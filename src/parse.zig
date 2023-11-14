@@ -1,4 +1,7 @@
+//! A streaming parser for ECMAScript.
+//!
 //! grammar rules current as of Draft ECMA-262 / November 3, 2023
+//! https://tc39.es/ecma262/
 
 const std = @import("std");
 
