@@ -1,4 +1,5 @@
 const std = @import("std");
+const deps = @import("./deps.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -12,6 +13,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = mode,
     });
+    deps.addAllTo(exe);
     exe.strip = strip;
     exe.pie = pie;
 
@@ -33,6 +35,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = mode,
     });
+    deps.addAllTo(unit_tests);
     unit_tests.strip = strip;
     unit_tests.pie = pie;
 
