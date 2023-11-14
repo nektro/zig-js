@@ -2,20 +2,22 @@
 
 const std = @import("std");
 
-pub fn parse() void {
+pub fn do() !void {
     //
+    _ = &parseScript;
+    _ = &parseModule;
 }
 
 //   Script :
 //     ScriptBody?
-fn parseScript() void {
+fn parseScript() !void {
     //
     _ = &parseScriptBody;
 }
 
 //   ScriptBody :
 //     StatementList[~Yield, ~Await, ~Return]
-fn parseScriptBody() void {
+fn parseScriptBody() !void {
     //
     _ = &parseStatementList;
 }
@@ -23,7 +25,7 @@ fn parseScriptBody() void {
 //  StatementList[Yield, Await, Return] :
 // StatementListItem[?Yield, ?Await, ?Return]
 // StatementList[?Yield, ?Await, ?Return] StatementListItem[?Yield, ?Await, ?Return]
-fn parseStatementList() void {
+fn parseStatementList() !void {
     //
     _ = &parseStatementListItem;
 }
@@ -31,7 +33,7 @@ fn parseStatementList() void {
 //  StatementListItem[Yield, Await, Return] :
 // Statement[?Yield, ?Await, ?Return]
 // Declaration[?Yield, ?Await]
-fn parseStatementListItem() void {
+fn parseStatementListItem() !void {
     //
     _ = &parseStatement;
     _ = &parseDeclaration;
@@ -52,7 +54,7 @@ fn parseStatementListItem() void {
 // ThrowStatement[?Yield, ?Await]
 // TryStatement[?Yield, ?Await, ?Return]
 // DebuggerStatement
-fn parseStatement() void {
+fn parseStatement() !void {
     //
     _ = &parseBlockStatement;
     _ = &parseVariableStatement;
@@ -74,7 +76,7 @@ fn parseStatement() void {
 // HoistableDeclaration[?Yield, ?Await, ~Default]
 // ClassDeclaration[?Yield, ?Await, ~Default]
 // LexicalDeclaration[+In, ?Yield, ?Await]
-fn parseDeclaration() void {
+fn parseDeclaration() !void {
     //
     _ = &parseHoistableDeclaration;
     _ = &parseClassDeclaration;
@@ -83,27 +85,27 @@ fn parseDeclaration() void {
 
 //  BlockStatement[Yield, Await, Return] :
 // Block[?Yield, ?Await, ?Return]
-fn parseBlockStatement() void {
+fn parseBlockStatement() !void {
     //
     _ = &parseBlock;
 }
 
 //  VariableStatement[Yield, Await] :
 // var VariableDeclarationList[+In, ?Yield, ?Await] ;
-fn parseVariableStatement() void {
+fn parseVariableStatement() !void {
     //
     _ = &parseVariableDeclarationList;
 }
 
 //  EmptyStatement :
 // ;
-fn parseEmptyStatement() void {
+fn parseEmptyStatement() !void {
     //
 }
 
 //  ExpressionStatement[Yield, Await] :
 // [lookahead ∉ { {, function, async [no LineTerminator here] function, class, let [ }] Expression[+In, ?Yield, ?Await] ;
-fn parseExpressionStatement() void {
+fn parseExpressionStatement() !void {
     //
     _ = &parseExpression;
 }
@@ -111,7 +113,7 @@ fn parseExpressionStatement() void {
 //  IfStatement[Yield, Await, Return] :
 // if ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return] else Statement[?Yield, ?Await, ?Return]
 // if ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return] [lookahead ≠ else]
-fn parseIfStatement() void {
+fn parseIfStatement() !void {
     //
     _ = &parseExpression;
     _ = &parseStatement;
@@ -120,7 +122,7 @@ fn parseIfStatement() void {
 //  BreakableStatement[Yield, Await, Return] :
 // IterationStatement[?Yield, ?Await, ?Return]
 // SwitchStatement[?Yield, ?Await, ?Return]
-fn parseBreakableStatement() void {
+fn parseBreakableStatement() !void {
     //
     _ = &parseIterationStatement;
     _ = &parseSwitchStatement;
@@ -129,7 +131,7 @@ fn parseBreakableStatement() void {
 //  ContinueStatement[Yield, Await] :
 // continue ;
 // continue [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
-fn parseContinueStatement() void {
+fn parseContinueStatement() !void {
     //
     _ = &parseLabelIdentifier;
 }
@@ -137,7 +139,7 @@ fn parseContinueStatement() void {
 //  BreakStatement[Yield, Await] :
 // break ;
 // break [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
-fn parseBreakStatement() void {
+fn parseBreakStatement() !void {
     //
     _ = &parseLabelIdentifier;
 }
@@ -145,14 +147,14 @@ fn parseBreakStatement() void {
 //  ReturnStatement[Yield, Await] :
 // return ;
 // return [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
-fn parseReturnStatement() void {
+fn parseReturnStatement() !void {
     //
     _ = &parseExpression;
 }
 
 //  LabelledStatement[Yield, Await, Return] :
 // LabelIdentifier[?Yield, ?Await] : LabelledItem[?Yield, ?Await, ?Return]
-fn parseLabelledStatement() void {
+fn parseLabelledStatement() !void {
     //
     _ = &parseLabelIdentifier;
     _ = &parseLabelledItem;
@@ -160,7 +162,7 @@ fn parseLabelledStatement() void {
 
 //  ThrowStatement[Yield, Await] :
 // throw [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
-fn parseThrowStatement() void {
+fn parseThrowStatement() !void {
     //
     _ = &parseExpression;
 }
@@ -169,7 +171,7 @@ fn parseThrowStatement() void {
 // try Block[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return]
 // try Block[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
 // try Block[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
-fn parseTryStatement() void {
+fn parseTryStatement() !void {
     //
     _ = &parseBlock;
     _ = &parseCatch;
@@ -178,7 +180,7 @@ fn parseTryStatement() void {
 
 //  DebuggerStatement :
 // debugger ;
-fn parseDebuggerStatement() void {
+fn parseDebuggerStatement() !void {
     //
 }
 
@@ -187,7 +189,7 @@ fn parseDebuggerStatement() void {
 // GeneratorDeclaration[?Yield, ?Await, ?Default]
 // AsyncFunctionDeclaration[?Yield, ?Await, ?Default]
 // AsyncGeneratorDeclaration[?Yield, ?Await, ?Default]
-fn parseHoistableDeclaration() void {
+fn parseHoistableDeclaration() !void {
     //
     _ = &parseFunctionDeclaration;
     _ = &parseGeneratorDeclaration;
@@ -198,7 +200,7 @@ fn parseHoistableDeclaration() void {
 //  ClassDeclaration[Yield, Await, Default] :
 // class BindingIdentifier[?Yield, ?Await] ClassTail[?Yield, ?Await]
 // [+Default] class ClassTail[?Yield, ?Await]
-fn parseClassDeclaration() void {
+fn parseClassDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseClassTail;
@@ -206,7 +208,7 @@ fn parseClassDeclaration() void {
 
 //  LexicalDeclaration[In, Yield, Await] :
 // LetOrConst BindingList[?In, ?Yield, ?Await] ;
-fn parseLexicalDeclaration() void {
+fn parseLexicalDeclaration() !void {
     //
     _ = &parseLetOrConst;
     _ = &parseBindingList;
@@ -214,14 +216,14 @@ fn parseLexicalDeclaration() void {
 
 //  Block[Yield, Await, Return] :
 // { StatementList[?Yield, ?Await, ?Return]? }
-fn parseBlock() void {
+fn parseBlock() !void {
     //
 }
 
 //  VariableDeclarationList[In, Yield, Await] :
 // VariableDeclaration[?In, ?Yield, ?Await]
 // VariableDeclarationList[?In, ?Yield, ?Await] , VariableDeclaration[?In, ?Yield, ?Await]
-fn parseVariableDeclarationList() void {
+fn parseVariableDeclarationList() !void {
     //
     _ = &parseVariableDeclaration;
 }
@@ -229,7 +231,7 @@ fn parseVariableDeclarationList() void {
 //  Expression[In, Yield, Await] :
 // AssignmentExpression[?In, ?Yield, ?Await]
 // Expression[?In, ?Yield, ?Await] , AssignmentExpression[?In, ?Yield, ?Await]
-fn parseExpression() void {
+fn parseExpression() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -239,7 +241,7 @@ fn parseExpression() void {
 // WhileStatement[?Yield, ?Await, ?Return]
 // ForStatement[?Yield, ?Await, ?Return]
 // ForInOfStatement[?Yield, ?Await, ?Return]
-fn parseIterationStatement() void {
+fn parseIterationStatement() !void {
     //
     _ = &parseDoWhileStatement;
     _ = &parseWhileStatement;
@@ -249,7 +251,7 @@ fn parseIterationStatement() void {
 
 //  SwitchStatement[Yield, Await, Return] :
 // switch ( Expression[+In, ?Yield, ?Await] ) CaseBlock[?Yield, ?Await, ?Return]
-fn parseSwitchStatement() void {
+fn parseSwitchStatement() !void {
     //
     _ = &parseExpression;
     _ = &parseCaseBlock;
@@ -259,7 +261,7 @@ fn parseSwitchStatement() void {
 // Identifier
 // [~Yield] yield
 // [~Await] await
-fn parseLabelIdentifier() void {
+fn parseLabelIdentifier() !void {
     //
     _ = &parseIdentifier;
 }
@@ -267,7 +269,7 @@ fn parseLabelIdentifier() void {
 //  LabelledItem[Yield, Await, Return] :
 // Statement[?Yield, ?Await, ?Return]
 // FunctionDeclaration[?Yield, ?Await, ~Default]
-fn parseLabelledItem() void {
+fn parseLabelledItem() !void {
     //
     _ = &parseStatement;
     _ = &parseFunctionDeclaration;
@@ -276,7 +278,7 @@ fn parseLabelledItem() void {
 //  Catch[Yield, Await, Return] :
 // catch ( CatchParameter[?Yield, ?Await] ) Block[?Yield, ?Await, ?Return]
 // catch Block[?Yield, ?Await, ?Return]
-fn parseCatch() void {
+fn parseCatch() !void {
     //
     _ = &parseCatchParameter;
     _ = &parseBlock;
@@ -284,7 +286,7 @@ fn parseCatch() void {
 
 //  Finally[Yield, Await, Return] :
 // finally Block[?Yield, ?Await, ?Return]
-fn parseFinally() void {
+fn parseFinally() !void {
     //
     _ = &parseBlock;
 }
@@ -292,7 +294,7 @@ fn parseFinally() void {
 //  FunctionDeclaration[Yield, Await, Default] :
 // function BindingIdentifier[?Yield, ?Await] ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
 // [+Default] function ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
-fn parseFunctionDeclaration() void {
+fn parseFunctionDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -302,7 +304,7 @@ fn parseFunctionDeclaration() void {
 //  GeneratorDeclaration[Yield, Await, Default] :
 // function * BindingIdentifier[?Yield, ?Await] ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
 // [+Default] function * ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
-fn parseGeneratorDeclaration() void {
+fn parseGeneratorDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -312,7 +314,7 @@ fn parseGeneratorDeclaration() void {
 //  AsyncFunctionDeclaration[Yield, Await, Default] :
 // async [no LineTerminator here] function BindingIdentifier[?Yield, ?Await] ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
 // [+Default] async [no LineTerminator here] function ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
-fn parseAsyncFunctionDeclaration() void {
+fn parseAsyncFunctionDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -322,7 +324,7 @@ fn parseAsyncFunctionDeclaration() void {
 //  AsyncGeneratorDeclaration[Yield, Await, Default] :
 // async [no LineTerminator here] function * BindingIdentifier[?Yield, ?Await] ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
 // [+Default] async [no LineTerminator here] function * ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
-fn parseAsyncGeneratorDeclaration() void {
+fn parseAsyncGeneratorDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -333,14 +335,14 @@ fn parseAsyncGeneratorDeclaration() void {
 // Identifier
 // yield
 // await
-fn parseBindingIdentifier() void {
+fn parseBindingIdentifier() !void {
     //
     _ = &parseIdentifier;
 }
 
 //  ClassTail[Yield, Await] :
 // ClassHeritage[?Yield, ?Await]? { ClassBody[?Yield, ?Await]? }
-fn parseClassTail() void {
+fn parseClassTail() !void {
     //
     _ = &parseClassHeritage;
     _ = &parseClassBody;
@@ -349,14 +351,14 @@ fn parseClassTail() void {
 //  LetOrConst :
 // let
 // const
-fn parseLetOrConst() void {
+fn parseLetOrConst() !void {
     //
 }
 
 //  BindingList[In, Yield, Await] :
 // LexicalBinding[?In, ?Yield, ?Await]
 // BindingList[?In, ?Yield, ?Await] , LexicalBinding[?In, ?Yield, ?Await]
-fn parseBindingList() void {
+fn parseBindingList() !void {
     //
     _ = &parseLexicalBinding;
     _ = &parseBindingList;
@@ -365,7 +367,7 @@ fn parseBindingList() void {
 //  VariableDeclaration[In, Yield, Await] :
 // BindingIdentifier[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]?
 // BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
-fn parseVariableDeclaration() void {
+fn parseVariableDeclaration() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -382,7 +384,7 @@ fn parseVariableDeclaration() void {
 // LeftHandSideExpression[?Yield, ?Await] &&= AssignmentExpression[?In, ?Yield, ?Await]
 // LeftHandSideExpression[?Yield, ?Await] ||= AssignmentExpression[?In, ?Yield, ?Await]
 // LeftHandSideExpression[?Yield, ?Await] ??= AssignmentExpression[?In, ?Yield, ?Await]
-fn parseAssignmentExpression() void {
+fn parseAssignmentExpression() !void {
     //
     _ = &parseConditionalExpression;
     _ = &parseYieldExpression;
@@ -395,7 +397,7 @@ fn parseAssignmentExpression() void {
 
 //  DoWhileStatement[Yield, Await, Return] :
 // do Statement[?Yield, ?Await, ?Return] while ( Expression[+In, ?Yield, ?Await] ) ;
-fn parseDoWhileStatement() void {
+fn parseDoWhileStatement() !void {
     //
     _ = &parseStatement;
     _ = &parseExpression;
@@ -403,7 +405,7 @@ fn parseDoWhileStatement() void {
 
 //  WhileStatement[Yield, Await, Return] :
 // while ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-fn parseWhileStatement() void {
+fn parseWhileStatement() !void {
     //
     _ = &parseExpression;
     _ = &parseStatement;
@@ -413,7 +415,7 @@ fn parseWhileStatement() void {
 // for ( [lookahead ≠ let [] Expression[~In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
 // for ( var VariableDeclarationList[~In, ?Yield, ?Await] ; Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
 // for ( LexicalDeclaration[~In, ?Yield, ?Await] Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
-fn parseForStatement() void {
+fn parseForStatement() !void {
     //
     _ = &parseExpression;
     _ = &parseStatement;
@@ -431,7 +433,7 @@ fn parseForStatement() void {
 // [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 // [+Await] for await ( var ForBinding[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 // [+Await] for await ( ForDeclaration[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-fn parseForInOfStatement() void {
+fn parseForInOfStatement() !void {
     //
     _ = &parseLeftHandSideExpression;
     _ = &parseExpression;
@@ -444,7 +446,7 @@ fn parseForInOfStatement() void {
 //  CaseBlock[Yield, Await, Return] :
 // { CaseClauses[?Yield, ?Await, ?Return]? }
 // { CaseClauses[?Yield, ?Await, ?Return]? DefaultClause[?Yield, ?Await, ?Return] CaseClauses[?Yield, ?Await, ?Return]? }
-fn parseCaseBlock() void {
+fn parseCaseBlock() !void {
     //
     _ = &parseCaseClauses;
     _ = &parseDefaultClause;
@@ -452,7 +454,7 @@ fn parseCaseBlock() void {
 
 //  Identifier :
 // IdentifierName but not ReservedWord
-fn parseIdentifier() void {
+fn parseIdentifier() !void {
     //
     _ = &parseIdentifierName;
     _ = &parseReservedWord;
@@ -461,7 +463,7 @@ fn parseIdentifier() void {
 //  CatchParameter[Yield, Await] :
 // BindingIdentifier[?Yield, ?Await]
 // BindingPattern[?Yield, ?Await]
-fn parseCatchParameter() void {
+fn parseCatchParameter() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -473,7 +475,7 @@ fn parseCatchParameter() void {
 // FormalParameterList[?Yield, ?Await]
 // FormalParameterList[?Yield, ?Await] ,
 // FormalParameterList[?Yield, ?Await] , FunctionRestParameter[?Yield, ?Await]
-fn parseFormalParameters() void {
+fn parseFormalParameters() !void {
     //
     _ = &parseFunctionRestParameter;
     _ = &parseFormalParameterList;
@@ -481,42 +483,42 @@ fn parseFormalParameters() void {
 
 //  FunctionBody[Yield, Await] :
 // FunctionStatementList[?Yield, ?Await]
-fn parseFunctionBody() void {
+fn parseFunctionBody() !void {
     //
     _ = &parseFunctionStatementList;
 }
 
 //  GeneratorBody :
 // FunctionBody[+Yield, ~Await]
-fn parseGeneratorBody() void {
+fn parseGeneratorBody() !void {
     //
     _ = &parseFunctionBody;
 }
 
 //  AsyncFunctionBody :
 // FunctionBody[~Yield, +Await]
-fn parseAsyncFunctionBody() void {
+fn parseAsyncFunctionBody() !void {
     //
     _ = &parseFunctionBody;
 }
 
 //  AsyncGeneratorBody :
 // FunctionBody[+Yield, +Await]
-fn parseAsyncGeneratorBody() void {
+fn parseAsyncGeneratorBody() !void {
     //
     _ = &parseFunctionBody;
 }
 
 //  ClassHeritage[Yield, Await] :
 // extends LeftHandSideExpression[?Yield, ?Await]
-fn parseClassHeritage() void {
+fn parseClassHeritage() !void {
     //
     _ = &parseLeftHandSideExpression;
 }
 
 //  ClassBody[Yield, Await] :
 // ClassElementList[?Yield, ?Await]
-fn parseClassBody() void {
+fn parseClassBody() !void {
     //
     _ = &parseClassElementList;
 }
@@ -524,7 +526,7 @@ fn parseClassBody() void {
 //  LexicalBinding[In, Yield, Await] :
 // BindingIdentifier[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]?
 // BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
-fn parseLexicalBinding() void {
+fn parseLexicalBinding() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -534,7 +536,7 @@ fn parseLexicalBinding() void {
 //  BindingPattern[Yield, Await] :
 // ObjectBindingPattern[?Yield, ?Await]
 // ArrayBindingPattern[?Yield, ?Await]
-fn parseBindingPattern() void {
+fn parseBindingPattern() !void {
     //
     _ = &parseObjectBindingPattern;
     _ = &parseArrayBindingPattern;
@@ -542,7 +544,7 @@ fn parseBindingPattern() void {
 
 //  Initializer[In, Yield, Await] :
 // = AssignmentExpression[?In, ?Yield, ?Await]
-fn parseInitializer() void {
+fn parseInitializer() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -550,7 +552,7 @@ fn parseInitializer() void {
 //  ConditionalExpression[In, Yield, Await] :
 // ShortCircuitExpression[?In, ?Yield, ?Await]
 // ShortCircuitExpression[?In, ?Yield, ?Await] ? AssignmentExpression[+In, ?Yield, ?Await] : AssignmentExpression[?In, ?Yield, ?Await]
-fn parseConditionalExpression() void {
+fn parseConditionalExpression() !void {
     //
     _ = &parseShortCircuitExpression;
     _ = &parseAssignmentExpression;
@@ -559,14 +561,14 @@ fn parseConditionalExpression() void {
 //  yield
 // yield [no LineTerminator here] AssignmentExpression[?In, +Yield, ?Await]
 // yield [no LineTerminator here] * AssignmentExpression[?In, +Yield, ?Await]
-fn parseYieldExpression() void {
+fn parseYieldExpression() !void {
     //
     _ = &parseAssignmentExpression;
 }
 
 //  ArrowFunction[In, Yield, Await] :
 // ArrowParameters[?Yield, ?Await] [no LineTerminator here] => ConciseBody[?In]
-fn parseArrowFunction() void {
+fn parseArrowFunction() !void {
     //
     _ = &parseArrowParameters;
     _ = &parseConciseBody;
@@ -575,7 +577,7 @@ fn parseArrowFunction() void {
 //  AsyncArrowFunction[In, Yield, Await] :
 // async [no LineTerminator here] AsyncArrowBindingIdentifier[?Yield] [no LineTerminator here] => AsyncConciseBody[?In]
 // CoverCallExpressionAndAsyncArrowHead[?Yield, ?Await] [no LineTerminator here] => AsyncConciseBody[?In]
-fn parseAsyncArrowFunction() void {
+fn parseAsyncArrowFunction() !void {
     //
     _ = &parseAsyncArrowBindingIdentifier;
     _ = &parseCoverCallExpressionAndAsyncArrowHead;
@@ -586,7 +588,7 @@ fn parseAsyncArrowFunction() void {
 // NewExpression[?Yield, ?Await]
 // CallExpression[?Yield, ?Await]
 // OptionalExpression[?Yield, ?Await]
-fn parseLeftHandSideExpression() void {
+fn parseLeftHandSideExpression() !void {
     //
     _ = &parseNewExpression;
     _ = &parseCallExpression;
@@ -595,14 +597,14 @@ fn parseLeftHandSideExpression() void {
 
 //  AssignmentOperator : one of
 // *= /= %= += -= <<= >>= >>>= &= ^= |= **=
-fn parseAssignmentOperator() void {
+fn parseAssignmentOperator() !void {
     //
 }
 
 //  ForBinding[Yield, Await] :
 // BindingIdentifier[?Yield, ?Await]
 // BindingPattern[?Yield, ?Await]
-fn parseForBinding() void {
+fn parseForBinding() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -610,7 +612,7 @@ fn parseForBinding() void {
 
 //  ForDeclaration[Yield, Await] :
 // LetOrConst ForBinding[?Yield, ?Await]
-fn parseForDeclaration() void {
+fn parseForDeclaration() !void {
     //
     _ = &parseLetOrConst;
     _ = &parseForBinding;
@@ -619,14 +621,14 @@ fn parseForDeclaration() void {
 //  CaseClauses[Yield, Await, Return] :
 // CaseClause[?Yield, ?Await, ?Return]
 // CaseClauses[?Yield, ?Await, ?Return] CaseClause[?Yield, ?Await, ?Return]
-fn parseCaseClauses() void {
+fn parseCaseClauses() !void {
     //
     _ = &parseCaseClause;
 }
 
 //  DefaultClause[Yield, Await, Return] :
 // default : StatementList[?Yield, ?Await, ?Return]?
-fn parseDefaultClause() void {
+fn parseDefaultClause() !void {
     //
     _ = &parseStatementList;
 }
@@ -634,7 +636,7 @@ fn parseDefaultClause() void {
 //  IdentifierName ::
 // IdentifierStart
 // IdentifierName IdentifierPart
-fn parseIdentifierName() void {
+fn parseIdentifierName() !void {
     //
     _ = &parseIdentifierStart;
     _ = &parseIdentifierName;
@@ -643,13 +645,13 @@ fn parseIdentifierName() void {
 
 //  ReservedWord :: one of
 // await break case catch class const continue debugger default delete do else enum export extends false finally for function if import in instanceof new null return super switch this throw true try typeof var void while with yield
-fn parseReservedWord() void {
+fn parseReservedWord() !void {
     //
 }
 
 //  FunctionRestParameter[Yield, Await] :
 // BindingRestElement[?Yield, ?Await]
-fn parseFunctionRestParameter() void {
+fn parseFunctionRestParameter() !void {
     //
     _ = &parseBindingRestElement;
 }
@@ -657,14 +659,14 @@ fn parseFunctionRestParameter() void {
 //  FormalParameterList[Yield, Await] :
 // FormalParameter[?Yield, ?Await]
 // FormalParameterList[?Yield, ?Await] , FormalParameter[?Yield, ?Await]
-fn parseFormalParameterList() void {
+fn parseFormalParameterList() !void {
     //
     _ = &parseFormalParameter;
 }
 
 //  FunctionStatementList[Yield, Await] :
 // StatementList[?Yield, ?Await, +Return]?
-fn parseFunctionStatementList() void {
+fn parseFunctionStatementList() !void {
     //
     _ = &parseStatementList;
 }
@@ -672,7 +674,7 @@ fn parseFunctionStatementList() void {
 //  ClassElementList[Yield, Await] :
 // ClassElement[?Yield, ?Await]
 // ClassElementList[?Yield, ?Await] ClassElement[?Yield, ?Await]
-fn parseClassElementList() void {
+fn parseClassElementList() !void {
     //
     _ = &parseClassElement;
 }
@@ -682,7 +684,7 @@ fn parseClassElementList() void {
 // { BindingRestProperty[?Yield, ?Await] }
 // { BindingPropertyList[?Yield, ?Await] }
 // { BindingPropertyList[?Yield, ?Await] , BindingRestProperty[?Yield, ?Await]? }
-fn parseObjectBindingPattern() void {
+fn parseObjectBindingPattern() !void {
     //
     _ = &parseBindingRestProperty;
     _ = &parseBindingPropertyList;
@@ -692,7 +694,7 @@ fn parseObjectBindingPattern() void {
 // [ Elision? BindingRestElement[?Yield, ?Await]? ]
 // [ BindingElementList[?Yield, ?Await] ]
 // [ BindingElementList[?Yield, ?Await] , Elision? BindingRestElement[?Yield, ?Await]? ]
-fn parseArrayBindingPattern() void {
+fn parseArrayBindingPattern() !void {
     //
     _ = &parseElision;
     _ = &parseBindingRestElement;
@@ -702,7 +704,7 @@ fn parseArrayBindingPattern() void {
 //  ShortCircuitExpression[In, Yield, Await] :
 // LogicalORExpression[?In, ?Yield, ?Await]
 // CoalesceExpression[?In, ?Yield, ?Await]
-fn parseShortCircuitExpression() void {
+fn parseShortCircuitExpression() !void {
     //
     _ = &parseLogicalORExpression;
     _ = &parseCoalesceExpression;
@@ -711,7 +713,7 @@ fn parseShortCircuitExpression() void {
 //  ArrowParameters[Yield, Await] :
 // BindingIdentifier[?Yield, ?Await]
 // CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
-fn parseArrowParameters() void {
+fn parseArrowParameters() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseCoverParenthesizedExpressionAndArrowParameterList;
@@ -720,7 +722,7 @@ fn parseArrowParameters() void {
 //  ConciseBody[In] :
 // [lookahead ≠ {] ExpressionBody[?In, ~Await]
 // { FunctionBody[~Yield, ~Await] }
-fn parseConciseBody() void {
+fn parseConciseBody() !void {
     //
     _ = &parseExpressionBody;
     _ = &parseFunctionBody;
@@ -728,14 +730,14 @@ fn parseConciseBody() void {
 
 //  AsyncArrowBindingIdentifier[Yield] :
 // BindingIdentifier[?Yield, +Await]
-fn parseAsyncArrowBindingIdentifier() void {
+fn parseAsyncArrowBindingIdentifier() !void {
     //
     _ = &parseBindingIdentifier;
 }
 
 //  CoverCallExpressionAndAsyncArrowHead[Yield, Await] :
 // MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
-fn parseCoverCallExpressionAndAsyncArrowHead() void {
+fn parseCoverCallExpressionAndAsyncArrowHead() !void {
     //
     _ = &parseMemberExpression;
     _ = &parseArguments;
@@ -744,7 +746,7 @@ fn parseCoverCallExpressionAndAsyncArrowHead() void {
 //  AsyncConciseBody[In] :
 // [lookahead ≠ {] ExpressionBody[?In, +Await]
 // { AsyncFunctionBody }
-fn parseAsyncConciseBody() void {
+fn parseAsyncConciseBody() !void {
     //
     _ = &parseExpressionBody;
     _ = &parseAsyncFunctionBody;
@@ -753,7 +755,7 @@ fn parseAsyncConciseBody() void {
 //  NewExpression[Yield, Await] :
 // MemberExpression[?Yield, ?Await]
 // new NewExpression[?Yield, ?Await]
-fn parseNewExpression() void {
+fn parseNewExpression() !void {
     //
     _ = &parseMemberExpression;
 }
@@ -767,7 +769,7 @@ fn parseNewExpression() void {
 // CallExpression[?Yield, ?Await] . IdentifierName
 // CallExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
 // CallExpression[?Yield, ?Await] . PrivateIdentifier
-fn parseCallExpression() void {
+fn parseCallExpression() !void {
     //
     _ = &parseCoverCallExpressionAndAsyncArrowHead;
     _ = &parseSuperCall;
@@ -783,7 +785,7 @@ fn parseCallExpression() void {
 // MemberExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 // CallExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 // OptionalExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
-fn parseOptionalExpression() void {
+fn parseOptionalExpression() !void {
     //
     _ = &parseMemberExpression;
     _ = &parseCallExpression;
@@ -792,7 +794,7 @@ fn parseOptionalExpression() void {
 
 //  CaseClause[Yield, Await, Return] :
 // case Expression[+In, ?Yield, ?Await] : StatementList[?Yield, ?Await, ?Return]?
-fn parseCaseClause() void {
+fn parseCaseClause() !void {
     //
     _ = &parseExpression;
     _ = &parseStatementList;
@@ -801,7 +803,7 @@ fn parseCaseClause() void {
 //  IdentifierStart ::
 // IdentifierStartChar
 // \ UnicodeEscapeSequence
-fn parseIdentifierStart() void {
+fn parseIdentifierStart() !void {
     //
     _ = &parseIdentifierStartChar;
     _ = &parseUnicodeEscapeSequence;
@@ -810,7 +812,7 @@ fn parseIdentifierStart() void {
 //  IdentifierPart ::
 // IdentifierPartChar
 // \ UnicodeEscapeSequence
-fn parseIdentifierPart() void {
+fn parseIdentifierPart() !void {
     //
     _ = &parseIdentifierPartChar;
     _ = &parseUnicodeEscapeSequence;
@@ -819,7 +821,7 @@ fn parseIdentifierPart() void {
 //  BindingRestElement[Yield, Await] :
 // ... BindingIdentifier[?Yield, ?Await]
 // ... BindingPattern[?Yield, ?Await]
-fn parseBindingRestElement() void {
+fn parseBindingRestElement() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -827,7 +829,7 @@ fn parseBindingRestElement() void {
 
 //  FormalParameter[Yield, Await] :
 // BindingElement[?Yield, ?Await]
-fn parseFormalParameter() void {
+fn parseFormalParameter() !void {
     //
     _ = &parseBindingElement;
 }
@@ -839,7 +841,7 @@ fn parseFormalParameter() void {
 // static FieldDefinition[?Yield, ?Await] ;
 // ClassStaticBlock
 // ;
-fn parseClassElement() void {
+fn parseClassElement() !void {
     //
     _ = &parseMethodDefinition;
     _ = &parseFieldDefinition;
@@ -848,7 +850,7 @@ fn parseClassElement() void {
 
 //  BindingRestProperty[Yield, Await] :
 // ... BindingIdentifier[?Yield, ?Await]
-fn parseBindingRestProperty() void {
+fn parseBindingRestProperty() !void {
     //
     _ = &parseBindingIdentifier;
 }
@@ -856,7 +858,7 @@ fn parseBindingRestProperty() void {
 //  BindingPropertyList[Yield, Await] :
 // BindingProperty[?Yield, ?Await]
 // BindingPropertyList[?Yield, ?Await] , BindingProperty[?Yield, ?Await]
-fn parseBindingPropertyList() void {
+fn parseBindingPropertyList() !void {
     //
     _ = &parseBindingProperty;
 }
@@ -864,14 +866,14 @@ fn parseBindingPropertyList() void {
 //  Elision :
 // ,
 // Elision ,
-fn parseElision() void {
+fn parseElision() !void {
     //
 }
 
 //  BindingElementList[Yield, Await] :
 // BindingElisionElement[?Yield, ?Await]
 // BindingElementList[?Yield, ?Await] , BindingElisionElement[?Yield, ?Await]
-fn parseBindingElementList() void {
+fn parseBindingElementList() !void {
     //
     _ = &parseBindingElisionElement;
 }
@@ -879,14 +881,14 @@ fn parseBindingElementList() void {
 //  LogicalORExpression[In, Yield, Await] :
 // LogicalANDExpression[?In, ?Yield, ?Await]
 // LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await]
-fn parseLogicalORExpression() void {
+fn parseLogicalORExpression() !void {
     //
     _ = &parseLogicalANDExpression;
 }
 
 //  CoalesceExpression[In, Yield, Await] :
 // CoalesceExpressionHead[?In, ?Yield, ?Await] ?? BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpression() void {
+fn parseCoalesceExpression() !void {
     //
     _ = &parseCoalesceExpressionHead;
     _ = &parseBitwiseORExpression;
@@ -900,7 +902,7 @@ fn parseCoalesceExpression() void {
 // ( ... BindingPattern[?Yield, ?Await] )
 // ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
 // ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
-fn parseCoverParenthesizedExpressionAndArrowParameterList() void {
+fn parseCoverParenthesizedExpressionAndArrowParameterList() !void {
     //
     _ = &parseExpression;
     _ = &parseBindingIdentifier;
@@ -909,7 +911,7 @@ fn parseCoverParenthesizedExpressionAndArrowParameterList() void {
 
 //  ExpressionBody[In, Await] :
 // AssignmentExpression[?In, ~Yield, ?Await]
-fn parseExpressionBody() void {
+fn parseExpressionBody() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -923,7 +925,7 @@ fn parseExpressionBody() void {
 // MetaProperty
 // new MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
 // MemberExpression[?Yield, ?Await] . PrivateIdentifier
-fn parseMemberExpression() void {
+fn parseMemberExpression() !void {
     //
     _ = &parsePrimaryExpression;
     _ = &parseExpression;
@@ -939,21 +941,21 @@ fn parseMemberExpression() void {
 // ( )
 // ( ArgumentList[?Yield, ?Await] )
 // ( ArgumentList[?Yield, ?Await] , )
-fn parseArguments() void {
+fn parseArguments() !void {
     //
     _ = &parseArgumentList;
 }
 
 //  SuperCall[Yield, Await] :
 // super Arguments[?Yield, ?Await]
-fn parseSuperCall() void {
+fn parseSuperCall() !void {
     //
     _ = &parseArguments;
 }
 
 //  ImportCall[Yield, Await] :
 // import ( AssignmentExpression[+In, ?Yield, ?Await] )
-fn parseImportCall() void {
+fn parseImportCall() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -961,7 +963,7 @@ fn parseImportCall() void {
 //  TemplateLiteral[Yield, Await, Tagged] :
 // NoSubstitutionTemplate
 // SubstitutionTemplate[?Yield, ?Await, ?Tagged]
-fn parseTemplateLiteral() void {
+fn parseTemplateLiteral() !void {
     //
     _ = &parseNoSubstitutionTemplate;
     _ = &parseSubstitutionTemplate;
@@ -969,7 +971,7 @@ fn parseTemplateLiteral() void {
 
 //  PrivateIdentifier ::
 // # IdentifierName
-fn parsePrivateIdentifier() void {
+fn parsePrivateIdentifier() !void {
     //
     _ = &parseIdentifierName;
 }
@@ -989,7 +991,7 @@ fn parsePrivateIdentifier() void {
 // NewExpression[?Yield, ?Await]
 // CallExpression[?Yield, ?Await]
 // OptionalExpression[?Yield, ?Await]
-fn parseOptionalChain() void {
+fn parseOptionalChain() !void {
     //
     _ = &parseArguments;
     _ = &parseExpression;
@@ -1006,7 +1008,7 @@ fn parseOptionalChain() void {
 // UnicodeIDStart
 // $
 // _
-fn parseIdentifierStartChar() void {
+fn parseIdentifierStartChar() !void {
     //
     _ = &parseUnicodeIDStart;
 }
@@ -1014,7 +1016,7 @@ fn parseIdentifierStartChar() void {
 //  UnicodeEscapeSequence ::
 // u Hex4Digits
 // u{ CodePoint }
-fn parseUnicodeEscapeSequence() void {
+fn parseUnicodeEscapeSequence() !void {
     //
     _ = &parseHex4Digits;
     _ = &parseCodePoint;
@@ -1025,7 +1027,7 @@ fn parseUnicodeEscapeSequence() void {
 // $
 // <ZWNJ>
 // <ZWJ>
-fn parseIdentifierPartChar() void {
+fn parseIdentifierPartChar() !void {
     //
     _ = &parseUnicodeIDContinue;
 }
@@ -1033,7 +1035,7 @@ fn parseIdentifierPartChar() void {
 //  BindingElement[Yield, Await] :
 // SingleNameBinding[?Yield, ?Await]
 // BindingPattern[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseBindingElement() void {
+fn parseBindingElement() !void {
     //
     _ = &parseSingleNameBinding;
     _ = &parseBindingPattern;
@@ -1047,7 +1049,7 @@ fn parseBindingElement() void {
 // AsyncGeneratorMethod[?Yield, ?Await]
 // get ClassElementName[?Yield, ?Await] ( ) { FunctionBody[~Yield, ~Await] }
 // set ClassElementName[?Yield, ?Await] ( PropertySetParameterList ) { FunctionBody[~Yield, ~Await] }
-fn parseMethodDefinition() void {
+fn parseMethodDefinition() !void {
     //
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
@@ -1060,7 +1062,7 @@ fn parseMethodDefinition() void {
 
 //  FieldDefinition[Yield, Await] :
 // ClassElementName[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseFieldDefinition() void {
+fn parseFieldDefinition() !void {
     //
     _ = &parseClassElementName;
     _ = &parseInitializer;
@@ -1068,7 +1070,7 @@ fn parseFieldDefinition() void {
 
 //  ClassStaticBlock :
 // static { ClassStaticBlockBody }
-fn parseClassStaticBlock() void {
+fn parseClassStaticBlock() !void {
     //
     _ = &parseClassStaticBlockBody;
 }
@@ -1076,7 +1078,7 @@ fn parseClassStaticBlock() void {
 //  BindingProperty[Yield, Await] :
 // SingleNameBinding[?Yield, ?Await]
 // PropertyName[?Yield, ?Await] : BindingElement[?Yield, ?Await]
-fn parseBindingProperty() void {
+fn parseBindingProperty() !void {
     //
     _ = &parseSingleNameBinding;
     _ = &parsePropertyName;
@@ -1085,7 +1087,7 @@ fn parseBindingProperty() void {
 
 //  BindingElisionElement[Yield, Await] :
 // Elision? BindingElement[?Yield, ?Await]
-fn parseBindingElisionElement() void {
+fn parseBindingElisionElement() !void {
     //
     _ = &parseElision;
     _ = &parseBindingElement;
@@ -1094,7 +1096,7 @@ fn parseBindingElisionElement() void {
 //  LogicalANDExpression[In, Yield, Await] :
 // BitwiseORExpression[?In, ?Yield, ?Await]
 // LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseLogicalANDExpression() void {
+fn parseLogicalANDExpression() !void {
     //
     _ = &parseBitwiseORExpression;
 }
@@ -1102,7 +1104,7 @@ fn parseLogicalANDExpression() void {
 //  CoalesceExpressionHead[In, Yield, Await] :
 // CoalesceExpression[?In, ?Yield, ?Await]
 // BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpressionHead() void {
+fn parseCoalesceExpressionHead() !void {
     //
     _ = &parseCoalesceExpression;
     _ = &parseBitwiseORExpression;
@@ -1111,7 +1113,7 @@ fn parseCoalesceExpressionHead() void {
 //  BitwiseORExpression[In, Yield, Await] :
 // BitwiseXORExpression[?In, ?Yield, ?Await]
 // BitwiseORExpression[?In, ?Yield, ?Await] | BitwiseXORExpression[?In, ?Yield, ?Await]
-fn parseBitwiseORExpression() void {
+fn parseBitwiseORExpression() !void {
     //
     _ = &parseBitwiseXORExpression;
 }
@@ -1130,7 +1132,7 @@ fn parseBitwiseORExpression() void {
 // RegularExpressionLiteral
 // TemplateLiteral[?Yield, ?Await, ~Tagged]
 // CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
-fn parsePrimaryExpression() void {
+fn parsePrimaryExpression() !void {
     //
     _ = &parseIdentifierReference;
     _ = &parseLiteral;
@@ -1149,7 +1151,7 @@ fn parsePrimaryExpression() void {
 //  SuperProperty[Yield, Await] :
 // super [ Expression[+In, ?Yield, ?Await] ]
 // super . IdentifierName
-fn parseSuperProperty() void {
+fn parseSuperProperty() !void {
     //
     _ = &parseExpression;
     _ = &parseIdentifierName;
@@ -1158,7 +1160,7 @@ fn parseSuperProperty() void {
 //  MetaProperty :
 // NewTarget
 // ImportMeta
-fn parseMetaProperty() void {
+fn parseMetaProperty() !void {
     //
     _ = &parseNewTarget;
     _ = &parseImportMeta;
@@ -1169,21 +1171,21 @@ fn parseMetaProperty() void {
 // ... AssignmentExpression[+In, ?Yield, ?Await]
 // ArgumentList[?Yield, ?Await] , AssignmentExpression[+In, ?Yield, ?Await]
 // ArgumentList[?Yield, ?Await] , ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parseArgumentList() void {
+fn parseArgumentList() !void {
     //
     _ = &parseAssignmentExpression;
 }
 
 //  NoSubstitutionTemplate ::
 // ` TemplateCharacters? `
-fn parseNoSubstitutionTemplate() void {
+fn parseNoSubstitutionTemplate() !void {
     //
     _ = &parseTemplateCharacters;
 }
 
 //  SubstitutionTemplate[Yield, Await, Tagged] :
 // TemplateHead Expression[+In, ?Yield, ?Await] TemplateSpans[?Yield, ?Await, ?Tagged]
-fn parseSubstitutionTemplate() void {
+fn parseSubstitutionTemplate() !void {
     //
     _ = &parseTemplateHead;
     _ = &parseExpression;
@@ -1192,32 +1194,32 @@ fn parseSubstitutionTemplate() void {
 
 //  UnicodeIDStart ::
 // any Unicode code point with the Unicode property “ID_Start”
-fn parseUnicodeIDStart() void {
+fn parseUnicodeIDStart() !void {
     //
 }
 
 //  Hex4Digits ::
 // HexDigit HexDigit HexDigit HexDigit
-fn parseHex4Digits() void {
+fn parseHex4Digits() !void {
     //
     _ = &parseHexDigit;
 }
 
 //  CodePoint ::
 // HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-fn parseCodePoint() void {
+fn parseCodePoint() !void {
     //
 }
 
 //  UnicodeIDContinue ::
 // any Unicode code point with the Unicode property “ID_Continue”
-fn parseUnicodeIDContinue() void {
+fn parseUnicodeIDContinue() !void {
     //
 }
 
 //  SingleNameBinding[Yield, Await] :
 // BindingIdentifier[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseSingleNameBinding() void {
+fn parseSingleNameBinding() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseInitializer;
@@ -1226,7 +1228,7 @@ fn parseSingleNameBinding() void {
 //  ClassElementName[Yield, Await] :
 // PropertyName[?Yield, ?Await]
 // PrivateIdentifier
-fn parseClassElementName() void {
+fn parseClassElementName() !void {
     //
     _ = &parsePropertyName;
     _ = &parsePrivateIdentifier;
@@ -1234,14 +1236,14 @@ fn parseClassElementName() void {
 
 //  UniqueFormalParameters[Yield, Await] :
 // FormalParameters[?Yield, ?Await]
-fn parseUniqueFormalParameters() void {
+fn parseUniqueFormalParameters() !void {
     //
     _ = &parseFormalParameters;
 }
 
 //  GeneratorMethod[Yield, Await] :
 // * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, ~Await] ) { GeneratorBody }
-fn parseGeneratorMethod() void {
+fn parseGeneratorMethod() !void {
     //
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
@@ -1250,7 +1252,7 @@ fn parseGeneratorMethod() void {
 
 //  AsyncMethod[Yield, Await] :
 // async [no LineTerminator here] ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
-fn parseAsyncMethod() void {
+fn parseAsyncMethod() !void {
     //
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
@@ -1259,7 +1261,7 @@ fn parseAsyncMethod() void {
 
 //  AsyncGeneratorMethod[Yield, Await] :
 // async [no LineTerminator here] * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
-fn parseAsyncGeneratorMethod() void {
+fn parseAsyncGeneratorMethod() !void {
     //
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
@@ -1268,14 +1270,14 @@ fn parseAsyncGeneratorMethod() void {
 
 //  PropertySetParameterList :
 // FormalParameter[~Yield, ~Await]
-fn parsePropertySetParameterList() void {
+fn parsePropertySetParameterList() !void {
     //
     _ = &parseFormalParameter;
 }
 
 //  ClassStaticBlockBody :
 // ClassStaticBlockStatementList
-fn parseClassStaticBlockBody() void {
+fn parseClassStaticBlockBody() !void {
     //
     _ = &parseClassStaticBlockStatementList;
 }
@@ -1283,7 +1285,7 @@ fn parseClassStaticBlockBody() void {
 //  PropertyName[Yield, Await] :
 // LiteralPropertyName
 // ComputedPropertyName[?Yield, ?Await]
-fn parsePropertyName() void {
+fn parsePropertyName() !void {
     //
     _ = &parseLiteralPropertyName;
     _ = &parseComputedPropertyName;
@@ -1292,7 +1294,7 @@ fn parsePropertyName() void {
 //  BitwiseXORExpression[In, Yield, Await] :
 // BitwiseANDExpression[?In, ?Yield, ?Await]
 // BitwiseXORExpression[?In, ?Yield, ?Await] ^ BitwiseANDExpression[?In, ?Yield, ?Await]
-fn parseBitwiseXORExpression() void {
+fn parseBitwiseXORExpression() !void {
     //
     _ = &parseBitwiseANDExpression;
 }
@@ -1301,7 +1303,7 @@ fn parseBitwiseXORExpression() void {
 // Identifier
 // [~Yield] yield
 // [~Await] await
-fn parseIdentifierReference() void {
+fn parseIdentifierReference() !void {
     //
     _ = &parseIdentifier;
 }
@@ -1311,7 +1313,7 @@ fn parseIdentifierReference() void {
 // BooleanLiteral
 // NumericLiteral
 // StringLiteral
-fn parseLiteral() void {
+fn parseLiteral() !void {
     //
     _ = &parseNullLiteral;
     _ = &parseBooleanLiteral;
@@ -1323,7 +1325,7 @@ fn parseLiteral() void {
 // [ Elision? ]
 // [ ElementList[?Yield, ?Await] ]
 // [ ElementList[?Yield, ?Await] , Elision? ]
-fn parseArrayLiteral() void {
+fn parseArrayLiteral() !void {
     //
     _ = &parseElision;
     _ = &parseElementList;
@@ -1333,14 +1335,14 @@ fn parseArrayLiteral() void {
 // { }
 // { PropertyDefinitionList[?Yield, ?Await] }
 // { PropertyDefinitionList[?Yield, ?Await] , }
-fn parseObjectLiteral() void {
+fn parseObjectLiteral() !void {
     //
     _ = &parsePropertyDefinitionList;
 }
 
 //  FunctionExpression :
 // function BindingIdentifier[~Yield, ~Await]? ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
-fn parseFunctionExpression() void {
+fn parseFunctionExpression() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -1349,7 +1351,7 @@ fn parseFunctionExpression() void {
 
 //  ClassExpression[Yield, Await] :
 // class BindingIdentifier[?Yield, ?Await]? ClassTail[?Yield, ?Await]
-fn parseClassExpression() void {
+fn parseClassExpression() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseClassTail;
@@ -1357,7 +1359,7 @@ fn parseClassExpression() void {
 
 //  GeneratorExpression :
 // function * BindingIdentifier[+Yield, ~Await]? ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
-fn parseGeneratorExpression() void {
+fn parseGeneratorExpression() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -1366,7 +1368,7 @@ fn parseGeneratorExpression() void {
 
 //  AsyncFunctionExpression :
 // async [no LineTerminator here] function BindingIdentifier[~Yield, +Await]? ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
-fn parseAsyncFunctionExpression() void {
+fn parseAsyncFunctionExpression() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -1375,7 +1377,7 @@ fn parseAsyncFunctionExpression() void {
 
 //  AsyncGeneratorExpression :
 // async [no LineTerminator here] function * BindingIdentifier[+Yield, +Await]? ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
-fn parseAsyncGeneratorExpression() void {
+fn parseAsyncGeneratorExpression() !void {
     //
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
@@ -1384,7 +1386,7 @@ fn parseAsyncGeneratorExpression() void {
 
 //  RegularExpressionLiteral ::
 // / RegularExpressionBody / RegularExpressionFlags
-fn parseRegularExpressionLiteral() void {
+fn parseRegularExpressionLiteral() !void {
     //
     _ = &parseRegularExpressionBody;
     _ = &parseRegularExpressionFlags;
@@ -1392,33 +1394,33 @@ fn parseRegularExpressionLiteral() void {
 
 //  NewTarget :
 // new . target
-fn parseNewTarget() void {
+fn parseNewTarget() !void {
     //
 }
 
 //  ImportMeta :
 // import . meta
-fn parseImportMeta() void {
+fn parseImportMeta() !void {
     //
 }
 
 //  TemplateCharacters ::
 // TemplateCharacter TemplateCharacters?
-fn parseTemplateCharacters() void {
+fn parseTemplateCharacters() !void {
     //
     _ = &parseTemplateCharacter;
 }
 
 //  TemplateHead ::
 // ` TemplateCharacters? ${
-fn parseTemplateHead() void {
+fn parseTemplateHead() !void {
     //
 }
 
 //  TemplateSpans[Yield, Await, Tagged] :
 // TemplateTail
 // TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateTail
-fn parseTemplateSpans() void {
+fn parseTemplateSpans() !void {
     //
     _ = &parseTemplateTail;
     _ = &parseTemplateMiddleList;
@@ -1426,13 +1428,13 @@ fn parseTemplateSpans() void {
 
 //  HexDigit :: one of
 // 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
-fn parseHexDigit() void {
+fn parseHexDigit() !void {
     //
 }
 
 //  ClassStaticBlockStatementList :
 // StatementList[~Yield, +Await, ~Return]?
-fn parseClassStaticBlockStatementList() void {
+fn parseClassStaticBlockStatementList() !void {
     //
     _ = &parseStatementList;
 }
@@ -1441,7 +1443,7 @@ fn parseClassStaticBlockStatementList() void {
 // IdentifierName
 // StringLiteral
 // NumericLiteral
-fn parseLiteralPropertyName() void {
+fn parseLiteralPropertyName() !void {
     //
     _ = &parseIdentifierName;
     _ = &parseStringLiteral;
@@ -1450,7 +1452,7 @@ fn parseLiteralPropertyName() void {
 
 //  ComputedPropertyName[Yield, Await] :
 // [ AssignmentExpression[+In, ?Yield, ?Await] ]
-fn parseComputedPropertyName() void {
+fn parseComputedPropertyName() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -1458,21 +1460,21 @@ fn parseComputedPropertyName() void {
 //  BitwiseANDExpression[In, Yield, Await] :
 // EqualityExpression[?In, ?Yield, ?Await]
 // BitwiseANDExpression[?In, ?Yield, ?Await] & EqualityExpression[?In, ?Yield, ?Await]
-fn parseBitwiseANDExpression() void {
+fn parseBitwiseANDExpression() !void {
     //
     _ = &parseEqualityExpression;
 }
 
 //  NullLiteral ::
 // null
-fn parseNullLiteral() void {
+fn parseNullLiteral() !void {
     //
 }
 
 //  BooleanLiteral ::
 // true
 // false
-fn parseBooleanLiteral() void {
+fn parseBooleanLiteral() !void {
     //
 }
 
@@ -1482,7 +1484,7 @@ fn parseBooleanLiteral() void {
 // NonDecimalIntegerLiteral[+Sep]
 // NonDecimalIntegerLiteral[+Sep] BigIntLiteralSuffix
 // LegacyOctalIntegerLiteral
-fn parseNumericLiteral() void {
+fn parseNumericLiteral() !void {
     //
     _ = &parseDecimalLiteral;
     _ = &parseDecimalBigIntegerLiteral;
@@ -1493,7 +1495,7 @@ fn parseNumericLiteral() void {
 //  StringLiteral ::
 // " DoubleStringCharacters? "
 // ' SingleStringCharacters? '
-fn parseStringLiteral() void {
+fn parseStringLiteral() !void {
     //
     _ = &parseDoubleStringCharacters;
     _ = &parseSingleStringCharacters;
@@ -1504,7 +1506,7 @@ fn parseStringLiteral() void {
 // Elision? SpreadElement[?Yield, ?Await]
 // ElementList[?Yield, ?Await] , Elision? AssignmentExpression[+In, ?Yield, ?Await]
 // ElementList[?Yield, ?Await] , Elision? SpreadElement[?Yield, ?Await]
-fn parseElementList() void {
+fn parseElementList() !void {
     //
     _ = &parseElision;
     _ = &parseAssignmentExpression;
@@ -1514,14 +1516,14 @@ fn parseElementList() void {
 //  PropertyDefinitionList[Yield, Await] :
 // PropertyDefinition[?Yield, ?Await]
 // PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
-fn parsePropertyDefinitionList() void {
+fn parsePropertyDefinitionList() !void {
     //
     _ = &parsePropertyDefinition;
 }
 
 //  RegularExpressionBody ::
 // RegularExpressionFirstChar RegularExpressionChars
-fn parseRegularExpressionBody() void {
+fn parseRegularExpressionBody() !void {
     //
     _ = &parseRegularExpressionFirstChar;
     _ = &parseRegularExpressionChars;
@@ -1530,7 +1532,7 @@ fn parseRegularExpressionBody() void {
 //  RegularExpressionFlags ::
 // [empty]
 // RegularExpressionFlags IdentifierPartChar
-fn parseRegularExpressionFlags() void {
+fn parseRegularExpressionFlags() !void {
     //
     _ = &parseIdentifierPartChar;
 }
@@ -1542,7 +1544,7 @@ fn parseRegularExpressionFlags() void {
 // LineContinuation
 // LineTerminatorSequence
 // SourceCharacter but not one of ` or \ or $ or LineTerminator
-fn parseTemplateCharacter() void {
+fn parseTemplateCharacter() !void {
     //
     _ = &parseTemplateEscapeSequence;
     _ = &parseNotEscapeSequence;
@@ -1553,7 +1555,7 @@ fn parseTemplateCharacter() void {
 
 //  TemplateTail ::
 // } TemplateCharacters? `
-fn parseTemplateTail() void {
+fn parseTemplateTail() !void {
     //
     _ = &parseTemplateCharacters;
 }
@@ -1561,7 +1563,7 @@ fn parseTemplateTail() void {
 //  TemplateMiddleList[Yield, Await, Tagged] :
 // TemplateMiddle Expression[+In, ?Yield, ?Await]
 // TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateMiddle Expression[+In, ?Yield, ?Await]
-fn parseTemplateMiddleList() void {
+fn parseTemplateMiddleList() !void {
     //
     _ = &parseTemplateMiddle;
     _ = &parseExpression;
@@ -1573,7 +1575,7 @@ fn parseTemplateMiddleList() void {
 // EqualityExpression[?In, ?Yield, ?Await] != RelationalExpression[?In, ?Yield, ?Await]
 // EqualityExpression[?In, ?Yield, ?Await] === RelationalExpression[?In, ?Yield, ?Await]
 // EqualityExpression[?In, ?Yield, ?Await] !== RelationalExpression[?In, ?Yield, ?Await]
-fn parseEqualityExpression() void {
+fn parseEqualityExpression() !void {
     //
     _ = &parseRelationalExpression;
 }
@@ -1582,7 +1584,7 @@ fn parseEqualityExpression() void {
 // DecimalIntegerLiteral . DecimalDigits[+Sep]? ExponentPart[+Sep]?
 // . DecimalDigits[+Sep] ExponentPart[+Sep]?
 // DecimalIntegerLiteral ExponentPart[+Sep]?
-fn parseDecimalLiteral() void {
+fn parseDecimalLiteral() !void {
     //
     _ = &parseDecimalIntegerLiteral;
     _ = &parseDecimalDigits;
@@ -1593,7 +1595,7 @@ fn parseDecimalLiteral() void {
 // 0 BigIntLiteralSuffix
 // NonZeroDigit DecimalDigits[+Sep]? BigIntLiteralSuffix
 // NonZeroDigit NumericLiteralSeparator DecimalDigits[+Sep] BigIntLiteralSuffix
-fn parseDecimalBigIntegerLiteral() void {
+fn parseDecimalBigIntegerLiteral() !void {
     //
     _ = &parseBigIntLiteralSuffix;
     _ = &parseNonZeroDigit;
@@ -1605,7 +1607,7 @@ fn parseDecimalBigIntegerLiteral() void {
 // BinaryIntegerLiteral[?Sep]
 // OctalIntegerLiteral[?Sep]
 // HexIntegerLiteral[?Sep]
-fn parseNonDecimalIntegerLiteral() void {
+fn parseNonDecimalIntegerLiteral() !void {
     //
     _ = &parseBinaryIntegerLiteral;
     _ = &parseOctalIntegerLiteral;
@@ -1614,27 +1616,27 @@ fn parseNonDecimalIntegerLiteral() void {
 
 //  BigIntLiteralSuffix ::
 // n
-fn parseBigIntLiteralSuffix() void {
+fn parseBigIntLiteralSuffix() !void {
     //
 }
 
 //  DoubleStringCharacters ::
 // DoubleStringCharacter DoubleStringCharacters?
-fn parseDoubleStringCharacters() void {
+fn parseDoubleStringCharacters() !void {
     //
     _ = &parseDoubleStringCharacter;
 }
 
 //  SingleStringCharacters ::
 // SingleStringCharacter SingleStringCharacters?
-fn parseSingleStringCharacters() void {
+fn parseSingleStringCharacters() !void {
     //
     _ = &parseSingleStringCharacter;
 }
 
 //  SpreadElement[Yield, Await] :
 // ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parseSpreadElement() void {
+fn parseSpreadElement() !void {
     //
     _ = &parseAssignmentExpression;
 }
@@ -1645,7 +1647,7 @@ fn parseSpreadElement() void {
 // PropertyName[?Yield, ?Await] : AssignmentExpression[+In, ?Yield, ?Await]
 // MethodDefinition[?Yield, ?Await]
 // ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parsePropertyDefinition() void {
+fn parsePropertyDefinition() !void {
     //
     _ = &parseIdentifierReference;
     _ = &parseCoverInitializedName;
@@ -1658,7 +1660,7 @@ fn parsePropertyDefinition() void {
 // RegularExpressionNonTerminator but not one of * or \ or / or [
 // RegularExpressionBackslashSequence
 // RegularExpressionClass
-fn parseRegularExpressionFirstChar() void {
+fn parseRegularExpressionFirstChar() !void {
     //
     _ = &parseRegularExpressionNonTerminator;
     _ = &parseRegularExpressionBackslashSequence;
@@ -1668,7 +1670,7 @@ fn parseRegularExpressionFirstChar() void {
 //  RegularExpressionChars ::
 // [empty]
 // RegularExpressionChars RegularExpressionChar
-fn parseRegularExpressionChars() void {
+fn parseRegularExpressionChars() !void {
     //
     _ = &parseRegularExpressionChar;
 }
@@ -1678,7 +1680,7 @@ fn parseRegularExpressionChars() void {
 // 0 [lookahead ∉ DecimalDigit]
 // HexEscapeSequence
 // UnicodeEscapeSequence
-fn parseTemplateEscapeSequence() void {
+fn parseTemplateEscapeSequence() !void {
     //
     _ = &parseCharacterEscapeSequence;
     _ = &parseDecimalDigit;
@@ -1698,7 +1700,7 @@ fn parseTemplateEscapeSequence() void {
 // u { [lookahead ∉ HexDigit]
 // u { NotCodePoint [lookahead ∉ HexDigit]
 // u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
-fn parseNotEscapeSequence() void {
+fn parseNotEscapeSequence() !void {
     //
     _ = &parseDecimalDigit;
     _ = &parseHexDigit;
@@ -1708,7 +1710,7 @@ fn parseNotEscapeSequence() void {
 
 //  LineContinuation ::
 // \ LineTerminatorSequence
-fn parseLineContinuation() void {
+fn parseLineContinuation() !void {
     //
     _ = &parseLineTerminatorSequence;
 }
@@ -1719,19 +1721,19 @@ fn parseLineContinuation() void {
 // <LS>
 // <PS>
 // <CR> <LF>
-fn parseLineTerminatorSequence() void {
+fn parseLineTerminatorSequence() !void {
     //
 }
 
 //  SourceCharacter ::
 // any Unicode code point
-fn parseSourceCharacter() void {
+fn parseSourceCharacter() !void {
     //
 }
 
 //  TemplateMiddle ::
 // } TemplateCharacters? ${
-fn parseTemplateMiddle() void {
+fn parseTemplateMiddle() !void {
     //
     _ = &parseTemplateCharacters;
 }
@@ -1745,7 +1747,7 @@ fn parseTemplateMiddle() void {
 // RelationalExpression[?In, ?Yield, ?Await] instanceof ShiftExpression[?Yield, ?Await]
 // [+In] RelationalExpression[+In, ?Yield, ?Await] in ShiftExpression[?Yield, ?Await]
 // [+In] PrivateIdentifier in ShiftExpression[?Yield, ?Await]
-fn parseRelationalExpression() void {
+fn parseRelationalExpression() !void {
     //
     _ = &parseShiftExpression;
     _ = &parsePrivateIdentifier;
@@ -1756,7 +1758,7 @@ fn parseRelationalExpression() void {
 // NonZeroDigit
 // NonZeroDigit NumericLiteralSeparator? DecimalDigits[+Sep]
 // NonOctalDecimalIntegerLiteral
-fn parseDecimalIntegerLiteral() void {
+fn parseDecimalIntegerLiteral() !void {
     //
     _ = &parseNonZeroDigit;
     _ = &parseNumericLiteralSeparator;
@@ -1768,7 +1770,7 @@ fn parseDecimalIntegerLiteral() void {
 // DecimalDigit
 // DecimalDigits[?Sep] DecimalDigit
 // [+Sep] DecimalDigits[+Sep] NumericLiteralSeparator DecimalDigit
-fn parseDecimalDigits() void {
+fn parseDecimalDigits() !void {
     //
     _ = &parseDecimalDigit;
     _ = &parseNumericLiteralSeparator;
@@ -1776,7 +1778,7 @@ fn parseDecimalDigits() void {
 
 //  ExponentPart[Sep] ::
 // ExponentIndicator SignedInteger[?Sep]
-fn parseExponentPart() void {
+fn parseExponentPart() !void {
     //
     _ = &parseExponentIndicator;
     _ = &parseSignedInteger;
@@ -1784,20 +1786,20 @@ fn parseExponentPart() void {
 
 //  NonZeroDigit :: one of
 // 1 2 3 4 5 6 7 8 9
-fn parseNonZeroDigit() void {
+fn parseNonZeroDigit() !void {
     //
 }
 
 //  NumericLiteralSeparator ::
 // _
-fn parseNumericLiteralSeparator() void {
+fn parseNumericLiteralSeparator() !void {
     //
 }
 
 //  BinaryIntegerLiteral[Sep] ::
 // 0b BinaryDigits[?Sep]
 // 0B BinaryDigits[?Sep]
-fn parseBinaryIntegerLiteral() void {
+fn parseBinaryIntegerLiteral() !void {
     //
     _ = &parseBinaryDigits;
 }
@@ -1805,7 +1807,7 @@ fn parseBinaryIntegerLiteral() void {
 //  OctalIntegerLiteral[Sep] ::
 // 0o OctalDigits[?Sep]
 // 0O OctalDigits[?Sep]
-fn parseOctalIntegerLiteral() void {
+fn parseOctalIntegerLiteral() !void {
     //
     _ = &parseOctalDigits;
 }
@@ -1813,7 +1815,7 @@ fn parseOctalIntegerLiteral() void {
 //  HexIntegerLiteral[Sep] ::
 // 0x HexDigits[?Sep]
 // 0X HexDigits[?Sep]
-fn parseHexIntegerLiteral() void {
+fn parseHexIntegerLiteral() !void {
     //
     _ = &parseHexDigits;
 }
@@ -1824,7 +1826,7 @@ fn parseHexIntegerLiteral() void {
 // <PS>
 // \ EscapeSequence
 // LineContinuation
-fn parseDoubleStringCharacter() void {
+fn parseDoubleStringCharacter() !void {
     //
     _ = &parseEscapeSequence;
     _ = &parseLineContinuation;
@@ -1836,7 +1838,7 @@ fn parseDoubleStringCharacter() void {
 // <PS>
 // \ EscapeSequence
 // LineContinuation
-fn parseSingleStringCharacter() void {
+fn parseSingleStringCharacter() !void {
     //
     _ = &parseEscapeSequence;
     _ = &parseLineContinuation;
@@ -1844,7 +1846,7 @@ fn parseSingleStringCharacter() void {
 
 //  CoverInitializedName[Yield, Await] :
 // IdentifierReference[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]
-fn parseCoverInitializedName() void {
+fn parseCoverInitializedName() !void {
     //
     _ = &parseIdentifierReference;
     _ = &parseInitializer;
@@ -1852,20 +1854,20 @@ fn parseCoverInitializedName() void {
 
 //  RegularExpressionNonTerminator ::
 // SourceCharacter but not LineTerminator
-fn parseRegularExpressionNonTerminator() void {
+fn parseRegularExpressionNonTerminator() !void {
     //
 }
 
 //  RegularExpressionBackslashSequence ::
 // \ RegularExpressionNonTerminator
-fn parseRegularExpressionBackslashSequence() void {
+fn parseRegularExpressionBackslashSequence() !void {
     //
     _ = &parseRegularExpressionNonTerminator;
 }
 
 //  RegularExpressionClass ::
 // [ RegularExpressionClassChars ]
-fn parseRegularExpressionClass() void {
+fn parseRegularExpressionClass() !void {
     //
     _ = &parseRegularExpressionClassChars;
 }
@@ -1874,7 +1876,7 @@ fn parseRegularExpressionClass() void {
 // RegularExpressionNonTerminator but not one of \ or / or [
 // RegularExpressionBackslashSequence
 // RegularExpressionClass
-fn parseRegularExpressionChar() void {
+fn parseRegularExpressionChar() !void {
     //
     _ = &parseRegularExpressionNonTerminator;
     _ = &parseRegularExpressionBackslashSequence;
@@ -1884,7 +1886,7 @@ fn parseRegularExpressionChar() void {
 //  CharacterEscapeSequence ::
 // SingleEscapeCharacter
 // NonEscapeCharacter
-fn parseCharacterEscapeSequence() void {
+fn parseCharacterEscapeSequence() !void {
     //
     _ = &parseSingleEscapeCharacter;
     _ = &parseNonEscapeCharacter;
@@ -1892,20 +1894,20 @@ fn parseCharacterEscapeSequence() void {
 
 //  DecimalDigit :: one of
 // 0 1 2 3 4 5 6 7 8 9
-fn parseDecimalDigit() void {
+fn parseDecimalDigit() !void {
     //
 }
 
 //  HexEscapeSequence ::
 // x HexDigit HexDigit
-fn parseHexEscapeSequence() void {
+fn parseHexEscapeSequence() !void {
     //
     _ = &parseHexDigit;
 }
 
 //  NotCodePoint ::
 // HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-fn parseNotCodePoint() void {
+fn parseNotCodePoint() !void {
     //
 }
 
@@ -1914,7 +1916,7 @@ fn parseNotCodePoint() void {
 // ShiftExpression[?Yield, ?Await] << AdditiveExpression[?Yield, ?Await]
 // ShiftExpression[?Yield, ?Await] >> AdditiveExpression[?Yield, ?Await]
 // ShiftExpression[?Yield, ?Await] >>> AdditiveExpression[?Yield, ?Await]
-fn parseShiftExpression() void {
+fn parseShiftExpression() !void {
     //
     _ = &parseAdditiveExpression;
 }
@@ -1923,7 +1925,7 @@ fn parseShiftExpression() void {
 // 0 NonOctalDigit
 // LegacyOctalLikeDecimalIntegerLiteral NonOctalDigit
 // NonOctalDecimalIntegerLiteral DecimalDigit
-fn parseNonOctalDecimalIntegerLiteral() void {
+fn parseNonOctalDecimalIntegerLiteral() !void {
     //
     _ = &parseNonOctalDigit;
     _ = &parseDecimalDigit;
@@ -1931,7 +1933,7 @@ fn parseNonOctalDecimalIntegerLiteral() void {
 
 //  ExponentIndicator :: one of
 // e E
-fn parseExponentIndicator() void {
+fn parseExponentIndicator() !void {
     //
 }
 
@@ -1939,7 +1941,7 @@ fn parseExponentIndicator() void {
 // DecimalDigits[?Sep]
 // + DecimalDigits[?Sep]
 // - DecimalDigits[?Sep]
-fn parseSignedInteger() void {
+fn parseSignedInteger() !void {
     //
     _ = &parseDecimalDigits;
 }
@@ -1948,7 +1950,7 @@ fn parseSignedInteger() void {
 // BinaryDigit
 // BinaryDigits[?Sep] BinaryDigit
 // [+Sep] BinaryDigits[+Sep] NumericLiteralSeparator BinaryDigit
-fn parseBinaryDigits() void {
+fn parseBinaryDigits() !void {
     //
     _ = &parseBinaryDigit;
     _ = &parseNumericLiteralSeparator;
@@ -1958,7 +1960,7 @@ fn parseBinaryDigits() void {
 // OctalDigit
 // OctalDigits[?Sep] OctalDigit
 // [+Sep] OctalDigits[+Sep] NumericLiteralSeparator OctalDigit
-fn parseOctalDigits() void {
+fn parseOctalDigits() !void {
     //
     _ = &parseOctalDigit;
     _ = &parseNumericLiteralSeparator;
@@ -1968,7 +1970,7 @@ fn parseOctalDigits() void {
 // HexDigit
 // HexDigits[?Sep] HexDigit
 // [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
-fn parseHexDigits() void {
+fn parseHexDigits() !void {
     //
     _ = &parseHexDigit;
     _ = &parseNumericLiteralSeparator;
@@ -1981,7 +1983,7 @@ fn parseHexDigits() void {
 // NonOctalDecimalEscapeSequence
 // HexEscapeSequence
 // UnicodeEscapeSequence
-fn parseEscapeSequence() void {
+fn parseEscapeSequence() !void {
     //
     _ = &parseCharacterEscapeSequence;
     _ = &parseNonOctalDecimalEscapeSequence;
@@ -1992,20 +1994,20 @@ fn parseEscapeSequence() void {
 //  RegularExpressionClassChars ::
 // [empty]
 // RegularExpressionClassChars RegularExpressionClassChar
-fn parseRegularExpressionClassChars() void {
+fn parseRegularExpressionClassChars() !void {
     //
     _ = &parseRegularExpressionClassChar;
 }
 
 //  SingleEscapeCharacter :: one of
 // ' " \ b f n r t v
-fn parseSingleEscapeCharacter() void {
+fn parseSingleEscapeCharacter() !void {
     //
 }
 
 //  NonEscapeCharacter ::
 // SourceCharacter but not one of EscapeCharacter or LineTerminator
-fn parseNonEscapeCharacter() void {
+fn parseNonEscapeCharacter() !void {
     //
 }
 
@@ -2013,39 +2015,39 @@ fn parseNonEscapeCharacter() void {
 // MultiplicativeExpression[?Yield, ?Await]
 // AdditiveExpression[?Yield, ?Await] + MultiplicativeExpression[?Yield, ?Await]
 // AdditiveExpression[?Yield, ?Await] - MultiplicativeExpression[?Yield, ?Await]
-fn parseAdditiveExpression() void {
+fn parseAdditiveExpression() !void {
     //
     _ = &parseMultiplicativeExpression;
 }
 
 //  NonOctalDigit :: one of
 // 8 9
-fn parseNonOctalDigit() void {
+fn parseNonOctalDigit() !void {
     //
 }
 
 //  BinaryDigit :: one of
 // 0 1
-fn parseBinaryDigit() void {
+fn parseBinaryDigit() !void {
     //
 }
 
 //  OctalDigit :: one of
 // 0 1 2 3 4 5 6 7
-fn parseOctalDigit() void {
+fn parseOctalDigit() !void {
     //
 }
 
 //  NonOctalDecimalEscapeSequence :: one of
 // 8 9
-fn parseNonOctalDecimalEscapeSequence() void {
+fn parseNonOctalDecimalEscapeSequence() !void {
     //
 }
 
 //  RegularExpressionClassChar ::
 // RegularExpressionNonTerminator but not one of ] or \
 // RegularExpressionBackslashSequence
-fn parseRegularExpressionClassChar() void {
+fn parseRegularExpressionClassChar() !void {
     //
     _ = &parseRegularExpressionNonTerminator;
     _ = &parseRegularExpressionBackslashSequence;
@@ -2054,7 +2056,7 @@ fn parseRegularExpressionClassChar() void {
 //  MultiplicativeExpression[Yield, Await] :
 // ExponentiationExpression[?Yield, ?Await]
 // MultiplicativeExpression[?Yield, ?Await] MultiplicativeOperator ExponentiationExpression[?Yield, ?Await]
-fn parseMultiplicativeExpression() void {
+fn parseMultiplicativeExpression() !void {
     //
     _ = &parseExponentiationExpression;
     _ = &parseMultiplicativeOperator;
@@ -2063,7 +2065,7 @@ fn parseMultiplicativeExpression() void {
 //  ExponentiationExpression[Yield, Await] :
 // UnaryExpression[?Yield, ?Await]
 // UpdateExpression[?Yield, ?Await] ** ExponentiationExpression[?Yield, ?Await]
-fn parseExponentiationExpression() void {
+fn parseExponentiationExpression() !void {
     //
     _ = &parseUnaryExpression;
     _ = &parseUpdateExpression;
@@ -2071,7 +2073,7 @@ fn parseExponentiationExpression() void {
 
 //  MultiplicativeOperator : one of
 // * / %
-fn parseMultiplicativeOperator() void {
+fn parseMultiplicativeOperator() !void {
     //
 }
 
@@ -2085,7 +2087,7 @@ fn parseMultiplicativeOperator() void {
 // ~ UnaryExpression[?Yield, ?Await]
 // ! UnaryExpression[?Yield, ?Await]
 // [+Await] AwaitExpression[?Yield]
-fn parseUnaryExpression() void {
+fn parseUnaryExpression() !void {
     //
     _ = &parseUpdateExpression;
     _ = &parseAwaitExpression;
@@ -2097,7 +2099,7 @@ fn parseUnaryExpression() void {
 // LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] --
 // ++ UnaryExpression[?Yield, ?Await]
 // -- UnaryExpression[?Yield, ?Await]
-fn parseUpdateExpression() void {
+fn parseUpdateExpression() !void {
     //
     _ = &parseLeftHandSideExpression;
     _ = &parseUnaryExpression;
@@ -2105,21 +2107,21 @@ fn parseUpdateExpression() void {
 
 //  AwaitExpression[Yield] :
 // await UnaryExpression[?Yield, +Await]
-fn parseAwaitExpression() void {
+fn parseAwaitExpression() !void {
     //
     _ = &parseUnaryExpression;
 }
 
 //  Module :
 // ModuleBody?
-fn parseModule() void {
+fn parseModule() !void {
     //
     _ = &parseModuleBody;
 }
 
 //  ModuleBody :
 // ModuleItemList
-fn parseModuleBody() void {
+fn parseModuleBody() !void {
     //
     _ = &parseModuleItemList;
 }
@@ -2127,7 +2129,7 @@ fn parseModuleBody() void {
 //  ModuleItemList :
 // ModuleItem
 // ModuleItemList ModuleItem
-fn parseModuleItemList() void {
+fn parseModuleItemList() !void {
     //
     _ = &parseModuleItem;
 }
@@ -2136,7 +2138,7 @@ fn parseModuleItemList() void {
 // ImportDeclaration
 // ExportDeclaration
 // StatementListItem[~Yield, +Await, ~Return]
-fn parseModuleItem() void {
+fn parseModuleItem() !void {
     //
     _ = &parseImportDeclaration;
     _ = &parseExportDeclaration;
@@ -2146,7 +2148,7 @@ fn parseModuleItem() void {
 //  ImportDeclaration :
 // import ImportClause FromClause ;
 // import ModuleSpecifier ;
-fn parseImportDeclaration() void {
+fn parseImportDeclaration() !void {
     //
     _ = &parseImportClause;
     _ = &parseFromClause;
@@ -2161,7 +2163,7 @@ fn parseImportDeclaration() void {
 // export default HoistableDeclaration[~Yield, +Await, +Default]
 // export default ClassDeclaration[~Yield, +Await, +Default]
 // export default [lookahead ∉ { function, async [no LineTerminator here] function, class }] AssignmentExpression[+In, ~Yield, +Await] ;
-fn parseExportDeclaration() void {
+fn parseExportDeclaration() !void {
     //
     _ = &parseExportFromClause;
     _ = &parseFromClause;
@@ -2178,7 +2180,7 @@ fn parseExportDeclaration() void {
 // NamedImports
 // ImportedDefaultBinding , NameSpaceImport
 // ImportedDefaultBinding , NamedImports
-fn parseImportClause() void {
+fn parseImportClause() !void {
     //
     _ = &parseImportedDefaultBinding;
     _ = &parseNameSpaceImport;
@@ -2187,14 +2189,14 @@ fn parseImportClause() void {
 
 //  FromClause :
 // from ModuleSpecifier
-fn parseFromClause() void {
+fn parseFromClause() !void {
     //
     _ = &parseModuleSpecifier;
 }
 
 //  ModuleSpecifier :
 // StringLiteral
-fn parseModuleSpecifier() void {
+fn parseModuleSpecifier() !void {
     //
     _ = parseStringLiteral;
 }
@@ -2203,7 +2205,7 @@ fn parseModuleSpecifier() void {
 // *
 // * as ModuleExportName
 // NamedExports
-fn parseExportFromClause() void {
+fn parseExportFromClause() !void {
     //
     _ = &parseModuleExportName;
     _ = &parseNamedExports;
@@ -2211,14 +2213,14 @@ fn parseExportFromClause() void {
 
 //  ImportedDefaultBinding :
 // ImportedBinding
-fn parseImportedDefaultBinding() void {
+fn parseImportedDefaultBinding() !void {
     //
     _ = &parseImportedBinding;
 }
 
 //  NameSpaceImport :
 // * as ImportedBinding
-fn parseNameSpaceImport() void {
+fn parseNameSpaceImport() !void {
     //
     _ = &parseImportedBinding;
 }
@@ -2227,7 +2229,7 @@ fn parseNameSpaceImport() void {
 // { }
 // { ImportsList }
 // { ImportsList , }
-fn parseNamedImports() void {
+fn parseNamedImports() !void {
     //
     _ = &parseImportsList;
 }
@@ -2235,7 +2237,7 @@ fn parseNamedImports() void {
 //  ModuleExportName :
 // IdentifierName
 // StringLiteral
-fn parseModuleExportName() void {
+fn parseModuleExportName() !void {
     //
     _ = &parseIdentifierName;
     _ = &parseStringLiteral;
@@ -2245,13 +2247,13 @@ fn parseModuleExportName() void {
 // { }
 // { ExportsList }
 // { ExportsList , }
-fn parseNamedExports() void {
+fn parseNamedExports() !void {
     //
 }
 
 //  ImportedBinding :
 // BindingIdentifier[~Yield, +Await]
-fn parseImportedBinding() void {
+fn parseImportedBinding() !void {
     //
     _ = &parseBindingIdentifier;
 }
@@ -2259,7 +2261,7 @@ fn parseImportedBinding() void {
 //  ImportsList :
 // ImportSpecifier
 // ImportsList , ImportSpecifier
-fn parseImportsList() void {
+fn parseImportsList() !void {
     //
     _ = &parseImportSpecifier;
 }
@@ -2267,7 +2269,7 @@ fn parseImportsList() void {
 //  ExportsList :
 // ExportSpecifier
 // ExportsList , ExportSpecifier
-fn parseExportsList() void {
+fn parseExportsList() !void {
     //
     _ = &parseExportSpecifier;
 }
@@ -2275,7 +2277,7 @@ fn parseExportsList() void {
 //  ImportSpecifier :
 // ImportedBinding
 // ModuleExportName as ImportedBinding
-fn parseImportSpecifier() void {
+fn parseImportSpecifier() !void {
     //
     _ = &parseImportedBinding;
     _ = &parseModuleExportName;
@@ -2284,7 +2286,7 @@ fn parseImportSpecifier() void {
 //  ExportSpecifier :
 // ModuleExportName
 // ModuleExportName as ModuleExportName
-fn parseExportSpecifier() void {
+fn parseExportSpecifier() !void {
     //
     _ = &parseModuleExportName;
 }
