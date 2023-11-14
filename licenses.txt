@@ -1,2 +1,6 @@
+MIT:
+= https://spdx.org/licenses/MIT
+- git https://github.com/nektro/zig-extras
+
 Unspecified:
 - This
