@@ -3,3 +3,6 @@ name: hübscher
 description: A drop-in replacement for prettier written in Zig
 root_dependencies:
   - src: git https://github.com/nektro/zig-extras
+
+  - src: git https://github.com/tc39/test262-parser-tests
+    keep: true

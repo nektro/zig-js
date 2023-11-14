@@ -6,15 +6,29 @@
 const std = @import("std");
 const string = []const u8;
 const Parser = @import("./Parser.zig");
+const extras = @import("extras");
 
-pub fn do() !void {
+pub fn do(alloc: std.mem.Allocator, path: string, inreader: anytype, isModule: bool) !void {
     //
-    _ = &parseScript;
-    _ = &parseModule;
+    _ = path;
+
+    var counter = std.io.countingReader(inreader);
+    const anyreader = extras.AnyReader.from(counter.reader());
+    var p = Parser{ .any = anyreader };
+    defer p.extras.deinit(alloc);
+    defer p.string_bytes.deinit(alloc);
+    defer p.strings_map.deinit(alloc);
+
+    _ = try p.addStr(alloc, "");
+
+    if (isModule) {
+        return parseModule(alloc, &p);
+    }
+    return parseScript(alloc, &p);
 }
 
 /// Script : ScriptBody?
-fn parseScript(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseScript(alloc: std.mem.Allocator, p: *Parser) !void {
     //
     _ = alloc;
     _ = p;
@@ -2364,7 +2378,7 @@ fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// Module : ModuleBody?
-fn parseModule(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseModule(alloc: std.mem.Allocator, p: *Parser) !void {
     //
     _ = alloc;
     _ = p;
