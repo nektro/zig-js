@@ -47,20 +47,26 @@ fn parseScriptBody(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// StatementList[Yield, Await, Return] : StatementListItem[?Yield, ?Await, ?Return]
 /// StatementList[Yield, Await, Return] : StatementList[?Yield, ?Await, ?Return] StatementListItem[?Yield, ?Await, ?Return]
-fn parseStatementList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseStatementListItem;
     return error.TODO;
 }
 
 /// StatementListItem[Yield, Await, Return] : Statement[?Yield, ?Await, ?Return]
 /// StatementListItem[Yield, Await, Return] : Declaration[?Yield, ?Await]
-fn parseStatementListItem(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseStatementListItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseStatement;
     _ = &parseDeclaration;
     return error.TODO;
@@ -80,10 +86,13 @@ fn parseStatementListItem(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// Statement[Yield, Await, Return] : ThrowStatement[?Yield, ?Await]
 /// Statement[Yield, Await, Return] : TryStatement[?Yield, ?Await, ?Return]
 /// Statement[Yield, Await, Return] : DebuggerStatement
-fn parseStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseBlockStatement;
     _ = &parseVariableStatement;
     _ = &parseEmptyStatement;
@@ -103,10 +112,12 @@ fn parseStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// Declaration[Yield, Await] : HoistableDeclaration[?Yield, ?Await, ~Default]
 /// Declaration[Yield, Await] : ClassDeclaration[?Yield, ?Await, ~Default]
 /// Declaration[Yield, Await] : LexicalDeclaration[+In, ?Yield, ?Await]
-fn parseDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseHoistableDeclaration;
     _ = &parseClassDeclaration;
     _ = &parseLexicalDeclaration;
@@ -114,19 +125,24 @@ fn parseDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// BlockStatement[Yield, Await, Return] : Block[?Yield, ?Await, ?Return]
-fn parseBlockStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBlockStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseBlock;
     return error.TODO;
 }
 
 /// VariableStatement[Yield, Await] : var VariableDeclarationList[+In, ?Yield, ?Await] ;
-fn parseVariableStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseVariableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseVariableDeclarationList;
     return error.TODO;
 }
@@ -140,20 +156,25 @@ fn parseEmptyStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// ExpressionStatement[Yield, Await] : [lookahead ∉ { {, function, async [no LineTerminator here] function, class, let [ }] Expression[+In, ?Yield, ?Await] ;
-fn parseExpressionStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseExpressionStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExpression;
     return error.TODO;
 }
 
 /// IfStatement[Yield, Await, Return] : if ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return] else Statement[?Yield, ?Await, ?Return]
 /// IfStatement[Yield, Await, Return] : if ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return] [lookahead ≠ else]
-fn parseIfStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseIfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseExpression;
     _ = &parseStatement;
     return error.TODO;
@@ -161,10 +182,13 @@ fn parseIfStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BreakableStatement[Yield, Await, Return] : IterationStatement[?Yield, ?Await, ?Return]
 /// BreakableStatement[Yield, Await, Return] : SwitchStatement[?Yield, ?Await, ?Return]
-fn parseBreakableStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBreakableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseIterationStatement;
     _ = &parseSwitchStatement;
     return error.TODO;
@@ -172,49 +196,60 @@ fn parseBreakableStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ContinueStatement[Yield, Await] : continue ;
 /// ContinueStatement[Yield, Await] : continue [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
-fn parseContinueStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseContinueStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLabelIdentifier;
     return error.TODO;
 }
 
 /// BreakStatement[Yield, Await] : break ;
 /// BreakStatement[Yield, Await] : break [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
-fn parseBreakStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBreakStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLabelIdentifier;
     return error.TODO;
 }
 
 /// ReturnStatement[Yield, Await] : return ;
 /// ReturnStatement[Yield, Await] : return [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
-fn parseReturnStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseReturnStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExpression;
     return error.TODO;
 }
 
 /// LabelledStatement[Yield, Await, Return] : LabelIdentifier[?Yield, ?Await] : LabelledItem[?Yield, ?Await, ?Return]
-fn parseLabelledStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLabelledStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseLabelIdentifier;
     _ = &parseLabelledItem;
     return error.TODO;
 }
 
 /// ThrowStatement[Yield, Await] : throw [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
-fn parseThrowStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseThrowStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExpression;
     return error.TODO;
 }
@@ -222,10 +257,13 @@ fn parseThrowStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// TryStatement[Yield, Await, Return] : try Block[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return]
 /// TryStatement[Yield, Await, Return] : try Block[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
 /// TryStatement[Yield, Await, Return] : try Block[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
-fn parseTryStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseTryStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseBlock;
     _ = &parseCatch;
     _ = &parseFinally;
@@ -244,10 +282,13 @@ fn parseDebuggerStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// HoistableDeclaration[Yield, Await, Default] : GeneratorDeclaration[?Yield, ?Await, ?Default]
 /// HoistableDeclaration[Yield, Await, Default] : AsyncFunctionDeclaration[?Yield, ?Await, ?Default]
 /// HoistableDeclaration[Yield, Await, Default] : AsyncGeneratorDeclaration[?Yield, ?Await, ?Default]
-fn parseHoistableDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseHoistableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseFunctionDeclaration;
     _ = &parseGeneratorDeclaration;
     _ = &parseAsyncFunctionDeclaration;
@@ -257,49 +298,64 @@ fn parseHoistableDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ClassDeclaration[Yield, Await, Default] : class BindingIdentifier[?Yield, ?Await] ClassTail[?Yield, ?Await]
 /// ClassDeclaration[Yield, Await, Default] : [+Default] class ClassTail[?Yield, ?Await]
-fn parseClassDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseBindingIdentifier;
     _ = &parseClassTail;
     return error.TODO;
 }
 
 /// LexicalDeclaration[In, Yield, Await] : LetOrConst BindingList[?In, ?Yield, ?Await] ;
-fn parseLexicalDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLexicalDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseLetOrConst;
     _ = &parseBindingList;
     return error.TODO;
 }
 
 /// Block[Yield, Await, Return] : { StatementList[?Yield, ?Await, ?Return]? }
-fn parseBlock(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     return error.TODO;
 }
 
 /// VariableDeclarationList[In, Yield, Await] : VariableDeclaration[?In, ?Yield, ?Await]
 /// VariableDeclarationList[In, Yield, Await] : VariableDeclarationList[?In, ?Yield, ?Await] , VariableDeclaration[?In, ?Yield, ?Await]
-fn parseVariableDeclarationList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseVariableDeclarationList(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseVariableDeclaration;
     return error.TODO;
 }
 
 /// Expression[In, Yield, Await] : AssignmentExpression[?In, ?Yield, ?Await]
 /// Expression[In, Yield, Await] : Expression[?In, ?Yield, ?Await] , AssignmentExpression[?In, ?Yield, ?Await]
-fn parseExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
@@ -308,10 +364,13 @@ fn parseExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// IterationStatement[Yield, Await, Return] : WhileStatement[?Yield, ?Await, ?Return]
 /// IterationStatement[Yield, Await, Return] : ForStatement[?Yield, ?Await, ?Return]
 /// IterationStatement[Yield, Await, Return] : ForInOfStatement[?Yield, ?Await, ?Return]
-fn parseIterationStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseIterationStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseDoWhileStatement;
     _ = &parseWhileStatement;
     _ = &parseForStatement;
@@ -320,10 +379,13 @@ fn parseIterationStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// SwitchStatement[Yield, Await, Return] : switch ( Expression[+In, ?Yield, ?Await] ) CaseBlock[?Yield, ?Await, ?Return]
-fn parseSwitchStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSwitchStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseExpression;
     _ = &parseCaseBlock;
     return error.TODO;
@@ -332,20 +394,25 @@ fn parseSwitchStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// LabelIdentifier[Yield, Await] : Identifier
 /// LabelIdentifier[Yield, Await] : [~Yield] yield
 /// LabelIdentifier[Yield, Await] : [~Await] await
-fn parseLabelIdentifier(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLabelIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifier;
     return error.TODO;
 }
 
 /// LabelledItem[Yield, Await, Return] : Statement[?Yield, ?Await, ?Return]
 /// LabelledItem[Yield, Await, Return] : FunctionDeclaration[?Yield, ?Await, ~Default]
-fn parseLabelledItem(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLabelledItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseStatement;
     _ = &parseFunctionDeclaration;
     return error.TODO;
@@ -353,30 +420,39 @@ fn parseLabelledItem(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// Catch[Yield, Await, Return] : catch ( CatchParameter[?Yield, ?Await] ) Block[?Yield, ?Await, ?Return]
 /// Catch[Yield, Await, Return] : catch Block[?Yield, ?Await, ?Return]
-fn parseCatch(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCatch(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseCatchParameter;
     _ = &parseBlock;
     return error.TODO;
 }
 
 /// Finally[Yield, Await, Return] : finally Block[?Yield, ?Await, ?Return]
-fn parseFinally(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFinally(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseBlock;
     return error.TODO;
 }
 
 /// FunctionDeclaration[Yield, Await, Default] : function BindingIdentifier[?Yield, ?Await] ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
 /// FunctionDeclaration[Yield, Await, Default] : [+Default] function ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
-fn parseFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
     _ = &parseFunctionBody;
@@ -385,10 +461,13 @@ fn parseFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// GeneratorDeclaration[Yield, Await, Default] : function * BindingIdentifier[?Yield, ?Await] ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
 /// GeneratorDeclaration[Yield, Await, Default] : [+Default] function * ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
-fn parseGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
     _ = &parseGeneratorBody;
@@ -397,10 +476,13 @@ fn parseGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// AsyncFunctionDeclaration[Yield, Await, Default] : async [no LineTerminator here] function BindingIdentifier[?Yield, ?Await] ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
 /// AsyncFunctionDeclaration[Yield, Await, Default] : [+Default] async [no LineTerminator here] function ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
-fn parseAsyncFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
     _ = &parseAsyncFunctionBody;
@@ -409,10 +491,13 @@ fn parseAsyncFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// AsyncGeneratorDeclaration[Yield, Await, Default] : async [no LineTerminator here] function * BindingIdentifier[?Yield, ?Await] ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
 /// AsyncGeneratorDeclaration[Yield, Await, Default] : [+Default] async [no LineTerminator here] function * ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
-fn parseAsyncGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Default;
     _ = &parseBindingIdentifier;
     _ = &parseFormalParameters;
     _ = &parseAsyncGeneratorBody;
@@ -422,19 +507,23 @@ fn parseAsyncGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// BindingIdentifier[Yield, Await] : Identifier
 /// BindingIdentifier[Yield, Await] : yield
 /// BindingIdentifier[Yield, Await] : await
-fn parseBindingIdentifier(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifier;
     return error.TODO;
 }
 
 /// ClassTail[Yield, Await] : ClassHeritage[?Yield, ?Await]? { ClassBody[?Yield, ?Await]? }
-fn parseClassTail(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassTail(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassHeritage;
     _ = &parseClassBody;
     return error.TODO;
@@ -451,10 +540,13 @@ fn parseLetOrConst(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingList[In, Yield, Await] : LexicalBinding[?In, ?Yield, ?Await]
 /// BindingList[In, Yield, Await] : BindingList[?In, ?Yield, ?Await] , LexicalBinding[?In, ?Yield, ?Await]
-fn parseBindingList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingList(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseLexicalBinding;
     _ = &parseBindingList;
     return error.TODO;
@@ -462,10 +554,13 @@ fn parseBindingList(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// VariableDeclaration[In, Yield, Await] : BindingIdentifier[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]?
 /// VariableDeclaration[In, Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
-fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
     _ = &parseInitializer;
@@ -481,10 +576,13 @@ fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// AssignmentExpression[In, Yield, Await] : LeftHandSideExpression[?Yield, ?Await] &&= AssignmentExpression[?In, ?Yield, ?Await]
 /// AssignmentExpression[In, Yield, Await] : LeftHandSideExpression[?Yield, ?Await] ||= AssignmentExpression[?In, ?Yield, ?Await]
 /// AssignmentExpression[In, Yield, Await] : LeftHandSideExpression[?Yield, ?Await] ??= AssignmentExpression[?In, ?Yield, ?Await]
-fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseConditionalExpression;
     _ = &parseYieldExpression;
     _ = &parseArrowFunction;
@@ -496,20 +594,26 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// DoWhileStatement[Yield, Await, Return] : do Statement[?Yield, ?Await, ?Return] while ( Expression[+In, ?Yield, ?Await] ) ;
-fn parseDoWhileStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseDoWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseStatement;
     _ = &parseExpression;
     return error.TODO;
 }
 
 /// WhileStatement[Yield, Await, Return] : while ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseExpression;
     _ = &parseStatement;
     return error.TODO;
@@ -518,10 +622,13 @@ fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ForStatement[Yield, Await, Return] : for ( [lookahead ≠ let [] Expression[~In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
 /// ForStatement[Yield, Await, Return] : for ( var VariableDeclarationList[~In, ?Yield, ?Await] ; Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
 /// ForStatement[Yield, Await, Return] : for ( LexicalDeclaration[~In, ?Yield, ?Await] Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
-fn parseForStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseExpression;
     _ = &parseStatement;
     _ = &parseVariableDeclarationList;
@@ -538,10 +645,13 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ForInOfStatement[Yield, Await, Return] : [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 /// ForInOfStatement[Yield, Await, Return] : [+Await] for await ( var ForBinding[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 /// ForInOfStatement[Yield, Await, Return] : [+Await] for await ( ForDeclaration[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-fn parseForInOfStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseForInOfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseLeftHandSideExpression;
     _ = &parseExpression;
     _ = &parseStatement;
@@ -553,10 +663,13 @@ fn parseForInOfStatement(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// CaseBlock[Yield, Await, Return] : { CaseClauses[?Yield, ?Await, ?Return]? }
 /// CaseBlock[Yield, Await, Return] : { CaseClauses[?Yield, ?Await, ?Return]? DefaultClause[?Yield, ?Await, ?Return] CaseClauses[?Yield, ?Await, ?Return]? }
-fn parseCaseBlock(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCaseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseCaseClauses;
     _ = &parseDefaultClause;
     return error.TODO;
@@ -574,10 +687,12 @@ fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// CatchParameter[Yield, Await] : BindingIdentifier[?Yield, ?Await]
 /// CatchParameter[Yield, Await] : BindingPattern[?Yield, ?Await]
-fn parseCatchParameter(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCatchParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
     return error.TODO;
@@ -588,20 +703,24 @@ fn parseCatchParameter(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// FormalParameters[Yield, Await] : FormalParameterList[?Yield, ?Await]
 /// FormalParameters[Yield, Await] : FormalParameterList[?Yield, ?Await] ,
 /// FormalParameters[Yield, Await] : FormalParameterList[?Yield, ?Await] , FunctionRestParameter[?Yield, ?Await]
-fn parseFormalParameters(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFormalParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseFunctionRestParameter;
     _ = &parseFormalParameterList;
     return error.TODO;
 }
 
 /// FunctionBody[Yield, Await] : FunctionStatementList[?Yield, ?Await]
-fn parseFunctionBody(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFunctionBody(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseFunctionStatementList;
     return error.TODO;
 }
@@ -634,29 +753,36 @@ fn parseAsyncGeneratorBody(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// ClassHeritage[Yield, Await] : extends LeftHandSideExpression[?Yield, ?Await]
-fn parseClassHeritage(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassHeritage(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLeftHandSideExpression;
     return error.TODO;
 }
 
 /// ClassBody[Yield, Await] : ClassElementList[?Yield, ?Await]
-fn parseClassBody(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassBody(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementList;
     return error.TODO;
 }
 
 /// LexicalBinding[In, Yield, Await] : BindingIdentifier[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]?
 /// LexicalBinding[In, Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
-fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
     _ = &parseInitializer;
@@ -665,30 +791,38 @@ fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingPattern[Yield, Await] : ObjectBindingPattern[?Yield, ?Await]
 /// BindingPattern[Yield, Await] : ArrayBindingPattern[?Yield, ?Await]
-fn parseBindingPattern(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseObjectBindingPattern;
     _ = &parseArrayBindingPattern;
     return error.TODO;
 }
 
 /// Initializer[In, Yield, Await] : = AssignmentExpression[?In, ?Yield, ?Await]
-fn parseInitializer(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseInitializer(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
 
 /// ConditionalExpression[In, Yield, Await] : ShortCircuitExpression[?In, ?Yield, ?Await]
 /// ConditionalExpression[In, Yield, Await] : ShortCircuitExpression[?In, ?Yield, ?Await] ? AssignmentExpression[+In, ?Yield, ?Await] : AssignmentExpression[?In, ?Yield, ?Await]
-fn parseConditionalExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseConditionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseShortCircuitExpression;
     _ = &parseAssignmentExpression;
     return error.TODO;
@@ -697,19 +831,24 @@ fn parseConditionalExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// YieldExpression[In, Await] : yield
 /// YieldExpression[In, Await] : yield [no LineTerminator here] AssignmentExpression[?In, +Yield, ?Await]
 /// YieldExpression[In, Await] : yield [no LineTerminator here] * AssignmentExpression[?In, +Yield, ?Await]
-fn parseYieldExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseYieldExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
 
 /// ArrowFunction[In, Yield, Await] : ArrowParameters[?Yield, ?Await] [no LineTerminator here] => ConciseBody[?In]
-fn parseArrowFunction(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseArrowParameters;
     _ = &parseConciseBody;
     return error.TODO;
@@ -717,10 +856,13 @@ fn parseArrowFunction(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// AsyncArrowFunction[In, Yield, Await] : async [no LineTerminator here] AsyncArrowBindingIdentifier[?Yield] [no LineTerminator here] => AsyncConciseBody[?In]
 /// AsyncArrowFunction[In, Yield, Await] : CoverCallExpressionAndAsyncArrowHead[?Yield, ?Await] [no LineTerminator here] => AsyncConciseBody[?In]
-fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseAsyncArrowBindingIdentifier;
     _ = &parseCoverCallExpressionAndAsyncArrowHead;
     _ = &parseAsyncConciseBody;
@@ -730,10 +872,12 @@ fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// LeftHandSideExpression[Yield, Await] : NewExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : CallExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : OptionalExpression[?Yield, ?Await]
-fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseNewExpression;
     _ = &parseCallExpression;
     _ = &parseOptionalExpression;
@@ -751,20 +895,24 @@ fn parseAssignmentOperator(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ForBinding[Yield, Await] : BindingIdentifier[?Yield, ?Await]
 /// ForBinding[Yield, Await] : BindingPattern[?Yield, ?Await]
-fn parseForBinding(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseForBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
     return error.TODO;
 }
 
 /// ForDeclaration[Yield, Await] : LetOrConst ForBinding[?Yield, ?Await]
-fn parseForDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseForDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLetOrConst;
     _ = &parseForBinding;
     return error.TODO;
@@ -772,19 +920,25 @@ fn parseForDeclaration(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// CaseClauses[Yield, Await, Return] : CaseClause[?Yield, ?Await, ?Return]
 /// CaseClauses[Yield, Await, Return] : CaseClauses[?Yield, ?Await, ?Return] CaseClause[?Yield, ?Await, ?Return]
-fn parseCaseClauses(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCaseClauses(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseCaseClause;
     return error.TODO;
 }
 
 /// DefaultClause[Yield, Await, Return] : default : StatementList[?Yield, ?Await, ?Return]?
-fn parseDefaultClause(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseDefaultClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseStatementList;
     return error.TODO;
 }
@@ -811,39 +965,47 @@ fn parseReservedWord(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// FunctionRestParameter[Yield, Await] : BindingRestElement[?Yield, ?Await]
-fn parseFunctionRestParameter(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFunctionRestParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingRestElement;
     return error.TODO;
 }
 
 /// FormalParameterList[Yield, Await] : FormalParameter[?Yield, ?Await]
 /// FormalParameterList[Yield, Await] : FormalParameterList[?Yield, ?Await] , FormalParameter[?Yield, ?Await]
-fn parseFormalParameterList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFormalParameterList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseFormalParameter;
     return error.TODO;
 }
 
 /// FunctionStatementList[Yield, Await] : StatementList[?Yield, ?Await, +Return]?
-fn parseFunctionStatementList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFunctionStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseStatementList;
     return error.TODO;
 }
 
 /// ClassElementList[Yield, Await] : ClassElement[?Yield, ?Await]
 /// ClassElementList[Yield, Await] : ClassElementList[?Yield, ?Await] ClassElement[?Yield, ?Await]
-fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElement;
     return error.TODO;
 }
@@ -852,10 +1014,12 @@ fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ObjectBindingPattern[Yield, Await] : { BindingRestProperty[?Yield, ?Await] }
 /// ObjectBindingPattern[Yield, Await] : { BindingPropertyList[?Yield, ?Await] }
 /// ObjectBindingPattern[Yield, Await] : { BindingPropertyList[?Yield, ?Await] , BindingRestProperty[?Yield, ?Await]? }
-fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingRestProperty;
     _ = &parseBindingPropertyList;
     return error.TODO;
@@ -864,10 +1028,12 @@ fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ArrayBindingPattern[Yield, Await] : [ Elision? BindingRestElement[?Yield, ?Await]? ]
 /// ArrayBindingPattern[Yield, Await] : [ BindingElementList[?Yield, ?Await] ]
 /// ArrayBindingPattern[Yield, Await] : [ BindingElementList[?Yield, ?Await] , Elision? BindingRestElement[?Yield, ?Await]? ]
-fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseElision;
     _ = &parseBindingRestElement;
     _ = &parseBindingElementList;
@@ -876,10 +1042,13 @@ fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ShortCircuitExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await]
 /// ShortCircuitExpression[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await]
-fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseLogicalORExpression;
     _ = &parseCoalesceExpression;
     return error.TODO;
@@ -887,10 +1056,12 @@ fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ArrowParameters[Yield, Await] : BindingIdentifier[?Yield, ?Await]
 /// ArrowParameters[Yield, Await] : CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
-fn parseArrowParameters(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArrowParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseCoverParenthesizedExpressionAndArrowParameterList;
     return error.TODO;
@@ -898,29 +1069,33 @@ fn parseArrowParameters(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ConciseBody[In] : [lookahead ≠ {] ExpressionBody[?In, ~Await]
 /// ConciseBody[In] : { FunctionBody[~Yield, ~Await] }
-fn parseConciseBody(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
     _ = &parseExpressionBody;
     _ = &parseFunctionBody;
     return error.TODO;
 }
 
 /// AsyncArrowBindingIdentifier[Yield] : BindingIdentifier[?Yield, +Await]
-fn parseAsyncArrowBindingIdentifier(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncArrowBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
     _ = &parseBindingIdentifier;
     return error.TODO;
 }
 
 /// CoverCallExpressionAndAsyncArrowHead[Yield, Await] : MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
-fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseMemberExpression;
     _ = &parseArguments;
     return error.TODO;
@@ -928,10 +1103,11 @@ fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parse
 
 /// AsyncConciseBody[In] : [lookahead ≠ {] ExpressionBody[?In, +Await]
 /// AsyncConciseBody[In] : { AsyncFunctionBody }
-fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
     _ = &parseExpressionBody;
     _ = &parseAsyncFunctionBody;
     return error.TODO;
@@ -939,10 +1115,12 @@ fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// NewExpression[Yield, Await] : MemberExpression[?Yield, ?Await]
 /// NewExpression[Yield, Await] : new NewExpression[?Yield, ?Await]
-fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseMemberExpression;
     return error.TODO;
 }
@@ -955,10 +1133,12 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] . IdentifierName
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] . PrivateIdentifier
-fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseCoverCallExpressionAndAsyncArrowHead;
     _ = &parseSuperCall;
     _ = &parseImportCall;
@@ -973,10 +1153,12 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// OptionalExpression[Yield, Await] : MemberExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 /// OptionalExpression[Yield, Await] : CallExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 /// OptionalExpression[Yield, Await] : OptionalExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
-fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseMemberExpression;
     _ = &parseCallExpression;
     _ = &parseOptionalChain;
@@ -984,10 +1166,13 @@ fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// CaseClause[Yield, Await, Return] : case Expression[+In, ?Yield, ?Await] : StatementList[?Yield, ?Await, ?Return]?
-fn parseCaseClause(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCaseClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Return;
     _ = &parseExpression;
     _ = &parseStatementList;
     return error.TODO;
@@ -1017,20 +1202,24 @@ fn parseIdentifierPart(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingRestElement[Yield, Await] : ... BindingIdentifier[?Yield, ?Await]
 /// BindingRestElement[Yield, Await] : ... BindingPattern[?Yield, ?Await]
-fn parseBindingRestElement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingRestElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
     return error.TODO;
 }
 
 /// FormalParameter[Yield, Await] : BindingElement[?Yield, ?Await]
-fn parseFormalParameter(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFormalParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingElement;
     return error.TODO;
 }
@@ -1041,10 +1230,12 @@ fn parseFormalParameter(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ClassElement[Yield, Await] : static FieldDefinition[?Yield, ?Await] ;
 /// ClassElement[Yield, Await] : ClassStaticBlock
 /// ClassElement[Yield, Await] : ;
-fn parseClassElement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseMethodDefinition;
     _ = &parseFieldDefinition;
     _ = &parseClassStaticBlock;
@@ -1052,20 +1243,24 @@ fn parseClassElement(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// BindingRestProperty[Yield, Await] : ... BindingIdentifier[?Yield, ?Await]
-fn parseBindingRestProperty(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingRestProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     return error.TODO;
 }
 
 /// BindingPropertyList[Yield, Await] : BindingProperty[?Yield, ?Await]
 /// BindingPropertyList[Yield, Await] : BindingPropertyList[?Yield, ?Await] , BindingProperty[?Yield, ?Await]
-fn parseBindingPropertyList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingPropertyList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingProperty;
     return error.TODO;
 }
@@ -1081,29 +1276,37 @@ fn parseElision(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingElementList[Yield, Await] : BindingElisionElement[?Yield, ?Await]
 /// BindingElementList[Yield, Await] : BindingElementList[?Yield, ?Await] , BindingElisionElement[?Yield, ?Await]
-fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingElisionElement;
     return error.TODO;
 }
 
 /// LogicalORExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await]
 /// LogicalORExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await]
-fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseLogicalANDExpression;
     return error.TODO;
 }
 
 /// CoalesceExpression[In, Yield, Await] : CoalesceExpressionHead[?In, ?Yield, ?Await] ?? BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseCoalesceExpressionHead;
     _ = &parseBitwiseORExpression;
     return error.TODO;
@@ -1116,10 +1319,12 @@ fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( ... BindingPattern[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
-fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExpression;
     _ = &parseBindingIdentifier;
     _ = &parseBindingPattern;
@@ -1127,10 +1332,12 @@ fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocat
 }
 
 /// ExpressionBody[In, Await] : AssignmentExpression[?In, ~Yield, ?Await]
-fn parseExpressionBody(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseExpressionBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
@@ -1143,10 +1350,12 @@ fn parseExpressionBody(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// MemberExpression[Yield, Await] : MetaProperty
 /// MemberExpression[Yield, Await] : new MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
 /// MemberExpression[Yield, Await] : MemberExpression[?Yield, ?Await] . PrivateIdentifier
-fn parseMemberExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseMemberExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parsePrimaryExpression;
     _ = &parseExpression;
     _ = &parseIdentifierName;
@@ -1161,38 +1370,47 @@ fn parseMemberExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// Arguments[Yield, Await] : ( )
 /// Arguments[Yield, Await] : ( ArgumentList[?Yield, ?Await] )
 /// Arguments[Yield, Await] : ( ArgumentList[?Yield, ?Await] , )
-fn parseArguments(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArguments(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseArgumentList;
     return error.TODO;
 }
 
 /// SuperCall[Yield, Await] : super Arguments[?Yield, ?Await]
-fn parseSuperCall(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSuperCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseArguments;
     return error.TODO;
 }
 
 /// ImportCall[Yield, Await] : import ( AssignmentExpression[+In, ?Yield, ?Await] )
-fn parseImportCall(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseImportCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
 
 /// TemplateLiteral[Yield, Await, Tagged] : NoSubstitutionTemplate
 /// TemplateLiteral[Yield, Await, Tagged] : SubstitutionTemplate[?Yield, ?Await, ?Tagged]
-fn parseTemplateLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseTemplateLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Tagged;
     _ = &parseNoSubstitutionTemplate;
     _ = &parseSubstitutionTemplate;
     return error.TODO;
@@ -1221,10 +1439,12 @@ fn parsePrivateIdentifier(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// OptionalChain[Yield, Await] : NewExpression[?Yield, ?Await]
 /// OptionalChain[Yield, Await] : CallExpression[?Yield, ?Await]
 /// OptionalChain[Yield, Await] : OptionalExpression[?Yield, ?Await]
-fn parseOptionalChain(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseOptionalChain(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseArguments;
     _ = &parseExpression;
     _ = &parseIdentifierName;
@@ -1273,10 +1493,12 @@ fn parseIdentifierPartChar(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingElement[Yield, Await] : SingleNameBinding[?Yield, ?Await]
 /// BindingElement[Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseSingleNameBinding;
     _ = &parseBindingPattern;
     _ = &parseInitializer;
@@ -1289,10 +1511,12 @@ fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// MethodDefinition[Yield, Await] : AsyncGeneratorMethod[?Yield, ?Await]
 /// MethodDefinition[Yield, Await] : get ClassElementName[?Yield, ?Await] ( ) { FunctionBody[~Yield, ~Await] }
 /// MethodDefinition[Yield, Await] : set ClassElementName[?Yield, ?Await] ( PropertySetParameterList ) { FunctionBody[~Yield, ~Await] }
-fn parseMethodDefinition(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseMethodDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
     _ = &parseFunctionBody;
@@ -1304,10 +1528,12 @@ fn parseMethodDefinition(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// FieldDefinition[Yield, Await] : ClassElementName[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseFieldDefinition(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseFieldDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementName;
     _ = &parseInitializer;
     return error.TODO;
@@ -1324,10 +1550,12 @@ fn parseClassStaticBlock(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BindingProperty[Yield, Await] : SingleNameBinding[?Yield, ?Await]
 /// BindingProperty[Yield, Await] : PropertyName[?Yield, ?Await] : BindingElement[?Yield, ?Await]
-fn parseBindingProperty(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseSingleNameBinding;
     _ = &parsePropertyName;
     _ = &parseBindingElement;
@@ -1335,10 +1563,12 @@ fn parseBindingProperty(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// BindingElisionElement[Yield, Await] : Elision? BindingElement[?Yield, ?Await]
-fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseElision;
     _ = &parseBindingElement;
     return error.TODO;
@@ -1346,20 +1576,25 @@ fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// LogicalANDExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
 /// LogicalANDExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseBitwiseORExpression;
     return error.TODO;
 }
 
 /// CoalesceExpressionHead[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await]
 /// CoalesceExpressionHead[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpressionHead(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCoalesceExpressionHead(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseCoalesceExpression;
     _ = &parseBitwiseORExpression;
     return error.TODO;
@@ -1367,10 +1602,12 @@ fn parseCoalesceExpressionHead(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BitwiseORExpression[In, Yield, Await] : BitwiseXORExpression[?In, ?Yield, ?Await]
 /// BitwiseORExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await] | BitwiseXORExpression[?In, ?Yield, ?Await]
-fn parseBitwiseORExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBitwiseORExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBitwiseXORExpression;
     return error.TODO;
 }
@@ -1388,10 +1625,12 @@ fn parseBitwiseORExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// PrimaryExpression[Yield, Await] : RegularExpressionLiteral
 /// PrimaryExpression[Yield, Await] : TemplateLiteral[?Yield, ?Await, ~Tagged]
 /// PrimaryExpression[Yield, Await] : CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
-fn parsePrimaryExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parsePrimaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifierReference;
     _ = &parseLiteral;
     _ = &parseArrayLiteral;
@@ -1409,10 +1648,12 @@ fn parsePrimaryExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// SuperProperty[Yield, Await] : super [ Expression[+In, ?Yield, ?Await] ]
 /// SuperProperty[Yield, Await] : super . IdentifierName
-fn parseSuperProperty(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSuperProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExpression;
     _ = &parseIdentifierName;
     return error.TODO;
@@ -1433,10 +1674,12 @@ fn parseMetaProperty(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ArgumentList[Yield, Await] : ... AssignmentExpression[+In, ?Yield, ?Await]
 /// ArgumentList[Yield, Await] : ArgumentList[?Yield, ?Await] , AssignmentExpression[+In, ?Yield, ?Await]
 /// ArgumentList[Yield, Await] : ArgumentList[?Yield, ?Await] , ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parseArgumentList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArgumentList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
@@ -1451,10 +1694,13 @@ fn parseNoSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// SubstitutionTemplate[Yield, Await, Tagged] : TemplateHead Expression[+In, ?Yield, ?Await] TemplateSpans[?Yield, ?Await, ?Tagged]
-fn parseSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Tagged;
     _ = &parseTemplateHead;
     _ = &parseExpression;
     _ = &parseTemplateSpans;
@@ -1498,10 +1744,12 @@ fn parseUnicodeIDContinue(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// SingleNameBinding[Yield, Await] : BindingIdentifier[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
-fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseInitializer;
     return error.TODO;
@@ -1509,29 +1757,35 @@ fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ClassElementName[Yield, Await] : PropertyName[?Yield, ?Await]
 /// ClassElementName[Yield, Await] : PrivateIdentifier
-fn parseClassElementName(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassElementName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parsePropertyName;
     _ = &parsePrivateIdentifier;
     return error.TODO;
 }
 
 /// UniqueFormalParameters[Yield, Await] : FormalParameters[?Yield, ?Await]
-fn parseUniqueFormalParameters(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseUniqueFormalParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseFormalParameters;
     return error.TODO;
 }
 
 /// GeneratorMethod[Yield, Await] : * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, ~Await] ) { GeneratorBody }
-fn parseGeneratorMethod(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
     _ = &parseGeneratorBody;
@@ -1539,10 +1793,12 @@ fn parseGeneratorMethod(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// AsyncMethod[Yield, Await] : async [no LineTerminator here] ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
-fn parseAsyncMethod(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
     _ = &parseAsyncFunctionBody;
@@ -1550,10 +1806,12 @@ fn parseAsyncMethod(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// AsyncGeneratorMethod[Yield, Await] : async [no LineTerminator here] * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
-fn parseAsyncGeneratorMethod(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAsyncGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseClassElementName;
     _ = &parseUniqueFormalParameters;
     _ = &parseAsyncGeneratorBody;
@@ -1580,10 +1838,12 @@ fn parseClassStaticBlockBody(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// PropertyName[Yield, Await] : LiteralPropertyName
 /// PropertyName[Yield, Await] : ComputedPropertyName[?Yield, ?Await]
-fn parsePropertyName(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parsePropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLiteralPropertyName;
     _ = &parseComputedPropertyName;
     return error.TODO;
@@ -1591,10 +1851,13 @@ fn parsePropertyName(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BitwiseXORExpression[In, Yield, Await] : BitwiseANDExpression[?In, ?Yield, ?Await]
 /// BitwiseXORExpression[In, Yield, Await] : BitwiseXORExpression[?In, ?Yield, ?Await] ^ BitwiseANDExpression[?In, ?Yield, ?Await]
-fn parseBitwiseXORExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBitwiseXORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseBitwiseANDExpression;
     return error.TODO;
 }
@@ -1602,10 +1865,12 @@ fn parseBitwiseXORExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// IdentifierReference[Yield, Await] : Identifier
 /// IdentifierReference[Yield, Await] : [~Yield] yield
 /// IdentifierReference[Yield, Await] : [~Await] await
-fn parseIdentifierReference(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseIdentifierReference(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifier;
     return error.TODO;
 }
@@ -1628,10 +1893,12 @@ fn parseLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ArrayLiteral[Yield, Await] : [ Elision? ]
 /// ArrayLiteral[Yield, Await] : [ ElementList[?Yield, ?Await] ]
 /// ArrayLiteral[Yield, Await] : [ ElementList[?Yield, ?Await] , Elision? ]
-fn parseArrayLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseArrayLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseElision;
     _ = &parseElementList;
     return error.TODO;
@@ -1640,10 +1907,12 @@ fn parseArrayLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ObjectLiteral[Yield, Await] : { }
 /// ObjectLiteral[Yield, Await] : { PropertyDefinitionList[?Yield, ?Await] }
 /// ObjectLiteral[Yield, Await] : { PropertyDefinitionList[?Yield, ?Await] , }
-fn parseObjectLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseObjectLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parsePropertyDefinitionList;
     return error.TODO;
 }
@@ -1660,10 +1929,12 @@ fn parseFunctionExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// ClassExpression[Yield, Await] : class BindingIdentifier[?Yield, ?Await]? ClassTail[?Yield, ?Await]
-fn parseClassExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseClassExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseBindingIdentifier;
     _ = &parseClassTail;
     return error.TODO;
@@ -1747,10 +2018,13 @@ fn parseTemplateHead(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// TemplateSpans[Yield, Await, Tagged] : TemplateTail
 /// TemplateSpans[Yield, Await, Tagged] : TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateTail
-fn parseTemplateSpans(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseTemplateSpans(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Tagged;
     _ = &parseTemplateTail;
     _ = &parseTemplateMiddleList;
     return error.TODO;
@@ -1788,20 +2062,25 @@ fn parseLiteralPropertyName(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// ComputedPropertyName[Yield, Await] : [ AssignmentExpression[+In, ?Yield, ?Await] ]
-fn parseComputedPropertyName(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseComputedPropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
 
 /// BitwiseANDExpression[In, Yield, Await] : EqualityExpression[?In, ?Yield, ?Await]
 /// BitwiseANDExpression[In, Yield, Await] : BitwiseANDExpression[?In, ?Yield, ?Await] & EqualityExpression[?In, ?Yield, ?Await]
-fn parseBitwiseANDExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBitwiseANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseEqualityExpression;
     return error.TODO;
 }
@@ -1854,10 +2133,12 @@ fn parseStringLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ElementList[Yield, Await] : Elision? SpreadElement[?Yield, ?Await]
 /// ElementList[Yield, Await] : ElementList[?Yield, ?Await] , Elision? AssignmentExpression[+In, ?Yield, ?Await]
 /// ElementList[Yield, Await] : ElementList[?Yield, ?Await] , Elision? SpreadElement[?Yield, ?Await]
-fn parseElementList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseElision;
     _ = &parseAssignmentExpression;
     _ = &parseSpreadElement;
@@ -1866,10 +2147,12 @@ fn parseElementList(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// PropertyDefinitionList[Yield, Await] : PropertyDefinition[?Yield, ?Await]
 /// PropertyDefinitionList[Yield, Await] : PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
-fn parsePropertyDefinitionList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parsePropertyDefinitionList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parsePropertyDefinition;
     return error.TODO;
 }
@@ -1923,10 +2206,13 @@ fn parseTemplateTail(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// TemplateMiddleList[Yield, Await, Tagged] : TemplateMiddle Expression[+In, ?Yield, ?Await]
 /// TemplateMiddleList[Yield, Await, Tagged] : TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateMiddle Expression[+In, ?Yield, ?Await]
-fn parseTemplateMiddleList(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseTemplateMiddleList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
+    _ = Tagged;
     _ = &parseTemplateMiddle;
     _ = &parseExpression;
     return error.TODO;
@@ -1937,10 +2223,13 @@ fn parseTemplateMiddleList(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// EqualityExpression[In, Yield, Await] : EqualityExpression[?In, ?Yield, ?Await] != RelationalExpression[?In, ?Yield, ?Await]
 /// EqualityExpression[In, Yield, Await] : EqualityExpression[?In, ?Yield, ?Await] === RelationalExpression[?In, ?Yield, ?Await]
 /// EqualityExpression[In, Yield, Await] : EqualityExpression[?In, ?Yield, ?Await] !== RelationalExpression[?In, ?Yield, ?Await]
-fn parseEqualityExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseEqualityExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseRelationalExpression;
     return error.TODO;
 }
@@ -1975,10 +2264,11 @@ fn parseDecimalBigIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// NonDecimalIntegerLiteral[Sep] :: BinaryIntegerLiteral[?Sep]
 /// NonDecimalIntegerLiteral[Sep] :: OctalIntegerLiteral[?Sep]
 /// NonDecimalIntegerLiteral[Sep] :: HexIntegerLiteral[?Sep]
-fn parseNonDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseNonDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseBinaryIntegerLiteral;
     _ = &parseOctalIntegerLiteral;
     _ = &parseHexIntegerLiteral;
@@ -2012,10 +2302,12 @@ fn parseSingleStringCharacters(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// SpreadElement[Yield, Await] : ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parseSpreadElement(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSpreadElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseAssignmentExpression;
     return error.TODO;
 }
@@ -2025,10 +2317,12 @@ fn parseSpreadElement(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// PropertyDefinition[Yield, Await] : PropertyName[?Yield, ?Await] : AssignmentExpression[+In, ?Yield, ?Await]
 /// PropertyDefinition[Yield, Await] : MethodDefinition[?Yield, ?Await]
 /// PropertyDefinition[Yield, Await] : ... AssignmentExpression[+In, ?Yield, ?Await]
-fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifierReference;
     _ = &parseCoverInitializedName;
     _ = &parsePropertyName;
@@ -2144,10 +2438,13 @@ fn parseTemplateMiddle(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// RelationalExpression[In, Yield, Await] : RelationalExpression[?In, ?Yield, ?Await] instanceof ShiftExpression[?Yield, ?Await]
 /// RelationalExpression[In, Yield, Await] : [+In] RelationalExpression[+In, ?Yield, ?Await] in ShiftExpression[?Yield, ?Await]
 /// RelationalExpression[In, Yield, Await] : [+In] PrivateIdentifier in ShiftExpression[?Yield, ?Await]
-fn parseRelationalExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseRelationalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = In;
+    _ = Yield;
+    _ = Await;
     _ = &parseShiftExpression;
     _ = &parsePrivateIdentifier;
     return error.TODO;
@@ -2171,20 +2468,22 @@ fn parseDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// DecimalDigits[Sep] :: DecimalDigit
 /// DecimalDigits[Sep] :: DecimalDigits[?Sep] DecimalDigit
 /// DecimalDigits[Sep] :: [+Sep] DecimalDigits[+Sep] NumericLiteralSeparator DecimalDigit
-fn parseDecimalDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseDecimalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseDecimalDigit;
     _ = &parseNumericLiteralSeparator;
     return error.TODO;
 }
 
 /// ExponentPart[Sep] :: ExponentIndicator SignedInteger[?Sep]
-fn parseExponentPart(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseExponentPart(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseExponentIndicator;
     _ = &parseSignedInteger;
     return error.TODO;
@@ -2209,30 +2508,33 @@ fn parseNumericLiteralSeparator(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// BinaryIntegerLiteral[Sep] :: 0b BinaryDigits[?Sep]
 /// BinaryIntegerLiteral[Sep] :: 0B BinaryDigits[?Sep]
-fn parseBinaryIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBinaryIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseBinaryDigits;
     return error.TODO;
 }
 
 /// OctalIntegerLiteral[Sep] :: 0o OctalDigits[?Sep]
 /// OctalIntegerLiteral[Sep] :: 0O OctalDigits[?Sep]
-fn parseOctalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseOctalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseOctalDigits;
     return error.TODO;
 }
 
 /// HexIntegerLiteral[Sep] :: 0x HexDigits[?Sep]
 /// HexIntegerLiteral[Sep] :: 0X HexDigits[?Sep]
-fn parseHexIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseHexIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseHexDigits;
     return error.TODO;
 }
@@ -2266,10 +2568,12 @@ fn parseSingleStringCharacter(alloc: std.mem.Allocator, p: *Parser) !?void {
 }
 
 /// CoverInitializedName[Yield, Await] : IdentifierReference[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]
-fn parseCoverInitializedName(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseCoverInitializedName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseIdentifierReference;
     _ = &parseInitializer;
     return error.TODO;
@@ -2356,10 +2660,12 @@ fn parseNotCodePoint(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// ShiftExpression[Yield, Await] : ShiftExpression[?Yield, ?Await] << AdditiveExpression[?Yield, ?Await]
 /// ShiftExpression[Yield, Await] : ShiftExpression[?Yield, ?Await] >> AdditiveExpression[?Yield, ?Await]
 /// ShiftExpression[Yield, Await] : ShiftExpression[?Yield, ?Await] >>> AdditiveExpression[?Yield, ?Await]
-fn parseShiftExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseShiftExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseAdditiveExpression;
     return error.TODO;
 }
@@ -2388,10 +2694,11 @@ fn parseExponentIndicator(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// SignedInteger[Sep] :: DecimalDigits[?Sep]
 /// SignedInteger[Sep] :: + DecimalDigits[?Sep]
 /// SignedInteger[Sep] :: - DecimalDigits[?Sep]
-fn parseSignedInteger(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseSignedInteger(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseDecimalDigits;
     return error.TODO;
 }
@@ -2399,10 +2706,11 @@ fn parseSignedInteger(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// BinaryDigits[Sep] :: BinaryDigit
 /// BinaryDigits[Sep] :: BinaryDigits[?Sep] BinaryDigit
 /// BinaryDigits[Sep] :: [+Sep] BinaryDigits[+Sep] NumericLiteralSeparator BinaryDigit
-fn parseBinaryDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseBinaryDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseBinaryDigit;
     _ = &parseNumericLiteralSeparator;
     return error.TODO;
@@ -2411,10 +2719,11 @@ fn parseBinaryDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// OctalDigits[Sep] :: OctalDigit
 /// OctalDigits[Sep] :: OctalDigits[?Sep] OctalDigit
 /// OctalDigits[Sep] :: [+Sep] OctalDigits[+Sep] NumericLiteralSeparator OctalDigit
-fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseOctalDigit;
     _ = &parseNumericLiteralSeparator;
     return error.TODO;
@@ -2423,10 +2732,11 @@ fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// HexDigits[Sep] :: HexDigit
 /// HexDigits[Sep] :: HexDigits[?Sep] HexDigit
 /// HexDigits[Sep] :: [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
-fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Sep;
     _ = &parseHexDigit;
     _ = &parseNumericLiteralSeparator;
     return error.TODO;
@@ -2479,10 +2789,12 @@ fn parseNonEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// AdditiveExpression[Yield, Await] : MultiplicativeExpression[?Yield, ?Await]
 /// AdditiveExpression[Yield, Await] : AdditiveExpression[?Yield, ?Await] + MultiplicativeExpression[?Yield, ?Await]
 /// AdditiveExpression[Yield, Await] : AdditiveExpression[?Yield, ?Await] - MultiplicativeExpression[?Yield, ?Await]
-fn parseAdditiveExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAdditiveExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseMultiplicativeExpression;
     return error.TODO;
 }
@@ -2536,10 +2848,12 @@ fn parseRegularExpressionClassChar(alloc: std.mem.Allocator, p: *Parser) !?void 
 
 /// MultiplicativeExpression[Yield, Await] : ExponentiationExpression[?Yield, ?Await]
 /// MultiplicativeExpression[Yield, Await] : MultiplicativeExpression[?Yield, ?Await] MultiplicativeOperator ExponentiationExpression[?Yield, ?Await]
-fn parseMultiplicativeExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseMultiplicativeExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseExponentiationExpression;
     _ = &parseMultiplicativeOperator;
     return error.TODO;
@@ -2547,10 +2861,12 @@ fn parseMultiplicativeExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 
 /// ExponentiationExpression[Yield, Await] : UnaryExpression[?Yield, ?Await]
 /// ExponentiationExpression[Yield, Await] : UpdateExpression[?Yield, ?Await] ** ExponentiationExpression[?Yield, ?Await]
-fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseUnaryExpression;
     _ = &parseUpdateExpression;
     return error.TODO;
@@ -2574,10 +2890,12 @@ fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// UnaryExpression[Yield, Await] : ~ UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : ! UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : [+Await] AwaitExpression[?Yield]
-fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseUpdateExpression;
     _ = &parseAwaitExpression;
     return error.TODO;
@@ -2588,20 +2906,23 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
 /// UpdateExpression[Yield, Await] : LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] --
 /// UpdateExpression[Yield, Await] : ++ UnaryExpression[?Yield, ?Await]
 /// UpdateExpression[Yield, Await] : -- UnaryExpression[?Yield, ?Await]
-fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
+    _ = Await;
     _ = &parseLeftHandSideExpression;
     _ = &parseUnaryExpression;
     return error.TODO;
 }
 
 /// AwaitExpression[Yield] : await UnaryExpression[?Yield, +Await]
-fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser) !?void {
+fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool) !?void {
     //
     _ = alloc;
     _ = p;
+    _ = Yield;
     _ = &parseUnaryExpression;
     return error.TODO;
 }
