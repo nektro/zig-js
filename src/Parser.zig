@@ -15,6 +15,7 @@ string_bytes: std.ArrayListUnmanaged(u8) = .{},
 strings_map: std.StringArrayHashMapUnmanaged(t.StringIndex) = .{},
 
 pub fn eat(ore: *Parser, comptime test_s: string) !?void {
+    if (test_s.len == 1) return if (try ore.eatByte(test_s[0])) |_| {} else null;
     if (!try ore.peek(test_s)) return null;
     ore.shiftLAmt(test_s.len);
 }
@@ -50,13 +51,21 @@ pub fn shiftLAmt(ore: *Parser, amt: usize) void {
     ore.amt -= amt;
 }
 
+pub fn peekByte(ore: *Parser, test_c: u8) !bool {
+    try ore.peekAmt(1) orelse return false;
+    return ore.buf[0] == test_c;
+}
+
 pub fn eatByte(ore: *Parser, test_c: u8) !?u8 {
-    try ore.peekAmt(1) orelse return null;
-    if (ore.buf[0] == test_c) {
+    if (try ore.peekByte(test_c)) {
         defer ore.shiftLAmt(1);
         return test_c;
     }
     return null;
+}
+
+pub fn eatCp(ore: *Parser, comptime test_cp: u21) !?u21 {
+    return ore.eatRangeM(test_cp, test_cp);
 }
 
 pub fn eatRange(ore: *Parser, comptime from: u8, comptime to: u8) !?u8 {
@@ -105,18 +114,6 @@ pub fn eatAnyNot(ore: *Parser, test_s: []const u8) !?u8 {
     return ore.buf[0];
 }
 
-pub fn eatQuoteS(ore: *Parser) !?u8 {
-    return ore.eatAny(&.{ '"', '\'' });
-}
-
-pub fn eatQuoteE(ore: *Parser, q: u8) !?void {
-    return switch (q) {
-        '"' => ore.eat("\""),
-        '\'' => ore.eat("'"),
-        else => unreachable,
-    };
-}
-
 pub fn eatEnum(ore: *Parser, comptime E: type) !?E {
     inline for (comptime std.meta.fieldNames(E)) |name| {
         if (try ore.eat(name)) |_| {
@@ -133,6 +130,14 @@ pub fn eatEnumU8(ore: *Parser, comptime E: type) !?E {
         }
     }
     return null;
+}
+
+pub fn peek_fn(ore: *Parser, alloc: std.mem.Allocator, comptime peek_amt: usize, eater: *const fn (std.mem.Allocator, *Parser) anyerror!?void) !bool {
+    try ore.peekAmt(peek_amt) orelse return false;
+    var fbs = std.io.fixedBufferStream(ore.buf[0..4]);
+    var np = Parser{ .any = extras.AnyReader.from(fbs.reader()) };
+    if (try eater(alloc, &np)) |_| return true;
+    return false;
 }
 
 pub fn addStr(ore: *Parser, alloc: std.mem.Allocator, str: string) !t.StringIndex {
