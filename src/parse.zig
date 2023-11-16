@@ -3145,3 +3145,25 @@ fn parseExportSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!?void {
     _ = &parseModuleExportName;
     return error.TODO;
 }
+
+// LineTerminator :: <LF>
+// LineTerminator :: <CR>
+// LineTerminator :: <LS>
+// LineTerminator :: <PS>
+fn parseLineTerminator(alloc: std.mem.Allocator, p: *Parser) anyerror!?void {
+    //
+    _ = alloc;
+    _ = p;
+    return error.TODO;
+}
+
+// EscapeCharacter :: SingleEscapeCharacter
+// EscapeCharacter :: DecimalDigit
+// EscapeCharacter :: x
+// EscapeCharacter :: u
+fn parseEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!?void {
+    //
+    _ = alloc;
+    _ = p;
+    return error.TODO;
+}
