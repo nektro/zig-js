@@ -1552,8 +1552,9 @@ fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Y
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseLogicalORExpression(alloc, p, In, Yield, Await))) |_| return;
-    if (w(parseCoalesceExpression(alloc, p, In, Yield, Await))) |_| return;
+    const bitwiseor = try parseBitwiseORExpression(alloc, p, In, Yield, Await);
+    if (w(parseLogicalORExpression(alloc, p, In, Yield, Await, bitwiseor))) |_| return;
+    if (w(parseCoalesceExpression(alloc, p, In, Yield, Await, bitwiseor))) |_| return;
     return error.JsMalformed;
 }
 
@@ -1966,7 +1967,7 @@ fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
 
 /// LogicalORExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await]
 /// LogicalORExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await]
-fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
+fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _firstBitwiseORExpression: void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -1976,7 +1977,11 @@ fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yiel
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseLogicalANDExpression(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
+        if (i == 0) {
+            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await, _firstBitwiseORExpression) catch return error.JsMalformed;
+        } else {
+            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await, null) catch break;
+        }
         p.eatTok("||") catch break;
     }
 }
@@ -1984,18 +1989,19 @@ fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yiel
 /// CoalesceExpression[In, Yield, Await] : CoalesceExpressionHead[?In, ?Yield, ?Await] ?? BitwiseORExpression[?In, ?Yield, ?Await]
 /// CoalesceExpressionHead[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await]
 /// CoalesceExpressionHead[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
+fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _firstBitwiseORExpression: void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
 
+    _ = _firstBitwiseORExpression;
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
         p.eatTok("??") catch break;
+        _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch break;
     }
 }
 
@@ -2514,7 +2520,7 @@ fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser, Yield: bool,
 
 /// LogicalANDExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
 /// LogicalANDExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
+fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _maybeBitwiseORExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -2524,7 +2530,11 @@ fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
+        if (i == 0) {
+            _ = _maybeBitwiseORExpression orelse return error.JsMalformed;
+        } else {
+            _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch break;
+        }
         p.eatTok("&&") catch break;
     }
 }
