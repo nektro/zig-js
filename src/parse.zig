@@ -2012,6 +2012,7 @@ fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( ... BindingPattern[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
+//FIXME:
 fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src());
@@ -4415,9 +4416,10 @@ fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bo
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseUnaryExpression(alloc, p, Yield, Await))) |_| return;
+    const update = try parseUpdateExpression(alloc, p, Yield, Await);
 
-    _ = try parseUpdateExpression(alloc, p, Yield, Await);
+    if (w(parseUnaryExpression(alloc, p, Yield, Await, update))) |_| return;
+
     try p.eatTok("**");
     _ = try parseExponentiationExpression(alloc, p, Yield, Await);
 }
@@ -4448,7 +4450,7 @@ fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// UnaryExpression[Yield, Await] : ~ UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : ! UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : [+Await] AwaitExpression[?Yield]
-fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
+fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeUpdateExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -4456,7 +4458,7 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseUpdateExpression(alloc, p, Yield, Await))) |_| return;
+    if (_maybeUpdateExpression) |_| return;
     if (Await) if (w(parseAwaitExpression(alloc, p, Yield))) |_| return;
 
     _ = blk: {
@@ -4469,7 +4471,7 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
         if (w(p.eatTok("!"))) |_| break :blk;
         return error.JsMalformed;
     };
-    _ = try parseUnaryExpression(alloc, p, Yield, Await);
+    _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
 }
 
 /// UpdateExpression[Yield, Await] : LeftHandSideExpression[?Yield, ?Await]
@@ -4495,7 +4497,7 @@ fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Awai
         if (w(p.eatTok("--"))) |_| break :blk;
         return error.JsMalformed;
     };
-    _ = try parseUnaryExpression(alloc, p, Yield, Await);
+    _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
 }
 
 /// AwaitExpression[Yield] : await UnaryExpression[?Yield, +Await]
@@ -4508,7 +4510,7 @@ fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool) anyer
     errdefer p.idx = old_idx;
 
     try p.eatTok("await");
-    _ = try parseUnaryExpression(alloc, p, Yield, true);
+    _ = try parseUnaryExpression(alloc, p, Yield, true, null);
 }
 
 /// Module : ModuleBody?
