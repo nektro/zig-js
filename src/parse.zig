@@ -72,6 +72,7 @@ fn parseStatementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
     var i: usize = 0;
     while (true) : (i += 1) {
         _ = parseStatementListItem(alloc, p, Yield, Await, Return) catch if (i == 0) return error.JsMalformed else break;
+        if (p.end) break;
     }
 }
 
@@ -1283,6 +1284,7 @@ fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield
 /// LeftHandSideExpression[Yield, Await] : NewExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : CallExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : OptionalExpression[?Yield, ?Await]
+//FIXME:
 fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src());
@@ -1291,8 +1293,8 @@ fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseNewExpression(alloc, p, Yield, Await))) |_| return;
     if (w(parseCallExpression(alloc, p, Yield, Await))) |_| return;
+    if (w(parseNewExpression(alloc, p, Yield, Await))) |_| return;
     if (w(parseOptionalExpression(alloc, p, Yield, Await))) |_| return;
     return error.JsMalformed;
 }
@@ -1674,7 +1676,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
             // CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
             parseArguments(alloc, p, Yield, Await) catch break :blk;
             good = true;
-            return;
+            continue;
         };
         _ = blk: {
             var old_idx = p.idx;
@@ -1687,7 +1689,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
             parseExpression(alloc, p, true, Yield, Await) catch break :blk;
             p.eatTok("]") catch break :blk;
             good = true;
-            return;
+            continue;
         };
         _ = blk: {
             var old_idx = p.idx;
@@ -1699,7 +1701,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
             p.eatTok(".") catch break :blk;
             parseIdentifierName(alloc, p) catch break :blk;
             good = true;
-            return;
+            continue;
         };
         _ = blk: {
             var old_idx = p.idx;
@@ -1710,7 +1712,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
             // CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
             parseTemplateLiteral(alloc, p, Yield, Await, true) catch break :blk;
             good = true;
-            return;
+            continue;
         };
         _ = blk: {
             var old_idx = p.idx;
@@ -1722,7 +1724,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
             p.eatTok(".") catch break :blk;
             parsePrivateIdentifier(alloc, p) catch break :blk;
             good = true;
-            return;
+            continue;
         };
         break;
     }
@@ -1740,8 +1742,8 @@ fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
     errdefer p.idx = old_idx;
 
     _ = blk: {
-        if (w(parseMemberExpression(alloc, p, Yield, Await))) |_| break :blk;
         if (w(parseCallExpression(alloc, p, Yield, Await))) |_| break :blk;
+        if (w(parseMemberExpression(alloc, p, Yield, Await))) |_| break :blk;
         return error.JsMalformed;
     };
     var i: usize = 0;
@@ -2215,7 +2217,7 @@ fn parseArguments(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool
     errdefer p.idx = old_idx;
 
     try p.eatTok("(");
-    _ = try parseArgumentList(alloc, p, Yield, Await);
+    parseArgumentList(alloc, p, Yield, Await) catch {};
     p.eatTok(",") catch {};
     try p.eatTok(")");
 }
@@ -2308,8 +2310,8 @@ fn parseOptionalChain(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
     _ = &parseTemplateLiteral;
     _ = &parsePrivateIdentifier;
     _ = &parseLeftHandSideExpression;
-    _ = &parseNewExpression;
     _ = &parseCallExpression;
+    _ = &parseNewExpression;
     _ = &parseOptionalExpression;
     return error.TODO;
 }
@@ -2625,51 +2627,15 @@ fn parseArgumentList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
     const t = tracer.trace(@src());
     defer t.end();
 
-    var old_idx = p.idx;
+    var i: usize = 0;
+    while (true) : (i += 1) {
+        var old_idx = p.idx;
+        errdefer p.idx = old_idx;
 
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        parseAssignmentExpression(alloc, p, true, Yield, Await) catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        p.eatTok("...") catch break :blk;
-        parseAssignmentExpression(alloc, p, true, Yield, Await) catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        parseArgumentList(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(",") catch break :blk;
-        parseAssignmentExpression(alloc, p, true, Yield, Await) catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        parseArgumentList(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(",") catch break :blk;
-        p.eatTok("...") catch break :blk;
-        parseAssignmentExpression(alloc, p, true, Yield, Await) catch break :blk;
-        good = true;
-        return;
-    };
-    return error.JsMalformed;
+        p.eatTok("...") catch {};
+        parseAssignmentExpression(alloc, p, true, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
+        p.eatTok(",") catch break;
+    }
 }
 
 /// NoSubstitutionTemplate :: ` TemplateCharacters? `

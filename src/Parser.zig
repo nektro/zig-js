@@ -10,6 +10,7 @@ any: extras.AnyReader,
 arena: std.mem.Allocator,
 temp: std.ArrayListUnmanaged(u8) = .{},
 idx: usize = 0,
+end: bool = false,
 line: usize = 1,
 col: usize = 1,
 extras: std.ArrayListUnmanaged(u32) = .{},
@@ -55,6 +56,7 @@ fn peekAmt(ore: *Parser, amt: usize) !void {
     var buf: [buf_size]u8 = undefined;
     var target_buf = buf[0..diff_amt];
     const len = try ore.any.readAll(target_buf);
+    if (len == 0) ore.end = true;
     if (len == 0) return error.EndOfStream;
     std.debug.assert(len <= diff_amt);
     try ore.temp.appendSlice(ore.arena, target_buf[0..len]);
