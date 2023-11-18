@@ -1273,7 +1273,7 @@ fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    _ = parseCoverCallExpressionAndAsyncArrowHead(alloc, p, Yield, Await) catch {
+    _ = parseCoverCallExpressionAndAsyncArrowHead(alloc, p, Yield, Await, parseMemberExpression(alloc, p, Yield, Await) catch null) catch {
         try p.eatTok("async");
         _ = try parseAsyncArrowBindingIdentifier(alloc, p, Yield);
     };
@@ -1284,7 +1284,6 @@ fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield
 /// LeftHandSideExpression[Yield, Await] : NewExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : CallExpression[?Yield, ?Await]
 /// LeftHandSideExpression[Yield, Await] : OptionalExpression[?Yield, ?Await]
-//FIXME:
 fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src());
@@ -1293,9 +1292,10 @@ fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseCallExpression(alloc, p, Yield, Await))) |_| return;
-    if (w(parseNewExpression(alloc, p, Yield, Await))) |_| return;
-    if (w(parseOptionalExpression(alloc, p, Yield, Await))) |_| return;
+    const member = parseMemberExpression(alloc, p, Yield, Await) catch null;
+    if (w(parseCallExpression(alloc, p, Yield, Await, member))) |_| return;
+    if (w(parseNewExpression(alloc, p, Yield, Await, member))) |_| return;
+    if (w(parseOptionalExpression(alloc, p, Yield, Await, member))) |_| return;
     return error.JsMalformed;
 }
 
@@ -1600,7 +1600,7 @@ fn parseAsyncArrowBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, Yield:
 }
 
 /// CoverCallExpressionAndAsyncArrowHead[Yield, Await] : MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
-fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
+fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeMemberExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -1608,7 +1608,7 @@ fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parse
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    _ = try parseMemberExpression(alloc, p, Yield, Await);
+    _ = _maybeMemberExpression orelse return error.JsMalformed;
     _ = try parseArguments(alloc, p, Yield, Await);
 }
 
@@ -1632,7 +1632,7 @@ fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser, In: bool) anyerro
 
 /// NewExpression[Yield, Await] : MemberExpression[?Yield, ?Await]
 /// NewExpression[Yield, Await] : new NewExpression[?Yield, ?Await]
-fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
+fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeMemberExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -1640,9 +1640,11 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    while (w(p.eatTok("new"))) |_| {
+    var n: usize = 0;
+    while (w(p.eatTok("new"))) |_| : (n += 1) {
         //
     }
+    if (n == 0) return _maybeMemberExpression orelse error.JsMalformed;
     return parseMemberExpression(alloc, p, Yield, Await);
 }
 
@@ -1654,15 +1656,15 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] . IdentifierName
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] . PrivateIdentifier
-fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
+fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeMemberExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
 
     _ = blk: {
-        if (w(parseCoverCallExpressionAndAsyncArrowHead(alloc, p, Yield, Await))) |_| break :blk;
         if (w(parseSuperCall(alloc, p, Yield, Await))) |_| break :blk;
         if (w(parseImportCall(alloc, p, Yield, Await))) |_| break :blk;
+        if (w(parseCoverCallExpressionAndAsyncArrowHead(alloc, p, Yield, Await, _maybeMemberExpression))) |_| break :blk;
         return error.JsMalformed;
     };
 
@@ -1734,7 +1736,7 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
 /// OptionalExpression[Yield, Await] : MemberExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 /// OptionalExpression[Yield, Await] : CallExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 /// OptionalExpression[Yield, Await] : OptionalExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
-fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
+fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeMemberExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
@@ -1743,8 +1745,8 @@ fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
     errdefer p.idx = old_idx;
 
     _ = blk: {
-        if (w(parseCallExpression(alloc, p, Yield, Await))) |_| break :blk;
-        if (w(parseMemberExpression(alloc, p, Yield, Await))) |_| break :blk;
+        if (w(parseCallExpression(alloc, p, Yield, Await, _maybeMemberExpression))) |_| break :blk;
+        if (_maybeMemberExpression) |_| break :blk;
         return error.JsMalformed;
     };
     var i: usize = 0;
