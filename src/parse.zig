@@ -746,21 +746,26 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
+    var i: usize = 0;
+    while (true) : (i += 1) {
+        var old_idxi = p.idx;
+        parseLeftHandSideExpression(alloc, p, Yield, Await) catch break;
+        _ = blk: {
+            if (w(p.eatTok("&&="))) |_| break :blk;
+            if (w(p.eatTok("||="))) |_| break :blk;
+            if (w(p.eatTok("??="))) |_| break :blk;
+            if (w(parseAssignmentOperator(alloc, p))) |_| break :blk;
+            if (w(p.eatTok("="))) |_| break :blk;
+            p.idx = old_idxi;
+            break;
+        };
+    }
+
     if (w(parseConditionalExpression(alloc, p, In, Yield, Await))) |_| return;
     if (Yield) if (w(parseYieldExpression(alloc, p, In, Await))) |_| return;
     if (w(parseArrowFunction(alloc, p, In, Yield, Await))) |_| return;
     if (w(parseAsyncArrowFunction(alloc, p, In, Yield, Await))) |_| return;
-    _ = try parseLeftHandSideExpression(alloc, p, Yield, Await);
-    _ = blk: {
-        if (w(p.eatTok("&&="))) |_| break :blk;
-        if (w(p.eatTok("||="))) |_| break :blk;
-        if (w(p.eatTok("??="))) |_| break :blk;
-        if (w(parseAssignmentOperator(alloc, p))) |_| break :blk;
-        if (w(p.eatTok("="))) |_| break :blk;
-        return error.JsMalformed;
-    };
-
-    _ = try parseAssignmentExpression(alloc, p, In, Yield, Await);
+    return error.JsMalformed;
 }
 
 /// DoWhileStatement[Yield, Await, Return] : do Statement[?Yield, ?Await, ?Return] while ( Expression[+In, ?Yield, ?Await] ) ;
