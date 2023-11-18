@@ -55,13 +55,9 @@ fn peekAmt(ore: *Parser, amt: usize) !void {
     var target_buf = buf[0..diff_amt];
     const len = try ore.any.readAll(target_buf);
     if (len == 0) return error.EndOfStream;
+    std.debug.assert(len <= diff_amt);
+    try ore.temp.appendSlice(ore.arena, target_buf[0..len]);
     if (len != diff_amt) return error.EndOfStream;
-    // for (target_buf) |c| {
-    //     ore.col += 1;
-    //     if (c == '\n') ore.line += 1;
-    //     if (c == '\n') ore.col = 1;
-    // }
-    try ore.temp.appendSlice(ore.arena, target_buf);
 }
 
 pub fn eatByte(ore: *Parser, test_c: u8) !u8 {
@@ -132,7 +128,7 @@ pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
     var s: usize = 0;
     var n: usize = 0;
     while (true) {
-        try ore.peekAmt(1);
+        ore.peekAmt(1) catch break;
         const b = ore.slice()[0];
         if (b == ' ') {
             ore.idx += 1;
