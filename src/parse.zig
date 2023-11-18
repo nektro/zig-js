@@ -115,7 +115,6 @@ fn parseStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool
     if (w(parseBlockStatement(alloc, p, Yield, Await, Return))) |_| return;
     if (w(parseVariableStatement(alloc, p, Yield, Await))) |_| return;
     if (w(parseEmptyStatement(alloc, p))) |_| return;
-    if (w(parseExpressionStatement(alloc, p, Yield, Await))) |_| return;
     if (w(parseIfStatement(alloc, p, Yield, Await, Return))) |_| return;
     if (w(parseBreakableStatement(alloc, p, Yield, Await, Return))) |_| return;
     if (w(parseContinueStatement(alloc, p, Yield, Await))) |_| return;
@@ -125,6 +124,7 @@ fn parseStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool
     if (w(parseThrowStatement(alloc, p, Yield, Await))) |_| return;
     if (w(parseTryStatement(alloc, p, Yield, Await, Return))) |_| return;
     if (w(parseDebuggerStatement(alloc, p))) |_| return;
+    if (w(parseExpressionStatement(alloc, p, Yield, Await))) |_| return;
     return error.JsMalformed;
 }
 
@@ -423,7 +423,7 @@ fn parseBlock(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, Re
     errdefer p.idx = old_idx;
 
     try p.eatTok("{");
-    _ = try parseStatementList(alloc, p, Yield, Await, Return);
+    _ = parseStatementList(alloc, p, Yield, Await, Return) catch {};
     try p.eatTok("}");
 }
 
@@ -1392,7 +1392,7 @@ fn parseIdentifierName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     errdefer p.idx = old_idx;
 
     _ = try parseIdentifierStart(alloc, p);
-    _ = try parseIdentifierPart(alloc, p);
+    _ = parseIdentifierPart(alloc, p) catch return;
 }
 
 ///  ReservedWord :: one of
