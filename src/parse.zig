@@ -8,6 +8,7 @@ const string = []const u8;
 const Parser = @import("./Parser.zig");
 const extras = @import("extras");
 const unicodeucd = @import("unicode-ucd");
+const tracer = @import("tracer");
 
 inline fn w(val: anytype) ?W(@TypeOf(val)) {
     return val catch null;
@@ -22,6 +23,9 @@ fn W(comptime T: type) type {
 
 pub fn do(alloc: std.mem.Allocator, path: string, inreader: anytype, isModule: bool) !void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     _ = path;
 
     var counter = std.io.countingReader(inreader);
@@ -43,12 +47,18 @@ pub fn do(alloc: std.mem.Allocator, path: string, inreader: anytype, isModule: b
 /// Script : ScriptBody
 fn parseScript(alloc: std.mem.Allocator, p: *Parser) !void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseScriptBody(alloc, p);
 }
 
 /// ScriptBody : StatementList[~Yield, ~Await, ~Return]?
 fn parseScriptBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseStatementList(alloc, p, false, false, false);
 }
 
@@ -56,6 +66,9 @@ fn parseScriptBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// StatementList[Yield, Await, Return] : StatementList[?Yield, ?Await, ?Return] StatementListItem[?Yield, ?Await, ?Return]
 fn parseStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         _ = parseStatementListItem(alloc, p, Yield, Await, Return) catch if (i == 0) return error.JsMalformed else break;
@@ -66,6 +79,9 @@ fn parseStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// StatementListItem[Yield, Await, Return] : Declaration[?Yield, ?Await]
 fn parseStatementListItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -90,6 +106,9 @@ fn parseStatementListItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// Statement[Yield, Await, Return] : DebuggerStatement
 fn parseStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -114,6 +133,9 @@ fn parseStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// Declaration[Yield, Await] : LexicalDeclaration[+In, ?Yield, ?Await]
 fn parseDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -126,12 +148,18 @@ fn parseDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, 
 /// BlockStatement[Yield, Await, Return] : Block[?Yield, ?Await, ?Return]
 fn parseBlockStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseBlock(alloc, p, Yield, Await, Return);
 }
 
 /// VariableStatement[Yield, Await] : var VariableDeclarationList[+In, ?Yield, ?Await] ;
 fn parseVariableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -143,6 +171,9 @@ fn parseVariableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// EmptyStatement : ;
 fn parseEmptyStatement(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -153,6 +184,9 @@ fn parseEmptyStatement(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ExpressionStatement[Yield, Await] : [lookahead ∉ { {, function, async [no LineTerminator here] function, class, let [ }] Expression[+In, ?Yield, ?Await] ;
 fn parseExpressionStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -193,6 +227,9 @@ fn parseExpressionStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// IfStatement[Yield, Await, Return] : if ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return] [lookahead ≠ else]
 fn parseIfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -209,6 +246,9 @@ fn parseIfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, 
 /// BreakableStatement[Yield, Await, Return] : SwitchStatement[?Yield, ?Await, ?Return]
 fn parseBreakableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -221,6 +261,9 @@ fn parseBreakableStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// ContinueStatement[Yield, Await] : continue [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
 fn parseContinueStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -234,6 +277,9 @@ fn parseContinueStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// BreakStatement[Yield, Await] : break [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
 fn parseBreakStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -247,6 +293,9 @@ fn parseBreakStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// ReturnStatement[Yield, Await] : return [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
 fn parseReturnStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -259,6 +308,9 @@ fn parseReturnStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// LabelledStatement[Yield, Await, Return] : LabelIdentifier[?Yield, ?Await] : LabelledItem[?Yield, ?Await, ?Return]
 fn parseLabelledStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -270,6 +322,9 @@ fn parseLabelledStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// ThrowStatement[Yield, Await] : throw [no LineTerminator here] Expression[+In, ?Yield, ?Await] ;
 fn parseThrowStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -283,6 +338,9 @@ fn parseThrowStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// TryStatement[Yield, Await, Return] : try Block[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
 fn parseTryStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -296,6 +354,9 @@ fn parseTryStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// DebuggerStatement : debugger ;
 fn parseDebuggerStatement(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -310,6 +371,9 @@ fn parseDebuggerStatement(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// HoistableDeclaration[Yield, Await, Default] : AsyncGeneratorDeclaration[?Yield, ?Await, ?Default]
 fn parseHoistableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -324,6 +388,9 @@ fn parseHoistableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// ClassDeclaration[Yield, Await, Default] : [+Default] class ClassTail[?Yield, ?Await]
 fn parseClassDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -335,6 +402,9 @@ fn parseClassDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// LexicalDeclaration[In, Yield, Await] : LetOrConst BindingList[?In, ?Yield, ?Await] ;
 fn parseLexicalDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -346,6 +416,9 @@ fn parseLexicalDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: bo
 /// Block[Yield, Await, Return] : { StatementList[?Yield, ?Await, ?Return]? }
 fn parseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -358,6 +431,9 @@ fn parseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, compti
 /// VariableDeclarationList[In, Yield, Await] : VariableDeclarationList[?In, ?Yield, ?Await] , VariableDeclaration[?In, ?Yield, ?Await]
 fn parseVariableDeclarationList(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -372,6 +448,9 @@ fn parseVariableDeclarationList(alloc: std.mem.Allocator, p: *Parser, comptime I
 /// Expression[In, Yield, Await] : Expression[?In, ?Yield, ?Await] , AssignmentExpression[?In, ?Yield, ?Await]
 fn parseExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -388,6 +467,9 @@ fn parseExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comp
 /// IterationStatement[Yield, Await, Return] : ForInOfStatement[?Yield, ?Await, ?Return]
 fn parseIterationStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -401,6 +483,9 @@ fn parseIterationStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// SwitchStatement[Yield, Await, Return] : switch ( Expression[+In, ?Yield, ?Await] ) CaseBlock[?Yield, ?Await, ?Return]
 fn parseSwitchStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -416,6 +501,9 @@ fn parseSwitchStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// LabelIdentifier[Yield, Await] : [~Await] await
 fn parseLabelIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -429,6 +517,9 @@ fn parseLabelIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// LabelledItem[Yield, Await, Return] : FunctionDeclaration[?Yield, ?Await, ~Default]
 fn parseLabelledItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -441,6 +532,9 @@ fn parseLabelledItem(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// Catch[Yield, Await, Return] : catch Block[?Yield, ?Await, ?Return]
 fn parseCatch(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -455,6 +549,9 @@ fn parseCatch(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, compti
 /// Finally[Yield, Await, Return] : finally Block[?Yield, ?Await, ?Return]
 fn parseFinally(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -466,6 +563,9 @@ fn parseFinally(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comp
 /// FunctionDeclaration[Yield, Await, Default] : [+Default] function ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
 fn parseFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -483,6 +583,9 @@ fn parseFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// GeneratorDeclaration[Yield, Await, Default] : [+Default] function * ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
 fn parseGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -501,6 +604,9 @@ fn parseGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// AsyncFunctionDeclaration[Yield, Await, Default] : [+Default] async [no LineTerminator here] function ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
 fn parseAsyncFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -519,6 +625,9 @@ fn parseAsyncFunctionDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime 
 /// AsyncGeneratorDeclaration[Yield, Await, Default] : [+Default] async [no LineTerminator here] function * ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
 fn parseAsyncGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Default: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -539,6 +648,9 @@ fn parseAsyncGeneratorDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime
 /// BindingIdentifier[Yield, Await] : await
 fn parseBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -553,6 +665,9 @@ fn parseBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// ClassTail[Yield, Await] : ClassHeritage[?Yield, ?Await]? { ClassBody[?Yield, ?Await]? }
 fn parseClassTail(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -566,6 +681,9 @@ fn parseClassTail(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// LetOrConst : const
 fn parseLetOrConst(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -579,6 +697,9 @@ fn parseLetOrConst(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BindingList[In, Yield, Await] : BindingList[?In, ?Yield, ?Await] , LexicalBinding[?In, ?Yield, ?Await]
 fn parseBindingList(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -593,6 +714,9 @@ fn parseBindingList(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, com
 /// VariableDeclaration[In, Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
 fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -615,6 +739,9 @@ fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime In: b
 /// AssignmentExpression[In, Yield, Await] : LeftHandSideExpression[?Yield, ?Await] ??= AssignmentExpression[?In, ?Yield, ?Await]
 fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -638,6 +765,9 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: 
 /// DoWhileStatement[Yield, Await, Return] : do Statement[?Yield, ?Await, ?Return] while ( Expression[+In, ?Yield, ?Await] ) ;
 fn parseDoWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -653,6 +783,9 @@ fn parseDoWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// WhileStatement[Yield, Await, Return] : while ( Expression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -669,6 +802,9 @@ fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// ForStatement[Yield, Await, Return] : for ( LexicalDeclaration[~In, ?Yield, ?Await] Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
 fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -733,6 +869,9 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// ForInOfStatement[Yield, Await, Return] : [+Await] for await ( ForDeclaration[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
 fn parseForInOfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -907,6 +1046,9 @@ fn parseForInOfStatement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// CaseBlock[Yield, Await, Return] : { CaseClauses[?Yield, ?Await, ?Return]? DefaultClause[?Yield, ?Await, ?Return] CaseClauses[?Yield, ?Await, ?Return]? }
 fn parseCaseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -921,6 +1063,9 @@ fn parseCaseBlock(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// Identifier : IdentifierName but not ReservedWord
 fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -933,6 +1078,9 @@ fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// CatchParameter[Yield, Await] : BindingPattern[?Yield, ?Await]
 fn parseCatchParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -948,6 +1096,9 @@ fn parseCatchParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// FormalParameters[Yield, Await] : FormalParameterList[?Yield, ?Await] , FunctionRestParameter[?Yield, ?Await]
 fn parseFormalParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -960,30 +1111,45 @@ fn parseFormalParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// FunctionBody[Yield, Await] : FunctionStatementList[?Yield, ?Await]
 fn parseFunctionBody(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFunctionStatementList(alloc, p, Yield, Await);
 }
 
 /// GeneratorBody : FunctionBody[+Yield, ~Await]
 fn parseGeneratorBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFunctionBody(alloc, p, true, false);
 }
 
 /// AsyncFunctionBody : FunctionBody[~Yield, +Await]
 fn parseAsyncFunctionBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFunctionBody(alloc, p, false, true);
 }
 
 /// AsyncGeneratorBody : FunctionBody[+Yield, +Await]
 fn parseAsyncGeneratorBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFunctionBody(alloc, p, true, true);
 }
 
 /// ClassHeritage[Yield, Await] : extends LeftHandSideExpression[?Yield, ?Await]
 fn parseClassHeritage(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -994,6 +1160,9 @@ fn parseClassHeritage(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// ClassBody[Yield, Await] : ClassElementList[?Yield, ?Await]
 fn parseClassBody(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1004,6 +1173,9 @@ fn parseClassBody(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// LexicalBinding[In, Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[?In, ?Yield, ?Await]
 fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1019,6 +1191,9 @@ fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, 
 /// BindingPattern[Yield, Await] : ArrayBindingPattern[?Yield, ?Await]
 fn parseBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1030,6 +1205,9 @@ fn parseBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// Initializer[In, Yield, Await] : = AssignmentExpression[?In, ?Yield, ?Await]
 fn parseInitializer(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1041,6 +1219,9 @@ fn parseInitializer(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, com
 /// ConditionalExpression[In, Yield, Await] : ShortCircuitExpression[?In, ?Yield, ?Await] ? AssignmentExpression[+In, ?Yield, ?Await] : AssignmentExpression[?In, ?Yield, ?Await]
 fn parseConditionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1056,6 +1237,9 @@ fn parseConditionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In:
 /// YieldExpression[In, Await] : yield [no LineTerminator here] * AssignmentExpression[?In, +Yield, ?Await]
 fn parseYieldExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1067,6 +1251,9 @@ fn parseYieldExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool,
 /// ArrowFunction[In, Yield, Await] : ArrowParameters[?Yield, ?Await] [no LineTerminator here] => ConciseBody[?In]
 fn parseArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1079,6 +1266,9 @@ fn parseArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, c
 /// AsyncArrowFunction[In, Yield, Await] : CoverCallExpressionAndAsyncArrowHead[?Yield, ?Await] [no LineTerminator here] => AsyncConciseBody[?In]
 fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1095,6 +1285,9 @@ fn parseAsyncArrowFunction(alloc: std.mem.Allocator, p: *Parser, comptime In: bo
 /// LeftHandSideExpression[Yield, Await] : OptionalExpression[?Yield, ?Await]
 fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1108,6 +1301,9 @@ fn parseLeftHandSideExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yi
 /// *= /= %= += -= <<= >>= >>>= &= ^= |= **=
 fn parseAssignmentOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1131,6 +1327,9 @@ fn parseAssignmentOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ForBinding[Yield, Await] : BindingPattern[?Yield, ?Await]
 fn parseForBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1142,6 +1341,9 @@ fn parseForBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, c
 /// ForDeclaration[Yield, Await] : LetOrConst ForBinding[?Yield, ?Await]
 fn parseForDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1153,6 +1355,9 @@ fn parseForDeclaration(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// CaseClauses[Yield, Await, Return] : CaseClauses[?Yield, ?Await, ?Return] CaseClause[?Yield, ?Await, ?Return]
 fn parseCaseClauses(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1165,6 +1370,9 @@ fn parseCaseClauses(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, 
 /// DefaultClause[Yield, Await, Return] : default : StatementList[?Yield, ?Await, ?Return]?
 fn parseDefaultClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1177,6 +1385,9 @@ fn parseDefaultClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// IdentifierName :: IdentifierName IdentifierPart
 fn parseIdentifierName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1188,6 +1399,9 @@ fn parseIdentifierName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// await break case catch class const continue debugger default delete do else enum export extends false finally for function if import in instanceof new null return super switch this throw true try typeof var void while with yield
 fn parseReservedWord(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1236,6 +1450,9 @@ fn parseReservedWord(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// FunctionRestParameter[Yield, Await] : BindingRestElement[?Yield, ?Await]
 fn parseFunctionRestParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseBindingRestElement(alloc, p, Yield, Await);
 }
 
@@ -1243,6 +1460,9 @@ fn parseFunctionRestParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yie
 /// FormalParameterList[Yield, Await] : FormalParameterList[?Yield, ?Await] , FormalParameter[?Yield, ?Await]
 fn parseFormalParameterList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1256,6 +1476,9 @@ fn parseFormalParameterList(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// FunctionStatementList[Yield, Await] : StatementList[?Yield, ?Await, +Return]?
 fn parseFunctionStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseStatementList(alloc, p, Yield, Await, true);
 }
 
@@ -1263,6 +1486,9 @@ fn parseFunctionStatementList(alloc: std.mem.Allocator, p: *Parser, comptime Yie
 /// ClassElementList[Yield, Await] : ClassElementList[?Yield, ?Await] ClassElement[?Yield, ?Await]
 fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1278,6 +1504,9 @@ fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// ObjectBindingPattern[Yield, Await] : { BindingPropertyList[?Yield, ?Await] , BindingRestProperty[?Yield, ?Await]? }
 fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1295,6 +1524,9 @@ fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// ArrayBindingPattern[Yield, Await] : [ BindingElementList[?Yield, ?Await] , Elision? BindingRestElement[?Yield, ?Await]? ]
 fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1312,6 +1544,9 @@ fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// ShortCircuitExpression[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await]
 fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1324,6 +1559,9 @@ fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser, comptime In
 /// ArrowParameters[Yield, Await] : CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
 fn parseArrowParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1336,6 +1574,9 @@ fn parseArrowParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// ConciseBody[In] : { FunctionBody[~Yield, ~Await] }
 fn parseConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1349,12 +1590,18 @@ fn parseConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool) any
 /// AsyncArrowBindingIdentifier[Yield] : BindingIdentifier[?Yield, +Await]
 fn parseAsyncArrowBindingIdentifier(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseBindingIdentifier(alloc, p, Yield, true);
 }
 
 /// CoverCallExpressionAndAsyncArrowHead[Yield, Await] : MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
 fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1366,6 +1613,9 @@ fn parseCoverCallExpressionAndAsyncArrowHead(alloc: std.mem.Allocator, p: *Parse
 /// AsyncConciseBody[In] : { AsyncFunctionBody }
 fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1381,6 +1631,9 @@ fn parseAsyncConciseBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool
 /// NewExpression[Yield, Await] : new NewExpression[?Yield, ?Await]
 fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1400,6 +1653,9 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// CallExpression[Yield, Await] : CallExpression[?Yield, ?Await] . PrivateIdentifier
 fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     _ = blk: {
         if (w(parseCoverCallExpressionAndAsyncArrowHead(alloc, p, Yield, Await))) |_| break :blk;
         if (w(parseSuperCall(alloc, p, Yield, Await))) |_| break :blk;
@@ -1477,6 +1733,9 @@ fn parseCallExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// OptionalExpression[Yield, Await] : OptionalExpression[?Yield, ?Await] OptionalChain[?Yield, ?Await]
 fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1494,6 +1753,9 @@ fn parseOptionalExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// CaseClause[Yield, Await, Return] : case Expression[+In, ?Yield, ?Await] : StatementList[?Yield, ?Await, ?Return]?
 fn parseCaseClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Return: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1507,6 +1769,9 @@ fn parseCaseClause(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, c
 /// IdentifierStart :: \ UnicodeEscapeSequence
 fn parseIdentifierStart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1521,6 +1786,9 @@ fn parseIdentifierStart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// IdentifierPart :: \ UnicodeEscapeSequence
 fn parseIdentifierPart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1535,6 +1803,9 @@ fn parseIdentifierPart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BindingRestElement[Yield, Await] : ... BindingPattern[?Yield, ?Await]
 fn parseBindingRestElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1547,6 +1818,9 @@ fn parseBindingRestElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// FormalParameter[Yield, Await] : BindingElement[?Yield, ?Await]
 fn parseFormalParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseBindingElement(alloc, p, Yield, Await);
 }
 
@@ -1558,6 +1832,9 @@ fn parseFormalParameter(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// ClassElement[Yield, Await] : ;
 fn parseClassElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -1624,6 +1901,9 @@ fn parseClassElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// BindingRestProperty[Yield, Await] : ... BindingIdentifier[?Yield, ?Await]
 fn parseBindingRestProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1635,6 +1915,9 @@ fn parseBindingRestProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// BindingPropertyList[Yield, Await] : BindingPropertyList[?Yield, ?Await] , BindingProperty[?Yield, ?Await]
 fn parseBindingPropertyList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1649,6 +1932,9 @@ fn parseBindingPropertyList(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// Elision : Elision ,
 fn parseElision(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     _ = alloc;
     var i: usize = 0;
     while (true) {
@@ -1663,6 +1949,9 @@ fn parseElision(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BindingElementList[Yield, Await] : BindingElementList[?Yield, ?Await] , BindingElisionElement[?Yield, ?Await]
 fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1677,6 +1966,9 @@ fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// LogicalORExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await]
 fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1692,6 +1984,9 @@ fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: b
 /// CoalesceExpressionHead[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
 fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -1711,6 +2006,9 @@ fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bo
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
 fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -1811,6 +2109,9 @@ fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocat
 /// ExpressionBody[In, Await] : AssignmentExpression[?In, ~Yield, ?Await]
 fn parseExpressionBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseAssignmentExpression(alloc, p, In, false, Await);
 }
 
@@ -1820,6 +2121,9 @@ fn parseExpressionBody(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, 
 /// MemberExpression[Yield, Await] : MemberExpression[?Yield, ?Await] . PrivateIdentifier
 fn parseMemberExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1884,6 +2188,9 @@ fn parseMemberExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// MemberExpression[Yield, Await] : new MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
 fn parseMemberExpressionInner(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1901,6 +2208,9 @@ fn parseMemberExpressionInner(alloc: std.mem.Allocator, p: *Parser, comptime Yie
 /// Arguments[Yield, Await] : ( ArgumentList[?Yield, ?Await] , )
 fn parseArguments(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1913,6 +2223,9 @@ fn parseArguments(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// SuperCall[Yield, Await] : super Arguments[?Yield, ?Await]
 fn parseSuperCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1923,6 +2236,9 @@ fn parseSuperCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, co
 /// ImportCall[Yield, Await] : import ( AssignmentExpression[+In, ?Yield, ?Await] )
 fn parseImportCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1936,6 +2252,9 @@ fn parseImportCall(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, c
 /// TemplateLiteral[Yield, Await, Tagged] : SubstitutionTemplate[?Yield, ?Await, ?Tagged]
 fn parseTemplateLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1947,6 +2266,9 @@ fn parseTemplateLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// PrivateIdentifier :: # IdentifierName
 fn parsePrivateIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1970,6 +2292,9 @@ fn parsePrivateIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// OptionalChain[Yield, Await] : OptionalExpression[?Yield, ?Await]
 fn parseOptionalChain(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -1994,6 +2319,9 @@ fn parseOptionalChain(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// IdentifierStartChar :: _
 fn parseIdentifierStartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2007,6 +2335,9 @@ fn parseIdentifierStartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
 /// UnicodeEscapeSequence :: u{ CodePoint }
 fn parseUnicodeEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2025,6 +2356,9 @@ fn parseUnicodeEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// IdentifierPartChar :: <ZWJ>
 fn parseIdentifierPartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2039,6 +2373,9 @@ fn parseIdentifierPartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BindingElement[Yield, Await] : BindingPattern[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
 fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2056,6 +2393,9 @@ fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: boo
 /// MethodDefinition[Yield, Await] : set ClassElementName[?Yield, ?Await] ( PropertySetParameterList ) { FunctionBody[~Yield, ~Await] }
 fn parseMethodDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2118,6 +2458,9 @@ fn parseMethodDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// FieldDefinition[Yield, Await] : ClassElementName[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
 fn parseFieldDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2128,6 +2471,9 @@ fn parseFieldDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// ClassStaticBlock : static { ClassStaticBlockBody }
 fn parseClassStaticBlock(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2141,6 +2487,9 @@ fn parseClassStaticBlock(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BindingProperty[Yield, Await] : PropertyName[?Yield, ?Await] : BindingElement[?Yield, ?Await]
 fn parseBindingProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2154,6 +2503,9 @@ fn parseBindingProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// BindingElisionElement[Yield, Await] : Elision? BindingElement[?Yield, ?Await]
 fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     parseElision(alloc, p) catch {};
     _ = try parseBindingElement(alloc, p, Yield, Await);
 }
@@ -2162,6 +2514,9 @@ fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser, comptime Yie
 /// LogicalANDExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await]
 fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2176,6 +2531,9 @@ fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: 
 /// BitwiseORExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await] | BitwiseXORExpression[?In, ?Yield, ?Await]
 fn parseBitwiseORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2201,6 +2559,9 @@ fn parseBitwiseORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: b
 /// PrimaryExpression[Yield, Await] : CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
 fn parsePrimaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2224,6 +2585,9 @@ fn parsePrimaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// SuperProperty[Yield, Await] : super . IdentifierName
 fn parseSuperProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2241,6 +2605,9 @@ fn parseSuperProperty(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// MetaProperty : ImportMeta
 fn parseMetaProperty(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2255,6 +2622,9 @@ fn parseMetaProperty(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ArgumentList[Yield, Await] : ArgumentList[?Yield, ?Await] , ... AssignmentExpression[+In, ?Yield, ?Await]
 fn parseArgumentList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -2305,6 +2675,9 @@ fn parseArgumentList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// NoSubstitutionTemplate :: ` TemplateCharacters? `
 fn parseNoSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2316,6 +2689,9 @@ fn parseNoSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// SubstitutionTemplate[Yield, Await, Tagged] : TemplateHead Expression[+In, ?Yield, ?Await] TemplateSpans[?Yield, ?Await, ?Tagged]
 fn parseSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2328,6 +2704,9 @@ fn parseSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// any Unicode code point with the Unicode property “ID_Start”
 fn parseUnicodeIDStart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2344,6 +2723,9 @@ fn parseUnicodeIDStart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// Hex4Digits :: HexDigit HexDigit HexDigit HexDigit
 fn parseHex4Digits(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2357,6 +2739,9 @@ fn parseHex4Digits(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
 fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2369,6 +2754,9 @@ fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// any Unicode code point with the Unicode property “ID_Continue”
 fn parseUnicodeIDContinue(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2385,6 +2773,9 @@ fn parseUnicodeIDContinue(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// SingleNameBinding[Yield, Await] : BindingIdentifier[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]?
 fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2396,6 +2787,9 @@ fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser, comptime Yield: 
 /// ClassElementName[Yield, Await] : PrivateIdentifier
 fn parseClassElementName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2407,12 +2801,18 @@ fn parseClassElementName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// UniqueFormalParameters[Yield, Await] : FormalParameters[?Yield, ?Await]
 fn parseUniqueFormalParameters(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFormalParameters(alloc, p, Yield, Await);
 }
 
 /// GeneratorMethod[Yield, Await] : * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, ~Await] ) { GeneratorBody }
 fn parseGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2429,6 +2829,9 @@ fn parseGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// AsyncMethod[Yield, Await] : async [no LineTerminator here] ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
 fn parseAsyncMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2445,6 +2848,9 @@ fn parseAsyncMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, 
 /// AsyncGeneratorMethod[Yield, Await] : async [no LineTerminator here] * ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
 fn parseAsyncGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2462,12 +2868,18 @@ fn parseAsyncGeneratorMethod(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// PropertySetParameterList : FormalParameter[~Yield, ~Await]
 fn parsePropertySetParameterList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseFormalParameter(alloc, p, false, false);
 }
 
 /// ClassStaticBlockBody : ClassStaticBlockStatementList
 fn parseClassStaticBlockBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseClassStaticBlockStatementList(alloc, p);
 }
 
@@ -2475,6 +2887,9 @@ fn parseClassStaticBlockBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void
 /// PropertyName[Yield, Await] : ComputedPropertyName[?Yield, ?Await]
 fn parsePropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2487,6 +2902,9 @@ fn parsePropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// BitwiseXORExpression[In, Yield, Await] : BitwiseXORExpression[?In, ?Yield, ?Await] ^ BitwiseANDExpression[?In, ?Yield, ?Await]
 fn parseBitwiseXORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2502,6 +2920,9 @@ fn parseBitwiseXORExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: 
 /// IdentifierReference[Yield, Await] : [~Await] await
 fn parseIdentifierReference(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2517,6 +2938,9 @@ fn parseIdentifierReference(alloc: std.mem.Allocator, p: *Parser, comptime Yield
 /// Literal : StringLiteral
 fn parseLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2532,6 +2956,9 @@ fn parseLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ArrayLiteral[Yield, Await] : [ ElementList[?Yield, ?Await] , Elision? ]
 fn parseArrayLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2552,6 +2979,9 @@ fn parseArrayLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool,
 /// ObjectLiteral[Yield, Await] : { PropertyDefinitionList[?Yield, ?Await] , }
 fn parseObjectLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2566,6 +2996,9 @@ fn parseObjectLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// FunctionExpression : function BindingIdentifier[~Yield, ~Await]? ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
 fn parseFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2582,6 +3015,9 @@ fn parseFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ClassExpression[Yield, Await] : class BindingIdentifier[?Yield, ?Await]? ClassTail[?Yield, ?Await]
 fn parseClassExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2593,6 +3029,9 @@ fn parseClassExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// GeneratorExpression : function * BindingIdentifier[+Yield, ~Await]? ( FormalParameters[+Yield, ~Await] ) { GeneratorBody }
 fn parseGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2610,6 +3049,9 @@ fn parseGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
 /// AsyncFunctionExpression : async [no LineTerminator here] function BindingIdentifier[~Yield, +Await]? ( FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
 fn parseAsyncFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2628,6 +3070,9 @@ fn parseAsyncFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!v
 /// AsyncGeneratorExpression : async [no LineTerminator here] function * BindingIdentifier[+Yield, +Await]? ( FormalParameters[+Yield, +Await] ) { AsyncGeneratorBody }
 fn parseAsyncGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2646,6 +3091,9 @@ fn parseAsyncGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!
 /// RegularExpressionLiteral :: / RegularExpressionBody / RegularExpressionFlags
 fn parseRegularExpressionLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2658,6 +3106,9 @@ fn parseRegularExpressionLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!
 /// NewTarget : new . target
 fn parseNewTarget(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2670,6 +3121,9 @@ fn parseNewTarget(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportMeta : import . meta
 fn parseImportMeta(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2682,6 +3136,9 @@ fn parseImportMeta(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateCharacters :: TemplateCharacter TemplateCharacters?
 fn parseTemplateCharacters(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2694,6 +3151,9 @@ fn parseTemplateCharacters(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateHead :: ` TemplateCharacters? ${
 fn parseTemplateHead(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2706,6 +3166,9 @@ fn parseTemplateHead(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateSpans[Yield, Await, Tagged] : TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateTail
 fn parseTemplateSpans(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2717,6 +3180,9 @@ fn parseTemplateSpans(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
 fn parseHexDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2730,6 +3196,9 @@ fn parseHexDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ClassStaticBlockStatementList : StatementList[~Yield, +Await, ~Return]?
 fn parseClassStaticBlockStatementList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseStatementList(alloc, p, false, true, false);
 }
 
@@ -2738,6 +3207,9 @@ fn parseClassStaticBlockStatementList(alloc: std.mem.Allocator, p: *Parser) anye
 /// LiteralPropertyName : NumericLiteral
 fn parseLiteralPropertyName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2750,6 +3222,9 @@ fn parseLiteralPropertyName(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
 /// ComputedPropertyName[Yield, Await] : [ AssignmentExpression[+In, ?Yield, ?Await] ]
 fn parseComputedPropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2762,6 +3237,9 @@ fn parseComputedPropertyName(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// BitwiseANDExpression[In, Yield, Await] : BitwiseANDExpression[?In, ?Yield, ?Await] & EqualityExpression[?In, ?Yield, ?Await]
 fn parseBitwiseANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2775,6 +3253,9 @@ fn parseBitwiseANDExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: 
 /// NullLiteral :: null
 fn parseNullLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     _ = alloc;
     return p.eat("null");
 }
@@ -2783,6 +3264,9 @@ fn parseNullLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// BooleanLiteral :: false
 fn parseBooleanLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2799,6 +3283,9 @@ fn parseBooleanLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// NumericLiteral :: LegacyOctalIntegerLiteral
 fn parseNumericLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2812,6 +3299,9 @@ fn parseNumericLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// StringLiteral :: ' SingleStringCharacter* '
 fn parseStringLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     const q = try p.eatAny(&.{ '"', '\'' });
     while (true) {
         var old_idx = p.idx;
@@ -2832,6 +3322,9 @@ fn parseStringLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ElementList[Yield, Await] : ElementList[?Yield, ?Await] , Elision? SpreadElement[?Yield, ?Await]
 fn parseElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2848,6 +3341,9 @@ fn parseElementList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, 
 /// PropertyDefinitionList[Yield, Await] : PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
 fn parsePropertyDefinitionList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -2861,6 +3357,9 @@ fn parsePropertyDefinitionList(alloc: std.mem.Allocator, p: *Parser, comptime Yi
 /// RegularExpressionBody :: RegularExpressionFirstChar RegularExpressionChar*
 fn parseRegularExpressionBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2877,6 +3376,9 @@ fn parseRegularExpressionBody(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// RegularExpressionFlags :: RegularExpressionFlags IdentifierPartChar
 fn parseRegularExpressionFlags(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     while (true) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
@@ -2893,6 +3395,9 @@ fn parseRegularExpressionFlags(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// TemplateCharacter :: SourceCharacter but not one of ` or \ or $ or LineTerminator
 fn parseTemplateCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2913,6 +3418,9 @@ fn parseTemplateCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateTail :: } TemplateCharacters? `
 fn parseTemplateTail(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2925,6 +3433,9 @@ fn parseTemplateTail(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateMiddleList[Yield, Await, Tagged] : TemplateMiddleList[?Yield, ?Await, ?Tagged] TemplateMiddle Expression[+In, ?Yield, ?Await]
 fn parseTemplateMiddleList(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool, comptime Tagged: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     _ = Tagged;
     var i: usize = 0;
     while (true) : (i += 1) {
@@ -2943,6 +3454,9 @@ fn parseTemplateMiddleList(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// EqualityExpression[In, Yield, Await] : EqualityExpression[?In, ?Yield, ?Await] !== RelationalExpression[?In, ?Yield, ?Await]
 fn parseEqualityExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -2962,6 +3476,9 @@ fn parseEqualityExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bo
 /// DecimalLiteral :: DecimalIntegerLiteral ExponentPart[+Sep]?
 fn parseDecimalLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -3005,6 +3522,9 @@ fn parseDecimalLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// DecimalBigIntegerLiteral :: NonZeroDigit NumericLiteralSeparator DecimalDigits[+Sep] BigIntLiteralSuffix
 fn parseDecimalBigIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     const S = struct {
         fn op1(alloc2: std.mem.Allocator, p2: *Parser) anyerror!void {
             var old_idx = p2.idx;
@@ -3043,6 +3563,9 @@ fn parseDecimalBigIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!
 /// NonDecimalIntegerLiteral[Sep] :: HexIntegerLiteral[?Sep]
 fn parseNonDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3055,6 +3578,9 @@ fn parseNonDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime 
 /// BigIntLiteralSuffix :: n
 fn parseBigIntLiteralSuffix(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3066,6 +3592,9 @@ fn parseBigIntLiteralSuffix(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
 /// SpreadElement[Yield, Await] : ... AssignmentExpression[+In, ?Yield, ?Await]
 fn parseSpreadElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3080,6 +3609,9 @@ fn parseSpreadElement(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool
 /// PropertyDefinition[Yield, Await] : ... AssignmentExpression[+In, ?Yield, ?Await]
 fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     // var old_idx = p.idx;
     // errdefer p.idx = old_idx;
 
@@ -3120,6 +3652,9 @@ fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// RegularExpressionFirstChar :: RegularExpressionClass
 fn parseRegularExpressionFirstChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3139,6 +3674,9 @@ fn parseRegularExpressionFirstChar(alloc: std.mem.Allocator, p: *Parser) anyerro
 /// TemplateEscapeSequence :: UnicodeEscapeSequence
 fn parseTemplateEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3165,6 +3703,9 @@ fn parseTemplateEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// NotEscapeSequence :: u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
 fn parseNotEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3184,6 +3725,9 @@ fn parseNotEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// LineTerminatorSequence :: <CR> <LF>
 fn parseLineTerminatorSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3200,6 +3744,9 @@ fn parseLineTerminatorSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// any Unicode code point
 fn parseSourceCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3214,6 +3761,9 @@ fn parseSourceCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// TemplateMiddle :: } TemplateCharacters? ${
 fn parseTemplateMiddle(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3232,6 +3782,9 @@ fn parseTemplateMiddle(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// RelationalExpression[In, Yield, Await] : [+In] PrivateIdentifier in ShiftExpression[?Yield, ?Await]
 fn parseRelationalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: bool, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3264,6 +3817,9 @@ fn parseRelationalExpression(alloc: std.mem.Allocator, p: *Parser, comptime In: 
 /// DecimalIntegerLiteral :: NonOctalDecimalIntegerLiteral
 fn parseDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3279,6 +3835,9 @@ fn parseDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// DecimalDigits[Sep] :: [+Sep] DecimalDigits[+Sep] NumericLiteralSeparator DecimalDigit
 fn parseDecimalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 0) {
         var old_idx = p.idx;
@@ -3292,6 +3851,9 @@ fn parseDecimalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) 
 /// ExponentPart[Sep] :: ExponentIndicator SignedInteger[?Sep]
 fn parseExponentPart(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3303,6 +3865,9 @@ fn parseExponentPart(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) a
 /// 1 2 3 4 5 6 7 8 9
 fn parseNonZeroDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3314,6 +3879,9 @@ fn parseNonZeroDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// NumericLiteralSeparator :: _
 fn parseNumericLiteralSeparator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3326,6 +3894,9 @@ fn parseNumericLiteralSeparator(alloc: std.mem.Allocator, p: *Parser) anyerror!v
 /// BinaryIntegerLiteral[Sep] :: 0B BinaryDigits[?Sep]
 fn parseBinaryIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3337,6 +3908,9 @@ fn parseBinaryIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep:
 /// OctalIntegerLiteral[Sep] :: 0O OctalDigits[?Sep]
 fn parseOctalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3348,6 +3922,9 @@ fn parseOctalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: 
 /// HexIntegerLiteral[Sep] :: 0X HexDigits[?Sep]
 fn parseHexIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3362,6 +3939,9 @@ fn parseHexIntegerLiteral(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bo
 /// DoubleStringCharacter :: LineContinuation
 fn parseDoubleStringCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3385,6 +3965,9 @@ fn parseDoubleStringCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// SingleStringCharacter :: LineContinuation
 fn parseSingleStringCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3404,6 +3987,9 @@ fn parseSingleStringCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// CoverInitializedName[Yield, Await] : IdentifierReference[?Yield, ?Await] Initializer[+In, ?Yield, ?Await]
 fn parseCoverInitializedName(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3415,6 +4001,9 @@ fn parseCoverInitializedName(alloc: std.mem.Allocator, p: *Parser, comptime Yiel
 /// SourceCharacter but not LineTerminator
 fn parseRegularExpressionNonTerminator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3426,6 +4015,9 @@ fn parseRegularExpressionNonTerminator(alloc: std.mem.Allocator, p: *Parser) any
 /// RegularExpressionBackslashSequence :: \ RegularExpressionNonTerminator
 fn parseRegularExpressionBackslashSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3436,6 +4028,9 @@ fn parseRegularExpressionBackslashSequence(alloc: std.mem.Allocator, p: *Parser)
 /// RegularExpressionClass :: [ RegularExpressionClassChars ]
 fn parseRegularExpressionClass(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3449,6 +4044,9 @@ fn parseRegularExpressionClass(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// RegularExpressionChar :: RegularExpressionClass
 fn parseRegularExpressionChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3465,6 +4063,9 @@ fn parseRegularExpressionChar(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// CharacterEscapeSequence :: NonEscapeCharacter
 fn parseCharacterEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3477,6 +4078,9 @@ fn parseCharacterEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!v
 /// 0 1 2 3 4 5 6 7 8 9
 fn parseDecimalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3488,6 +4092,9 @@ fn parseDecimalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// HexEscapeSequence :: x HexDigit HexDigit
 fn parseHexEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3499,6 +4106,9 @@ fn parseHexEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// NotCodePoint :: HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
 fn parseNotCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3513,6 +4123,9 @@ fn parseNotCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ShiftExpression[Yield, Await] : ShiftExpression[?Yield, ?Await] >>> AdditiveExpression[?Yield, ?Await]
 fn parseShiftExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3531,6 +4144,9 @@ fn parseShiftExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// NonOctalDecimalIntegerLiteral :: NonOctalDecimalIntegerLiteral DecimalDigit
 fn parseNonOctalDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3546,6 +4162,9 @@ fn parseNonOctalDecimalIntegerLiteral(alloc: std.mem.Allocator, p: *Parser) anye
 /// e E
 fn parseExponentIndicator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3560,6 +4179,9 @@ fn parseExponentIndicator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// SignedInteger[Sep] :: - DecimalDigits[?Sep]
 fn parseSignedInteger(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3576,6 +4198,9 @@ fn parseSignedInteger(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) 
 /// BinaryDigits[Sep] :: [+Sep] BinaryDigits[+Sep] NumericLiteralSeparator BinaryDigit
 fn parseBinaryDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 0) {
         var old_idx = p.idx;
@@ -3591,6 +4216,9 @@ fn parseBinaryDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) a
 /// OctalDigits[Sep] :: [+Sep] OctalDigits[+Sep] NumericLiteralSeparator OctalDigit
 fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 0) {
         var old_idx = p.idx;
@@ -3606,6 +4234,9 @@ fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) an
 /// HexDigits[Sep] :: [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
 fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 0) {
         var old_idx = p.idx;
@@ -3624,6 +4255,9 @@ fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, comptime Sep: bool) anye
 /// EscapeSequence :: UnicodeEscapeSequence
 fn parseEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3642,6 +4276,9 @@ fn parseEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// RegularExpressionClassChars :: RegularExpressionClassChars RegularExpressionClassChar
 fn parseRegularExpressionClassChars(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     while (w(parseRegularExpressionClassChar(alloc, p))) |_| {
         //
     }
@@ -3651,6 +4288,9 @@ fn parseRegularExpressionClassChars(alloc: std.mem.Allocator, p: *Parser) anyerr
 /// ' " \ b f n r t v
 fn parseSingleEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3662,6 +4302,9 @@ fn parseSingleEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!voi
 /// NonEscapeCharacter :: SourceCharacter but not one of EscapeCharacter or LineTerminator
 fn parseNonEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3676,6 +4319,9 @@ fn parseNonEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// AdditiveExpression[Yield, Await] : AdditiveExpression[?Yield, ?Await] - MultiplicativeExpression[?Yield, ?Await]
 fn parseAdditiveExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3692,6 +4338,9 @@ fn parseAdditiveExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield:
 /// 8 9
 fn parseNonOctalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3705,6 +4354,9 @@ fn parseNonOctalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// 0 1
 fn parseBinaryDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3718,6 +4370,9 @@ fn parseBinaryDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// 0 1 2 3 4 5 6 7
 fn parseOctalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3730,6 +4385,9 @@ fn parseOctalDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// 8 9
 fn parseNonOctalDecimalEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3743,6 +4401,9 @@ fn parseNonOctalDecimalEscapeSequence(alloc: std.mem.Allocator, p: *Parser) anye
 /// RegularExpressionClassChar :: RegularExpressionBackslashSequence
 fn parseRegularExpressionClassChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3757,6 +4418,9 @@ fn parseRegularExpressionClassChar(alloc: std.mem.Allocator, p: *Parser) anyerro
 /// MultiplicativeExpression[Yield, Await] : MultiplicativeExpression[?Yield, ?Await] MultiplicativeOperator ExponentiationExpression[?Yield, ?Await]
 fn parseMultiplicativeExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3769,6 +4433,9 @@ fn parseMultiplicativeExpression(alloc: std.mem.Allocator, p: *Parser, comptime 
 /// ExponentiationExpression[Yield, Await] : UpdateExpression[?Yield, ?Await] ** ExponentiationExpression[?Yield, ?Await]
 fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3783,6 +4450,9 @@ fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser, comptime 
 /// * / %
 fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3804,6 +4474,9 @@ fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// UnaryExpression[Yield, Await] : [+Await] AwaitExpression[?Yield]
 fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3830,6 +4503,9 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// UpdateExpression[Yield, Await] : -- UnaryExpression[?Yield, ?Await]
 fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool, comptime Await: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3849,6 +4525,9 @@ fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: b
 /// AwaitExpression[Yield] : await UnaryExpression[?Yield, +Await]
 fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bool) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3859,12 +4538,18 @@ fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser, comptime Yield: bo
 /// Module : ModuleBody?
 fn parseModule(alloc: std.mem.Allocator, p: *Parser) !void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return try parseModuleBody(alloc, p);
 }
 
 /// ModuleBody : ModuleItemList
 fn parseModuleBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseModuleItemList(alloc, p);
 }
 
@@ -3872,6 +4557,9 @@ fn parseModuleBody(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ModuleItemList : ModuleItemList ModuleItem
 fn parseModuleItemList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -3886,6 +4574,9 @@ fn parseModuleItemList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ModuleItem : StatementListItem[~Yield, +Await, ~Return]
 fn parseModuleItem(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3899,6 +4590,9 @@ fn parseModuleItem(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportDeclaration : import ModuleSpecifier ;
 fn parseImportDeclaration(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -3921,6 +4615,9 @@ fn parseImportDeclaration(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ExportDeclaration : export default [lookahead ∉ { function, async [no LineTerminator here] function, class }] AssignmentExpression[+In, ~Yield, +Await] ;
 fn parseExportDeclaration(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
 
     _ = blk: {
@@ -4022,6 +4719,9 @@ fn parseExportDeclaration(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportClause : ImportedDefaultBinding , NamedImports
 fn parseImportClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4039,6 +4739,9 @@ fn parseImportClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// FromClause : from ModuleSpecifier
 fn parseFromClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4049,6 +4752,9 @@ fn parseFromClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ModuleSpecifier : StringLiteral
 fn parseModuleSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     try parseStringLiteral(alloc, p);
 }
 
@@ -4057,6 +4763,9 @@ fn parseModuleSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ExportFromClause : NamedExports
 fn parseExportFromClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4070,12 +4779,18 @@ fn parseExportFromClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportedDefaultBinding : ImportedBinding
 fn parseImportedDefaultBinding(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseImportedBinding(alloc, p);
 }
 
 /// NameSpaceImport : * as ImportedBinding
 fn parseNameSpaceImport(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4089,6 +4804,9 @@ fn parseNameSpaceImport(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// NamedImports : { ImportsList , }
 fn parseNamedImports(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4104,6 +4822,9 @@ fn parseNamedImports(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ModuleExportName : StringLiteral
 fn parseModuleExportName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4117,6 +4838,9 @@ fn parseModuleExportName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// NamedExports : { ExportsList , }
 fn parseNamedExports(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4131,6 +4855,9 @@ fn parseNamedExports(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportedBinding : BindingIdentifier[~Yield, +Await]
 fn parseImportedBinding(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     return parseBindingIdentifier(alloc, p, false, true);
 }
 
@@ -4138,6 +4865,9 @@ fn parseImportedBinding(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportsList : ImportsList , ImportSpecifier
 fn parseImportsList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -4152,6 +4882,9 @@ fn parseImportsList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ExportsList : ExportsList , ExportSpecifier
 fn parseExportsList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
@@ -4166,6 +4899,9 @@ fn parseExportsList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ImportSpecifier : ModuleExportName as ImportedBinding
 fn parseImportSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4180,6 +4916,9 @@ fn parseImportSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// ExportSpecifier : ModuleExportName as ModuleExportName
 fn parseExportSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4194,6 +4933,9 @@ fn parseExportSpecifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// LineTerminator :: <PS>
 fn parseLineTerminator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
@@ -4211,6 +4953,9 @@ fn parseLineTerminator(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 /// EscapeCharacter :: u
 fn parseEscapeCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
+    const t = tracer.trace(@src());
+    defer t.end();
+
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 

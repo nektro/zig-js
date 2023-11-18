@@ -4,6 +4,7 @@ const extras = @import("extras");
 const Parser = @This();
 const buf_size = 64;
 const t = @import("./types.zig");
+const tracer = @import("tracer");
 
 any: extras.AnyReader,
 arena: std.mem.Allocator,
@@ -124,6 +125,9 @@ pub fn eatEnumU8(ore: *Parser, comptime E: type) !E {
 }
 
 pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
+    const tr = tracer.trace(@src());
+    defer tr.end();
+
     try ore.eat(test_s);
     var s: usize = 0;
     var n: usize = 0;
