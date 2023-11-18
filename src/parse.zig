@@ -4450,6 +4450,7 @@ fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// UnaryExpression[Yield, Await] : ~ UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : ! UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : [+Await] AwaitExpression[?Yield]
+//FIXME:
 fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeUpdateExpression: ?void) anyerror!void {
     //
     const t = tracer.trace(@src());
@@ -4459,7 +4460,6 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
     errdefer p.idx = old_idx;
 
     if (_maybeUpdateExpression) |_| return;
-    if (Await) if (w(parseAwaitExpression(alloc, p, Yield))) |_| return;
 
     _ = blk: {
         if (w(p.eatTok("delete"))) |_| break :blk;
@@ -4469,6 +4469,7 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
         if (w(p.eatTok("-"))) |_| break :blk;
         if (w(p.eatTok("~"))) |_| break :blk;
         if (w(p.eatTok("!"))) |_| break :blk;
+        if (Await) if (w(p.eatTok("await"))) |_| break :blk;
         return error.JsMalformed;
     };
     _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
@@ -4498,19 +4499,6 @@ fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Awai
         return error.JsMalformed;
     };
     _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
-}
-
-/// AwaitExpression[Yield] : await UnaryExpression[?Yield, +Await]
-fn parseAwaitExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool) anyerror!void {
-    //
-    const t = tracer.trace(@src());
-    defer t.end();
-
-    var old_idx = p.idx;
-    errdefer p.idx = old_idx;
-
-    try p.eatTok("await");
-    _ = try parseUnaryExpression(alloc, p, Yield, true, null);
 }
 
 /// Module : ModuleBody?
