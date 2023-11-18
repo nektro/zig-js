@@ -2014,106 +2014,36 @@ fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( ... BindingPattern[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
 /// CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
-//FIXME:
 fn parseCoverParenthesizedExpressionAndArrowParameterList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src());
     defer t.end();
 
     var old_idx = p.idx;
+    errdefer p.idx = old_idx;
 
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] )
-        p.eatTok("(") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , )
-        p.eatTok("(") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
-        p.eatTok(",") catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( )
-        p.eatTok("(") catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( ... BindingIdentifier[?Yield, ?Await] )
-        p.eatTok("(") catch break :blk;
-        p.eatTok("...") catch break :blk;
-        parseBindingIdentifier(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( ... BindingPattern[?Yield, ?Await] )
-        p.eatTok("(") catch break :blk;
-        p.eatTok("...") catch break :blk;
-        parseBindingPattern(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
-        p.eatTok("(") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
-        p.eatTok(",") catch break :blk;
-        p.eatTok("...") catch break :blk;
-        parseBindingIdentifier(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
-    _ = blk: {
-        var good = false;
-        defer if (!good) {
-            p.idx = old_idx;
-        };
-        // CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] : ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
-        p.eatTok("(") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
-        p.eatTok(",") catch break :blk;
-        p.eatTok("...") catch break :blk;
-        parseBindingPattern(alloc, p, Yield, Await) catch break :blk;
-        p.eatTok(")") catch break :blk;
-        good = true;
-        return;
-    };
+    try p.eatTok("(");
+    if (w(p.eatTok(")"))) |_| return;
+
+    if (w(p.eatTok("..."))) |_| {
+        if (w(parseBindingIdentifier(alloc, p, Yield, Await))) |_| return;
+        if (w(parseBindingPattern(alloc, p, Yield, Await))) |_| return;
+        if (w(p.eatTok(")"))) |_| return;
+        return error.JsMalformed;
+    }
+
+    try parseExpression(alloc, p, true, Yield, Await);
+    if (w(p.eatTok(")"))) |_| return;
+
+    try p.eatTok(",");
+    if (w(p.eatTok(")"))) |_| return;
+
+    if (w(p.eatTok("..."))) |_| {
+        if (w(parseBindingIdentifier(alloc, p, Yield, Await))) |_| return;
+        if (w(parseBindingPattern(alloc, p, Yield, Await))) |_| return;
+        if (w(p.eatTok(")"))) |_| return;
+        return error.JsMalformed;
+    }
     return error.JsMalformed;
 }
 
