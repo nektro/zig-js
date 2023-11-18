@@ -1640,8 +1640,8 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(p.eatTok("new"))) |_| {
-        return parseNewExpression(alloc, p, Yield, Await);
+    while (w(p.eatTok("new"))) |_| {
+        //
     }
     return parseMemberExpression(alloc, p, Yield, Await);
 }
