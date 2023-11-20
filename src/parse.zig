@@ -2967,7 +2967,7 @@ fn parseGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
 
     try p.eatTok("function");
     try p.eatTok("*");
-    _ = try parseBindingIdentifier(alloc, p, true, false);
+    _ = parseBindingIdentifier(alloc, p, true, false) catch null;
     try p.eatTok("(");
     _ = try parseFormalParameters(alloc, p, true, false);
     try p.eatTok(")");
