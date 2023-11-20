@@ -1,5 +1,6 @@
 id: toe0bwsdkcbbijw1a0hqzzr5d40b1755fvlfjflkr9wry02e
 name: js
+license: MPL-2.0
 description: An ECMAScript module for Zig.
 root_dependencies:
   - src: git https://github.com/nektro/zig-extras
