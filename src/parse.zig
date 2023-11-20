@@ -1258,8 +1258,8 @@ fn parseYieldExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Await: b
     errdefer p.idx = old_idx;
 
     try p.eatTok("yield");
-    try p.eatTok("*");
-    _ = parseAssignmentExpression(alloc, p, In, true, Await) catch return;
+    p.eatTok("*") catch {};
+    _ = parseAssignmentExpression(alloc, p, In, true, Await) catch null;
 }
 
 /// ArrowFunction[In, Yield, Await] : ArrowParameters[?Yield, ?Await] [no LineTerminator here] => ConciseBody[?In]
