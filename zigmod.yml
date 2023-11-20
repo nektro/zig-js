@@ -1,6 +1,6 @@
 id: toe0bwsdkcbbijw1a0hqzzr5d40b1755fvlfjflkr9wry02e
-name: hübscher
-description: A drop-in replacement for prettier written in Zig
+name: js
+description: An ECMAScript module for Zig.
 root_dependencies:
   - src: git https://github.com/nektro/zig-extras
   - src: git https://github.com/nektro/zig-unicode-ucd
