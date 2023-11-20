@@ -762,10 +762,10 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
         };
     }
 
-    if (w(parseConditionalExpression(alloc, p, In, Yield, Await))) |_| return;
     if (Yield) if (w(parseYieldExpression(alloc, p, In, Await))) |_| return;
     if (w(parseArrowFunction(alloc, p, In, Yield, Await))) |_| return;
     if (w(parseAsyncArrowFunction(alloc, p, In, Yield, Await))) |_| return;
+    if (w(parseConditionalExpression(alloc, p, In, Yield, Await))) |_| return;
     return error.JsMalformed;
 }
 
