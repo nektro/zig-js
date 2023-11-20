@@ -747,11 +747,6 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseConditionalExpression(alloc, p, In, Yield, Await))) |_| return;
-    if (Yield) if (w(parseYieldExpression(alloc, p, In, Await))) |_| return;
-    if (w(parseArrowFunction(alloc, p, In, Yield, Await))) |_| return;
-    if (w(parseAsyncArrowFunction(alloc, p, In, Yield, Await))) |_| return;
-
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idxi = p.idx;
