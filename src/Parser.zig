@@ -148,7 +148,7 @@ pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
         }
         if (comptime extras.matchesAll(u8, test_s, std.ascii.isAlphabetic)) {
             if (std.ascii.isAlphabetic(b)) {
-                if (s == 0 or n == 0) {
+                if (s == 0 and n == 0) {
                     return error.JsMalformed;
                 }
             }
