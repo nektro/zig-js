@@ -3546,10 +3546,6 @@ fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
     // var old_idx = p.idx;
     // errdefer p.idx = old_idx;
 
-    if (w(parseIdentifierReference(alloc, p, Yield, Await))) |_| return;
-    if (w(parseCoverInitializedName(alloc, p, Yield, Await))) |_| return;
-    if (w(parseMethodDefinition(alloc, p, Yield, Await))) |_| return;
-
     _ = blk: {
         var old_idx = p.idx;
         var good = false;
@@ -3575,6 +3571,11 @@ fn parsePropertyDefinition(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
         good = true;
         return;
     };
+
+    if (w(parseCoverInitializedName(alloc, p, Yield, Await))) |_| return;
+    if (w(parseMethodDefinition(alloc, p, Yield, Await))) |_| return;
+    if (w(parseIdentifierReference(alloc, p, Yield, Await))) |_| return;
+
     return error.JsMalformed;
 }
 
