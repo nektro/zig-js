@@ -3009,7 +3009,7 @@ fn parseAsyncGeneratorExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!
     try p.eatTok("async");
     try p.eatTok("function");
     try p.eatTok("*");
-    _ = try parseBindingIdentifier(alloc, p, true, true);
+    _ = parseBindingIdentifier(alloc, p, true, true) catch null;
     try p.eatTok("(");
     _ = try parseFormalParameters(alloc, p, true, true);
     try p.eatTok(")");
