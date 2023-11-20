@@ -756,11 +756,18 @@ fn parseAssignmentExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
             if (w(p.eatTok("||="))) |_| break :blk;
             if (w(p.eatTok("??="))) |_| break :blk;
             if (w(parseAssignmentOperator(alloc, p))) |_| break :blk;
+            if (w(p.eatTok("=>"))) |_| {
+                // don't confuse this with ArrowFunction
+                // LeftHandSideExpression can sometimes match on ArrowParameters
+                p.idx = old_idxi;
+                break;
+            }
             if (w(p.eatTok("="))) |_| break :blk;
             p.idx = old_idxi;
             break;
         };
     }
+    if (i == 0) p.idx = old_idx;
 
     if (Yield) if (w(parseYieldExpression(alloc, p, In, Await))) |_| return;
     if (w(parseArrowFunction(alloc, p, In, Yield, Await))) |_| return;
