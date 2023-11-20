@@ -1384,7 +1384,7 @@ fn parseCaseClauses(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bo
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseCaseClause(alloc, p, Yield, Await, Return) catch if (i == 0) break else return error.JsMalformed;
+        _ = parseCaseClause(alloc, p, Yield, Await, Return) catch if (i == 0) return error.JsMalformed else break;
     }
 }
 
@@ -1489,7 +1489,7 @@ fn parseFormalParameterList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, A
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseFormalParameter(alloc, p, Yield, Await) catch if (i == 0) break else return error.JsMalformed;
+        _ = parseFormalParameter(alloc, p, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
         p.eatTok(",") catch break;
     }
 }
@@ -1515,7 +1515,7 @@ fn parseClassElementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Awai
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseClassElement(alloc, p, Yield, Await) catch if (i == 0) break else return error.JsMalformed;
+        _ = parseClassElement(alloc, p, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
     }
 }
 
@@ -1947,7 +1947,7 @@ fn parseBindingPropertyList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, A
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseBindingProperty(alloc, p, Yield, Await) catch if (i == 0) break else return error.JsMalformed;
+        _ = parseBindingProperty(alloc, p, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
         p.eatTok(",") catch break;
     }
 }
