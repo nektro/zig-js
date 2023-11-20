@@ -1952,7 +1952,7 @@ fn parseElision(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 
     _ = alloc;
     var i: usize = 0;
-    while (true) {
+    while (true) : (i += 1) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
