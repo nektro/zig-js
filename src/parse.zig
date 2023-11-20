@@ -1195,7 +1195,7 @@ fn parseLexicalBinding(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bo
         _ = try parseInitializer(alloc, p, In, Yield, Await);
         return;
     };
-    _ = try parseInitializer(alloc, p, In, Yield, Await);
+    _ = parseInitializer(alloc, p, In, Yield, Await) catch null;
 }
 
 /// BindingPattern[Yield, Await] : ObjectBindingPattern[?Yield, ?Await]
