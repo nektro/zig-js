@@ -1,6 +1,6 @@
 const std = @import("std");
 const string = []const u8;
-const parse = @import("./parse.zig");
+const js = @import("js");
 
 // zig fmt: off
 test { try doPass(".zigmod/deps/git/github.com/tc39/test262-parser-tests/pass-explicit/005dc7dff71d4b97.js"); }
@@ -1995,7 +1995,7 @@ fn doPass(input_path: string) !void {
     var input_file = try std.fs.cwd().openFile(input_path, .{});
     defer input_file.close();
 
-    _ = try parse.do(
+    try js.parse(
         allocator,
         input_path,
         input_file.reader(),

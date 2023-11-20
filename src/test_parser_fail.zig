@@ -1,6 +1,6 @@
 const std = @import("std");
 const string = []const u8;
-const parse = @import("./parse.zig");
+const js = @import("js");
 
 // zig fmt: off
 test { try doFail(".zigmod/deps/git/github.com/tc39/test262-parser-tests/fail/85351ad05c8d5f1b.js"); }
@@ -741,7 +741,7 @@ fn doFail(input_path: string) !void {
     var input_file = try std.fs.cwd().openFile(input_path, .{});
     defer input_file.close();
 
-    try std.testing.expectError(error.JsMalformed, parse.do(
+    try std.testing.expectError(error.JsMalformed, js.parse(
         allocator,
         input_path,
         input_file.reader(),

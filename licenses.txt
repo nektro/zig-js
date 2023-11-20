@@ -1,3 +1,7 @@
+MPL-2.0:
+= https://spdx.org/licenses/MPL-2.0
+- This
+
 MIT:
 = https://spdx.org/licenses/MIT
 - git https://github.com/nektro/zig-extras
@@ -5,5 +9,4 @@ MIT:
 - git https://github.com/nektro/zig-unicode-ucd
 
 Unspecified:
-- This
 - git https://github.com/tc39/test262-parser-tests
