@@ -4642,12 +4642,11 @@ fn parseImportClause(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseImportedDefaultBinding(alloc, p))) |_| return;
     if (w(parseNameSpaceImport(alloc, p))) |_| return;
     if (w(parseNamedImports(alloc, p))) |_| return;
 
     _ = try parseImportedDefaultBinding(alloc, p);
-    try p.eatTok(",");
+    p.eatTok(",") catch return;
     if (w(parseNameSpaceImport(alloc, p))) |_| return;
     if (w(parseNamedImports(alloc, p))) |_| return;
     return error.JsMalformed;
