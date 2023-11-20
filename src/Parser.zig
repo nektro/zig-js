@@ -127,7 +127,7 @@ pub fn eatEnumU8(ore: *Parser, comptime E: type) !E {
 }
 
 pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
-    const tr = tracer.trace(@src());
+    const tr = tracer.trace(@src(), "({d})({s})", .{ ore.idx, test_s });
     defer tr.end();
 
     try ore.eat(test_s);
