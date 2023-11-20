@@ -4474,6 +4474,7 @@ fn parseModuleItemList(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
         errdefer p.idx = old_idx;
 
         _ = parseModuleItem(alloc, p) catch if (i == 0) return error.JsMalformed else break;
+        if (p.end) break;
     }
 }
 
