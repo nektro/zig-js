@@ -1177,9 +1177,6 @@ fn parseClassBody(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
-    var old_idx = p.idx;
-    errdefer p.idx = old_idx;
-
     return parseClassElementList(alloc, p, Yield, Await);
 }
 
@@ -1567,9 +1564,8 @@ fn parseShortCircuitExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Y
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    const bitwiseor = try parseBitwiseORExpression(alloc, p, In, Yield, Await);
-    if (w(parseLogicalORExpression(alloc, p, In, Yield, Await, bitwiseor))) |_| return;
-    if (w(parseCoalesceExpression(alloc, p, In, Yield, Await, bitwiseor))) |_| return;
+    if (w(parseLogicalORExpression(alloc, p, In, Yield, Await))) |_| return;
+    if (w(parseCoalesceExpression(alloc, p, In, Yield, Await))) |_| return;
     return error.JsMalformed;
 }
 
@@ -1984,7 +1980,7 @@ fn parseBindingElementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Aw
 
 /// LogicalORExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await]
 /// LogicalORExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await]
-fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _firstBitwiseORExpression: void) anyerror!void {
+fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
@@ -1995,9 +1991,9 @@ fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yiel
         errdefer p.idx = old_idx;
 
         if (i == 0) {
-            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await, _firstBitwiseORExpression) catch return error.JsMalformed;
+            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await) catch return error.JsMalformed;
         } else {
-            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await, null) catch break;
+            _ = parseLogicalANDExpression(alloc, p, In, Yield, Await) catch break;
         }
         p.eatTok("||") catch break;
     }
@@ -2006,19 +2002,18 @@ fn parseLogicalORExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yiel
 /// CoalesceExpression[In, Yield, Await] : CoalesceExpressionHead[?In, ?Yield, ?Await] ?? BitwiseORExpression[?In, ?Yield, ?Await]
 /// CoalesceExpressionHead[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await]
 /// CoalesceExpressionHead[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _firstBitwiseORExpression: void) anyerror!void {
+fn parseCoalesceExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
-    _ = _firstBitwiseORExpression;
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
+        _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
         p.eatTok("??") catch break;
-        _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch break;
     }
 }
 
@@ -2468,7 +2463,7 @@ fn parseBindingElisionElement(alloc: std.mem.Allocator, p: *Parser, Yield: bool,
 
 /// LogicalANDExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await]
 /// LogicalANDExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await]
-fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool, _maybeBitwiseORExpression: ?void) anyerror!void {
+fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
@@ -2479,7 +2474,7 @@ fn parseLogicalANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
         errdefer p.idx = old_idx;
 
         if (i == 0) {
-            _ = _maybeBitwiseORExpression orelse return error.JsMalformed;
+            _ = try parseBitwiseORExpression(alloc, p, In, Yield, Await);
         } else {
             _ = parseBitwiseORExpression(alloc, p, In, Yield, Await) catch break;
         }
@@ -4365,9 +4360,7 @@ fn parseExponentiationExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bo
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    const update = try parseUpdateExpression(alloc, p, Yield, Await);
-
-    if (w(parseUnaryExpression(alloc, p, Yield, Await, update))) |_| return;
+    if (w(parseUnaryExpression(alloc, p, Yield, Await))) |_| return;
 
     try p.eatTok("**");
     _ = try parseExponentiationExpression(alloc, p, Yield, Await);
@@ -4399,16 +4392,13 @@ fn parseMultiplicativeOperator(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 /// UnaryExpression[Yield, Await] : ~ UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : ! UnaryExpression[?Yield, ?Await]
 /// UnaryExpression[Yield, Await] : [+Await] AwaitExpression[?Yield]
-//FIXME:
-fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool, _maybeUpdateExpression: ?void) anyerror!void {
+fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool) anyerror!void {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
-
-    if (_maybeUpdateExpression) |_| return;
 
     _ = blk: {
         if (w(p.eatTok("delete"))) |_| break :blk;
@@ -4419,9 +4409,10 @@ fn parseUnaryExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
         if (w(p.eatTok("~"))) |_| break :blk;
         if (w(p.eatTok("!"))) |_| break :blk;
         if (Await) if (w(p.eatTok("await"))) |_| break :blk;
-        return error.JsMalformed;
+
+        return parseUpdateExpression(alloc, p, Yield, Await);
     };
-    _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
+    _ = try parseUnaryExpression(alloc, p, Yield, Await);
 }
 
 /// UpdateExpression[Yield, Await] : LeftHandSideExpression[?Yield, ?Await]
@@ -4447,7 +4438,7 @@ fn parseUpdateExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Awai
         if (w(p.eatTok("--"))) |_| break :blk;
         return error.JsMalformed;
     };
-    _ = try parseUnaryExpression(alloc, p, Yield, Await, null);
+    _ = try parseUnaryExpression(alloc, p, Yield, Await);
 }
 
 /// Module : ModuleBody?
