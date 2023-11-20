@@ -672,9 +672,9 @@ fn parseClassTail(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: bool
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    _ = try parseClassHeritage(alloc, p, Yield, Await);
+    _ = parseClassHeritage(alloc, p, Yield, Await) catch null;
     try p.eatTok("{");
-    _ = try parseClassBody(alloc, p, Yield, Await);
+    _ = parseClassBody(alloc, p, Yield, Await) catch null;
     try p.eatTok("}");
 }
 
@@ -1500,7 +1500,7 @@ fn parseFunctionStatementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool,
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
-    return parseStatementList(alloc, p, Yield, Await, true);
+    _ = parseStatementList(alloc, p, Yield, Await, true) catch null;
 }
 
 /// ClassElementList[Yield, Await] : ClassElement[?Yield, ?Await]
@@ -2950,7 +2950,7 @@ fn parseClassExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
     errdefer p.idx = old_idx;
 
     try p.eatTok("class");
-    _ = try parseBindingIdentifier(alloc, p, Yield, Await);
+    _ = parseBindingIdentifier(alloc, p, Yield, Await) catch null;
     _ = try parseClassTail(alloc, p, Yield, Await);
 }
 
