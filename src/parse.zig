@@ -806,7 +806,6 @@ fn parseWhileStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
     _ = try parseExpression(alloc, p, true, Yield, Await);
     try p.eatTok(")");
     _ = try parseStatement(alloc, p, Yield, Await, Return);
-    try p.eatTok(";");
 }
 
 /// ForStatement[Yield, Await, Return] : for ( [lookahead ≠ let [] Expression[~In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ; Expression[+In, ?Yield, ?Await]? ) Statement[?Yield, ?Await, ?Return]
