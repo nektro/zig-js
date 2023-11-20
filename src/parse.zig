@@ -1080,6 +1080,11 @@ fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
+    if (w(p.eatRange(0x21, 0x2F))) |_| return error.JsMalformed; // !  /
+    if (w(p.eatRange(0x3A, 0x40))) |_| return error.JsMalformed; // :  @
+    if (w(p.eatRange(0x5B, 0x60))) |_| return error.JsMalformed; // [  `
+    if (w(p.eatRange(0x7B, 0x7E))) |_| return error.JsMalformed; // {  ~
+
     if (w(parseReservedWord(alloc, p))) |_| return error.JsMalformed;
     if (w(parseIdentifierName(alloc, p))) |_| return;
     return error.JsMalformed;
