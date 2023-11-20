@@ -1087,7 +1087,10 @@ fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     if (w(p.eatRange(0x7B, 0x7E))) |_| return error.JsMalformed; // {  ~
 
     if (w(parseReservedWord(alloc, p))) |_| return error.JsMalformed;
-    if (w(parseIdentifierName(alloc, p))) |_| return;
+    if (w(parseIdentifierName(alloc, p))) |_| {
+        try p.eatSpace(true);
+        return;
+    }
     return error.JsMalformed;
 }
 

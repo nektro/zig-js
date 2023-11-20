@@ -131,6 +131,10 @@ pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
     defer tr.end();
 
     try ore.eat(test_s);
+    try ore.eatSpace(extras.matchesAll(u8, test_s, std.ascii.isAlphabetic));
+}
+
+pub fn eatSpace(ore: *Parser, comptime test_was_alpha: bool) !void {
     var s: usize = 0;
     var n: usize = 0;
     while (true) {
@@ -146,7 +150,7 @@ pub fn eatTok(ore: *Parser, comptime test_s: string) !void {
             n += 1;
             continue;
         }
-        if (comptime extras.matchesAll(u8, test_s, std.ascii.isAlphabetic)) {
+        if (test_was_alpha) {
             if (std.ascii.isAlphabetic(b)) {
                 if (s == 0 and n == 0) {
                     return error.JsMalformed;
