@@ -1413,7 +1413,9 @@ fn parseIdentifierName(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     errdefer p.idx = old_idx;
 
     _ = try parseIdentifierStart(alloc, p);
-    _ = parseIdentifierPart(alloc, p) catch return;
+    while (true) {
+        _ = parseIdentifierPart(alloc, p) catch break;
+    }
 }
 
 ///  ReservedWord :: one of
