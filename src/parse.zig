@@ -4605,6 +4605,7 @@ fn parseExportDeclaration(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
         };
         // ExportDeclaration : export default [lookahead ∉ { function, async [no LineTerminator here] function, class }] AssignmentExpression[+In, ~Yield, +Await] ;
         p.eatTok("export") catch break :blk;
+        p.eatTok("default") catch break :blk;
         if (w(p.eatTok("function"))) |_| break :blk;
         if (w(p.eatTok("class"))) |_| break :blk;
         _ = blk2: {
