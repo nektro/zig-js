@@ -2988,7 +2988,7 @@ fn parseAsyncFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!v
     try p.eatTok("async");
     try p.eatTok("function");
     try p.eatTok("*");
-    _ = try parseBindingIdentifier(alloc, p, false, true);
+    _ = parseBindingIdentifier(alloc, p, false, true) catch null;
     try p.eatTok("(");
     _ = try parseFormalParameters(alloc, p, false, true);
     try p.eatTok(")");
