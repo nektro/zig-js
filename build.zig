@@ -44,4 +44,17 @@ pub fn build(b: *std.Build) void {
         const run_unit_tests = b.addRunArtifact(unit_tests);
         test_step.dependOn(&run_unit_tests.step);
     }
+    {
+        const unit_tests = b.addTest(.{
+            .root_source_file = .{ .path = "src/test_parser_fail.zig" },
+            .target = target,
+            .optimize = mode,
+        });
+        deps.addAllTo(unit_tests);
+        unit_tests.strip = strip;
+        unit_tests.pie = pie;
+
+        const run_unit_tests = b.addRunArtifact(unit_tests);
+        test_step.dependOn(&run_unit_tests.step);
+    }
 }
