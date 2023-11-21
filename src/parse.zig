@@ -2340,7 +2340,7 @@ fn parseBindingElement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await:
     if (w(parseSingleNameBinding(alloc, p, Yield, Await))) |_| return;
 
     _ = try parseBindingPattern(alloc, p, Yield, Await);
-    _ = try parseInitializer(alloc, p, true, Yield, Await);
+    _ = parseInitializer(alloc, p, true, Yield, Await) catch null;
 }
 
 /// MethodDefinition[Yield, Await] : ClassElementName[?Yield, ?Await] ( UniqueFormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
