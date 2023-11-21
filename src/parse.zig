@@ -2929,7 +2929,7 @@ fn parseFunctionExpression(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     errdefer p.idx = old_idx;
 
     try p.eatTok("function");
-    _ = try parseBindingIdentifier(alloc, p, false, false);
+    _ = parseBindingIdentifier(alloc, p, false, false) catch null;
     try p.eatTok("(");
     _ = try parseFormalParameters(alloc, p, false, false);
     try p.eatTok(")");
