@@ -2706,7 +2706,7 @@ fn parseSingleNameBinding(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Awa
     errdefer p.idx = old_idx;
 
     _ = try parseBindingIdentifier(alloc, p, Yield, Await);
-    _ = try parseInitializer(alloc, p, true, Yield, Await);
+    _ = parseInitializer(alloc, p, true, Yield, Await) catch null;
 }
 
 /// ClassElementName[Yield, Await] : PropertyName[?Yield, ?Await]
