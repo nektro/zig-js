@@ -3149,9 +3149,18 @@ fn parseLiteralPropertyName(alloc: std.mem.Allocator, p: *Parser) anyerror!void 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(parseIdentifierName(alloc, p))) |_| return;
-    if (w(parseStringLiteral(alloc, p))) |_| return;
-    if (w(parseNumericLiteral(alloc, p))) |_| return;
+    if (w(parseIdentifierName(alloc, p))) |_| {
+        try p.eatSpace(true);
+        return;
+    }
+    if (w(parseStringLiteral(alloc, p))) |_| {
+        try p.eatSpace(false);
+        return;
+    }
+    if (w(parseNumericLiteral(alloc, p))) |_| {
+        try p.eatSpace(false);
+        return;
+    }
     return error.JsMalformed;
 }
 
