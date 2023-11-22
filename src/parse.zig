@@ -1536,13 +1536,13 @@ fn parseObjectBindingPattern(alloc: std.mem.Allocator, p: *Parser, Yield: bool, 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    try p.eatTok("[");
+    try p.eatTok("{");
     if (w(parseBindingPropertyList(alloc, p, Yield, Await))) |_| {
-        p.eatTok(",") catch {};
-        p.eatTok("]") catch return;
+        if (w(p.eatTok("}"))) |_| return;
+        try p.eatTok(",");
     }
     _ = parseBindingRestProperty(alloc, p, Yield, Await) catch {};
-    try p.eatTok("]");
+    try p.eatTok("}");
 }
 
 /// ArrayBindingPattern[Yield, Await] : [ Elision? BindingRestElement[?Yield, ?Await]? ]
