@@ -1656,13 +1656,16 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
-    var old_idx = p.idx;
-    errdefer p.idx = old_idx;
-
-    var n: usize = 0;
-    while (w(p.eatTok("new"))) |_| : (n += 1) {
-        //
+    // only eat n-1 'new's since MemberExpression includes a `'new' MemberExpression Arguments` production
+    // and we don't want eating prefixed 'new's to interfere.
+    var fifo = extras.RingBuffer(usize, 2){};
+    fifo.append(p.idx);
+    fifo.append(p.idx);
+    while (w(p.eatTok("new"))) |_| {
+        fifo.append(p.idx);
     }
+    p.idx = fifo.items[0];
+
     return parseMemberExpression(alloc, p, Yield, Await);
 }
 
