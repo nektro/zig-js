@@ -2323,7 +2323,7 @@ fn parseIdentifierPartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(p.eatAny("!\"'[]{}();:#%^&|*=+-`~<>?"))) |_| return error.JsMalformed;
+    if (w(p.eatAny("!\"'[]{}();:#%^&|*=+-`~<>? "))) |_| return error.JsMalformed;
     if (w(p.eatByte('$'))) |_| return;
     if (w(p.eatCp(0x200C))) |_| return; // <ZWNJ>
     if (w(p.eatCp(0x200D))) |_| return; // <ZWJ>
