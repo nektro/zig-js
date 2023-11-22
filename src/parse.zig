@@ -1604,6 +1604,7 @@ fn parseConciseBody(alloc: std.mem.Allocator, p: *Parser, In: bool) anyerror!voi
     if (w(p.eatTok("{"))) |_| {
         _ = try parseFunctionBody(alloc, p, false, false);
         _ = try p.eatTok("}");
+        return;
     }
     _ = try parseExpressionBody(alloc, p, In, false);
 }
