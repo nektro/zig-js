@@ -2428,7 +2428,7 @@ fn parseFieldDefinition(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await
     errdefer p.idx = old_idx;
 
     _ = try parseClassElementName(alloc, p, Yield, Await);
-    _ = try parseInitializer(alloc, p, true, Yield, Await);
+    _ = parseInitializer(alloc, p, true, Yield, Await) catch null;
 }
 
 /// ClassStaticBlock : static { ClassStaticBlockBody }
