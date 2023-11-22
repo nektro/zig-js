@@ -831,9 +831,9 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         p.eatTok("for") catch break :blk;
         p.eatTok("(") catch break :blk;
         parseLexicalDeclaration(alloc, p, false, Yield, Await) catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(";") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
@@ -849,9 +849,9 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         p.eatTok("var") catch break :blk;
         parseVariableDeclarationList(alloc, p, false, Yield, Await) catch break :blk;
         p.eatTok(";") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(";") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
@@ -864,11 +864,11 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         };
         p.eatTok("for") catch break :blk;
         p.eatTok("(") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(";") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(";") catch break :blk;
-        parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        _ = parseExpression(alloc, p, true, Yield, Await) catch null;
         p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
