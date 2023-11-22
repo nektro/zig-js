@@ -1088,11 +1088,6 @@ fn parseIdentifier(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    if (w(p.eatRange(0x21, 0x2F))) |_| return error.JsMalformed; // !  /
-    if (w(p.eatRange(0x3A, 0x40))) |_| return error.JsMalformed; // :  @
-    if (w(p.eatRange(0x5B, 0x60))) |_| return error.JsMalformed; // [  `
-    if (w(p.eatRange(0x7B, 0x7E))) |_| return error.JsMalformed; // {  ~
-
     if (w(parseReservedWord(alloc, p))) |_| return error.JsMalformed;
     if (w(parseIdentifierName(alloc, p))) |_| {
         try p.eatSpace(true);
@@ -2325,6 +2320,7 @@ fn parseIdentifierPartChar(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
+    if (w(p.eatAny("!\"'[]{}();:#%^&|*=+-`~<>?"))) |_| return error.JsMalformed;
     if (w(p.eatByte('$'))) |_| return;
     if (w(p.eatCp(0x200C))) |_| return; // <ZWNJ>
     if (w(p.eatCp(0x200D))) |_| return; // <ZWJ>
