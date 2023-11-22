@@ -3173,6 +3173,12 @@ fn parseBitwiseANDExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yie
         errdefer p.idx = old_idx;
 
         _ = parseEqualityExpression(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
+        old_idx = p.idx;
+        if (w(p.eatTok("&&"))) |_| {
+            //TODO: remove this when we have proper token iterator
+            p.idx = old_idx;
+            break;
+        }
         p.eatTok("&") catch break;
     }
 }
