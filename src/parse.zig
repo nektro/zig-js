@@ -834,6 +834,7 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
         p.eatTok(";") catch break :blk;
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
         return;
@@ -851,6 +852,7 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
         p.eatTok(";") catch break :blk;
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
         return;
@@ -867,6 +869,7 @@ fn parseForStatement(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: b
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
         p.eatTok(";") catch break :blk;
         parseExpression(alloc, p, true, Yield, Await) catch break :blk;
+        p.eatTok(")") catch break :blk;
         parseStatement(alloc, p, Yield, Await, Return) catch break :blk;
         good = true;
         return;
