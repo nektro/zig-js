@@ -729,7 +729,7 @@ fn parseVariableDeclaration(alloc: std.mem.Allocator, p: *Parser, In: bool, Yiel
         _ = try parseInitializer(alloc, p, In, Yield, Await);
         return;
     };
-    _ = try parseInitializer(alloc, p, In, Yield, Await);
+    _ = parseInitializer(alloc, p, In, Yield, Await) catch null;
 }
 
 /// AssignmentExpression[In, Yield, Await] : ConditionalExpression[?In, ?Yield, ?Await]
