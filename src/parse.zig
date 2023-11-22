@@ -2615,7 +2615,7 @@ fn parseNoSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
     errdefer p.idx = old_idx;
 
     try p.eat("`");
-    _ = try parseTemplateCharacters(alloc, p);
+    _ = parseTemplateCharacters(alloc, p) catch null;
     try p.eat("`");
 }
 
