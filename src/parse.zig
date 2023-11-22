@@ -453,11 +453,14 @@ fn parseExpression(alloc: std.mem.Allocator, p: *Parser, In: bool, Yield: bool, 
     defer t.end();
 
     var i: usize = 0;
+    var last_good = p.idx;
     while (true) : (i += 1) {
-        var old_idx = p.idx;
-        errdefer p.idx = old_idx;
-
-        _ = try parseAssignmentExpression(alloc, p, In, Yield, Await);
+        _ = parseAssignmentExpression(alloc, p, In, Yield, Await) catch {
+            p.idx = last_good;
+            if (i == 0) return error.JsMalformed;
+            break;
+        };
+        last_good = p.idx;
         p.eatTok(",") catch break;
     }
 }
