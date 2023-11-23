@@ -71,8 +71,9 @@ fn parseStatementList(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
 
     var i: usize = 0;
     while (true) : (i += 1) {
-        _ = parseStatementListItem(alloc, p, Yield, Await, Return) catch if (i == 0) return error.JsMalformed else break;
+        const item = parseStatementListItem(alloc, p, Yield, Await, Return) catch null;
         if (p.end) break;
+        if (item == null) if (i == 0) return error.JsMalformed else break;
     }
 }
 
