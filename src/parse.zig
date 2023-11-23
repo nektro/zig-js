@@ -442,7 +442,7 @@ fn parseVariableDeclarationList(alloc: std.mem.Allocator, p: *Parser, In: bool, 
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = try parseVariableDeclaration(alloc, p, In, Yield, Await);
+        _ = parseVariableDeclaration(alloc, p, In, Yield, Await) catch if (i == 0) return error.JsMalformed else break;
         p.eatTok(",") catch break;
     }
 }
