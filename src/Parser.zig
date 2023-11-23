@@ -18,6 +18,7 @@ string_bytes: std.ArrayListUnmanaged(u8) = .{},
 strings_map: std.StringArrayHashMapUnmanaged(t.StringIndex) = .{},
 memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, struct { usize, void }) = .{},
 memoize_fails: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, void) = .{},
+trace_eat: bool = false,
 
 pub fn init(allocator: std.mem.Allocator, any: extras.AnyReader) Parser {
     return .{
@@ -41,6 +42,9 @@ pub fn slice(ore: *Parser) []const u8 {
 }
 
 pub fn eat(ore: *Parser, comptime test_s: string) !void {
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({s})", .{ ore.idx, test_s }) else tracer.Ctx{ .src = @src() };
+    defer if (ore.trace_eat) tr.end();
+
     if (test_s.len == 1) {
         _ = try ore.eatByte(test_s[0]);
         return;
@@ -68,6 +72,9 @@ fn peekAmt(ore: *Parser, amt: usize) !void {
 }
 
 pub fn eatByte(ore: *Parser, test_c: u8) !u8 {
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({c})", .{ ore.idx, test_c }) else tracer.Ctx{ .src = @src() };
+    defer if (ore.trace_eat) tr.end();
+
     try ore.peekAmt(1);
     if (ore.slice()[0] == test_c) {
         ore.idx += 1;
@@ -77,10 +84,16 @@ pub fn eatByte(ore: *Parser, test_c: u8) !u8 {
 }
 
 pub fn eatCp(ore: *Parser, comptime test_cp: u21) !u21 {
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})(U+{d})", .{ ore.idx, test_cp }) else tracer.Ctx{ .src = @src() };
+    defer if (ore.trace_eat) tr.end();
+
     return ore.eatRangeM(test_cp, test_cp);
 }
 
 pub fn eatRange(ore: *Parser, comptime from: u8, comptime to: u8) !u8 {
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else tracer.Ctx{ .src = @src() };
+    defer if (ore.trace_eat) tr.end();
+
     try ore.peekAmt(1);
     const b = ore.slice()[0];
     if (b >= from and b <= to) {
@@ -91,6 +104,9 @@ pub fn eatRange(ore: *Parser, comptime from: u8, comptime to: u8) !u8 {
 }
 
 pub fn eatRangeM(ore: *Parser, comptime from: u21, comptime to: u21) !u21 {
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else tracer.Ctx{ .src = @src() };
+    defer if (ore.trace_eat) tr.end();
+
     const from_len = comptime std.unicode.utf8CodepointSequenceLength(from) catch unreachable;
     const to_len = comptime std.unicode.utf8CodepointSequenceLength(to) catch unreachable;
     const amt = @max(from_len, to_len);

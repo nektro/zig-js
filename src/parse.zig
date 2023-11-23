@@ -2629,6 +2629,8 @@ fn parseNoSubstitutionTemplate(alloc: std.mem.Allocator, p: *Parser) anyerror!vo
 
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
+    p.trace_eat = true;
+    defer p.trace_eat = false;
 
     try p.eat("`");
     _ = parseTemplateCharacters(alloc, p) catch null;
@@ -3266,6 +3268,8 @@ fn parseStringLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
+    p.trace_eat = true;
+    defer p.trace_eat = false;
 
     const q = try p.eatAny(&.{ '"', '\'' });
     while (true) {
@@ -3450,6 +3454,9 @@ fn parseDecimalLiteral(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
         defer if (!good) {
             p.idx = old_idx;
         };
+        p.trace_eat = true;
+        defer p.trace_eat = false;
+
         parseDecimalIntegerLiteral(alloc, p) catch break :blk;
         p.eat(".") catch break :blk;
         parseDecimalDigits(alloc, p, true) catch {};
