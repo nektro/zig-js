@@ -3358,9 +3358,7 @@ fn parseTemplateCharacter(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     if (w(p.eatByte('$'))) |_| return;
     if (w(p.eatByte('\\'))) |_| {
         if (w(parseTemplateEscapeSequence(alloc, p))) |_| return;
-        if (w(parseNotEscapeSequence(alloc, p))) |_| return;
-        if (w(parseLineTerminatorSequence(alloc, p))) |_| return;
-        return error.JsMalformed;
+        return;
     }
     if (w(parseLineTerminatorSequence(alloc, p))) |_| return;
     if (w(p.eatByte('`'))) |_| return error.JsMalformed;
