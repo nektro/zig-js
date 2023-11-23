@@ -16,6 +16,8 @@ col: usize = 1,
 extras: std.ArrayListUnmanaged(u32) = .{},
 string_bytes: std.ArrayListUnmanaged(u8) = .{},
 strings_map: std.StringArrayHashMapUnmanaged(t.StringIndex) = .{},
+memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, struct { usize, void }) = .{},
+memoize_fails: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, void) = .{},
 
 pub fn init(allocator: std.mem.Allocator, any: extras.AnyReader) Parser {
     return .{
@@ -26,6 +28,8 @@ pub fn init(allocator: std.mem.Allocator, any: extras.AnyReader) Parser {
 
 pub fn deinit(ore: *Parser) void {
     ore.temp.deinit(ore.arena);
+    ore.memoize_map.deinit(ore.arena);
+    ore.memoize_fails.deinit(ore.arena);
 }
 
 pub fn avail(ore: *Parser) usize {
