@@ -3115,7 +3115,7 @@ fn parseTemplateSpans(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
 
 ///  HexDigit :: one of
 /// 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
-fn parseHexDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
+fn parseHexDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!u8 {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
@@ -3124,9 +3124,9 @@ fn parseHexDigit(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     errdefer p.idx = old_idx;
 
     _ = alloc;
-    if (w(p.eatRange('0', '9'))) |_| return;
-    if (w(p.eatRange('a', 'f'))) |_| return;
-    if (w(p.eatRange('A', 'F'))) |_| return;
+    if (w(p.eatRange('0', '9'))) |c| return c;
+    if (w(p.eatRange('a', 'f'))) |c| return c;
+    if (w(p.eatRange('A', 'F'))) |c| return c;
     return error.JsMalformed;
 }
 
