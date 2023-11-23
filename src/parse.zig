@@ -9,6 +9,7 @@ const Parser = @import("./Parser.zig");
 const extras = @import("extras");
 const unicodeucd = @import("unicode-ucd");
 const tracer = @import("tracer");
+const ty = @import("./types.zig");
 
 inline fn w(val: anytype) ?W(@TypeOf(val)) {
     return val catch null;
@@ -4185,19 +4186,22 @@ fn parseOctalDigits(alloc: std.mem.Allocator, p: *Parser, Sep: bool) anyerror!vo
 /// HexDigits[Sep] :: HexDigit
 /// HexDigits[Sep] :: HexDigits[?Sep] HexDigit
 /// HexDigits[Sep] :: [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
-fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, Sep: bool) anyerror!void {
+fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, Sep: bool) anyerror!ty.StringIndex {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
+    var list = std.ArrayList(u8).init(alloc);
+    defer list.deinit();
     var i: usize = 0;
     while (true) : (i += 1) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
-        _ = parseHexDigit(alloc, p) catch if (i == 0) return error.JsMalformed else break;
-        if (Sep) _ = parseNumericLiteralSeparator(alloc, p) catch {};
+        try list.append(parseHexDigit(alloc, p) catch if (i == 0) return error.JsMalformed else break);
+        if (Sep) parseNumericLiteralSeparator(alloc, p) catch {};
     }
+    return p.addStr(alloc, list.items);
 }
 
 /// EscapeSequence :: CharacterEscapeSequence
