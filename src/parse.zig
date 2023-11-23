@@ -1554,9 +1554,10 @@ fn parseArrayBindingPattern(alloc: std.mem.Allocator, p: *Parser, Yield: bool, A
     errdefer p.idx = old_idx;
 
     try p.eatTok("[");
-    if (w(parseBindingElementList(alloc, p, Yield, Await))) |_| {
+    if (w(parseBindingElementList(alloc, p, Yield, Await))) |_| blk: {
         p.eatTok(",") catch {};
-        p.eatTok("]") catch return;
+        p.eatTok("]") catch break :blk;
+        return;
     }
     parseElision(alloc, p) catch {};
     _ = parseBindingRestElement(alloc, p, Yield, Await) catch {};
