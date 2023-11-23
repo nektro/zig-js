@@ -2158,6 +2158,16 @@ fn parseMemberExpressionInner(alloc: std.mem.Allocator, p: *Parser, Yield: bool,
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
+    if (p.memoize_map.get(.{ parseMemberExpressionInner, p.idx, Yield, Await, false })) |result| {
+        p.idx += result[0];
+        return result[1];
+    }
+    if (p.memoize_fails.get(.{ parseMemberExpressionInner, p.idx, Yield, Await, false })) |_| return error.JsMalformed;
+    var ok = true;
+    defer if (ok) p.memoize_map.put(alloc, .{ parseMemberExpressionInner, old_idx, Yield, Await, false }, .{ p.idx - old_idx, {} }) catch @panic("oom");
+    defer if (!ok) p.memoize_fails.put(alloc, .{ parseMemberExpressionInner, old_idx, Yield, Await, false }, {}) catch @panic("oom");
+    errdefer ok = false;
+
     if (w(parsePrimaryExpression(alloc, p, Yield, Await))) |_| return;
     if (w(parseSuperProperty(alloc, p, Yield, Await))) |_| return;
     if (w(parseMetaProperty(alloc, p))) |_| return;
