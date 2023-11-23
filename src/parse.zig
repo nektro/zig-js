@@ -4192,7 +4192,7 @@ fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, Sep: bool) anyerror!void
     defer t.end();
 
     var i: usize = 0;
-    while (true) : (i += 0) {
+    while (true) : (i += 1) {
         var old_idx = p.idx;
         errdefer p.idx = old_idx;
 
