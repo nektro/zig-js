@@ -2674,7 +2674,7 @@ fn parseHex4Digits(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
 
 ///  CodePoint ::
 /// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
+fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!u21 {
     //
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
@@ -2682,9 +2682,10 @@ fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     var old_idx = p.idx;
     errdefer p.idx = old_idx;
 
-    //TODO:
-    _ = alloc;
-    return error.TODO;
+    const sidx = try parseHexDigits(alloc, p, false);
+    const s = p.getStr(sidx);
+    const c = std.fmt.parseInt(u21, s, 16) catch return error.JsMalformed;
+    return c;
 }
 
 ///  UnicodeIDContinue ::
