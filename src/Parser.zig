@@ -184,7 +184,7 @@ pub fn eatSpace(ore: *Parser, comptime test_was_alpha: bool) !void {
 
 pub fn addStr(ore: *Parser, alloc: std.mem.Allocator, str: string) !t.StringIndex {
     const adapter: Adapter = .{ .ore = ore };
-    var res = try ore.strings_map.getOrPutAdapted(alloc, str, adapter);
+    const res = try ore.strings_map.getOrPutAdapted(alloc, str, adapter);
     if (res.found_existing) return res.value_ptr.*;
     const q = ore.string_bytes.items.len;
     try ore.string_bytes.appendSlice(alloc, str);
