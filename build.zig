@@ -8,7 +8,7 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Run unit tests");
     {
         const unit_tests = b.addTest(.{
-            .root_source_file = .{ .path = "src/test_parser.zig" },
+            .root_source_file = b.path("src/test_parser.zig"),
             .target = target,
             .optimize = mode,
         });
@@ -19,7 +19,7 @@ pub fn build(b: *std.Build) void {
     }
     {
         const unit_tests = b.addTest(.{
-            .root_source_file = .{ .path = "src/test_parser_pass.zig" },
+            .root_source_file = b.path("src/test_parser_pass.zig"),
             .target = target,
             .optimize = mode,
         });
@@ -30,7 +30,7 @@ pub fn build(b: *std.Build) void {
     }
     {
         const unit_tests = b.addTest(.{
-            .root_source_file = .{ .path = "src/test_parser_fail.zig" },
+            .root_source_file = b.path("src/test_parser_fail.zig"),
             .target = target,
             .optimize = mode,
         });
