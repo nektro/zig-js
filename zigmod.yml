@@ -10,4 +10,5 @@ dependencies:
 
 root_dependencies:
   - src: git https://github.com/tc39/test262-parser-tests
+    id: jt8JCkXwRTS9N64psaAPzYy2vZUWMF5HKdfxecED
     keep: true
