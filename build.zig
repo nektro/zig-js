@@ -15,6 +15,7 @@ pub fn build(b: *std.Build) void {
         deps.addAllTo(unit_tests);
 
         const run_unit_tests = b.addRunArtifact(unit_tests);
+        run_unit_tests.has_side_effects = true;
         test_step.dependOn(&run_unit_tests.step);
     }
     {
@@ -26,6 +27,7 @@ pub fn build(b: *std.Build) void {
         deps.addAllTo(unit_tests);
 
         const run_unit_tests = b.addRunArtifact(unit_tests);
+        run_unit_tests.has_side_effects = true;
         test_step.dependOn(&run_unit_tests.step);
     }
     {
@@ -37,6 +39,7 @@ pub fn build(b: *std.Build) void {
         deps.addAllTo(unit_tests);
 
         const run_unit_tests = b.addRunArtifact(unit_tests);
+        run_unit_tests.has_side_effects = true;
         test_step.dependOn(&run_unit_tests.step);
     }
 }
