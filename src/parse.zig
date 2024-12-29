@@ -2664,7 +2664,7 @@ fn parseUnicodeIDStart(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     _ = alloc;
     @setEvalBranchQuota(100_000);
     inline for (unicodeucd.derived_core_properties.data) |item| {
-        if (item.prop == .ID_Start) {
+        if (item.property == .ID_Start) {
             if (w(p.eatRangeM(item.from, item.to))) |_| return;
         }
     }
@@ -2715,7 +2715,7 @@ fn parseUnicodeIDContinue(alloc: std.mem.Allocator, p: *Parser) anyerror!void {
     _ = alloc;
     @setEvalBranchQuota(100_000);
     inline for (unicodeucd.derived_core_properties.data) |item| {
-        if (item.prop == .ID_Continue) {
+        if (item.property == .ID_Continue) {
             if (w(p.eatRangeM(item.from, item.to))) |_| return;
         }
     }
