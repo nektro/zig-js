@@ -9,7 +9,7 @@ pub fn build(b: *std.Build) void {
     const options = b.addOptions();
     options.addOption([]const u8, "parser_tests_path", deps.dirs._jt8JCkXwRTS9);
 
-    const test_step = b.step("test", "Run unit tests");
+    const test_step = b.step("test", "Run all library tests");
     {
         const unit_tests = b.addTest(.{
             .root_source_file = b.path("src/test_parser.zig"),
