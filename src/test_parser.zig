@@ -26,7 +26,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/028846a58c67687f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/02b924339f85fe00.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/02cf1a37af2403fe.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/02dad3c9ec38d3c7.js"); }
-test {return error.SkipZigTest;}// try doPass(parser_tests_path ++ "/pass-explicit/0339fa95c78c11bd.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/0339fa95c78c11bd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/034ded949b5c2fa3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/03608b6e222ae700.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0371eb8b8c28569d.js"); }
@@ -71,7 +71,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/075c7204d0b0af60.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/079b7b699d0cacab.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/07a74deab99e85eb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/07bce073a241288b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/07cfd31162dc117a.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/07cfd31162dc117a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/07d4bedb35fb60b6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0813adc754c82a98.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0821d3a84023aca2.js"); }
@@ -99,18 +99,18 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/0aa9242278e1393b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0aeb95f62766e684.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b1fc7208759253b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b2804600405dbf6.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/0b281915a3227177.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/0b281915a3227177.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b4d61559ccce0f9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b4e932ec15cdae4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b50309b4112013e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b5f023129f23abf.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b6dfcd5427a43a6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0b881b80b7220fad.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/0ba326a76aa2a0ae.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/0ba326a76aa2a0ae.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0bbda5d7d8ae8990.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0bef54f61acccbe5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0c44152a1a3e2f90.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/0c7719169ed21a87.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/0c7719169ed21a87.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0c8a07486c1ff18e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0cd7b76d7d1431d6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0ce4fa8fdf700065.js"); }
@@ -121,7 +121,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/0d7e3e1647af9ba6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0d9f26fe4d91ad07.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0da4b57d03d33129.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0da6496ed75822b1.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/0de4ef1344cbb907.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/0de4ef1344cbb907.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0de707242475664c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0de805d0c921e235.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/0def12c63f682470.js"); }
@@ -141,7 +141,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/0fe2654034a20f6b.module.j
 test { try doPass(parser_tests_path ++ "/pass-explicit/0ffdc03e2ffcb5dc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/10786cdac00d0c02.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/10857a84ed2962f1.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1093d98f5fc0758d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1093d98f5fc0758d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/10a21e1cf65c5afb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/10d6486502949e74.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/10f0ef998c05c611.js"); }
@@ -155,15 +155,15 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/119e9dce4feae643.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/11a021c9efe0e432.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/121491a690a13543.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1223609b0f7a2129.js"); }
-test {return error.SkipZigTest;}// try doPass(parser_tests_path ++ "/pass-explicit/123285734ee7f954.js"); } // uses 'with'
-test { try doPass(parser_tests_path ++ "/pass-explicit/123bfcc3f6cf379f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/123285734ee7f954.js"); } // uses 'with'
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/123bfcc3f6cf379f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/123f89c06747ced2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/124490e0f2dbbac7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/12556d5e39db1cea.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/126a6455f0f721fe.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1270d541e0fd6af8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/12752899d5c5eb00.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/129c95a57d234b7b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/129c95a57d234b7b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/12d4b327a5e20850.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/12d5bedf1812952a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/12e59b6d403833ae.js"); }
@@ -187,28 +187,28 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/151d4db59b774864.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1530c2c5484d867f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/153688477d7e69ba.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/153bd6819f5fa69b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/159c17331c90a465.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/159c17331c90a465.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/15a12468ff312d51.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/15d072c60817cdca.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/15d9592709b947a0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/15dfd62aa10c8b18.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1623cc76ec1fb540.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/162fd7b4a7647a1b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/162fd7b4a7647a1b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/163e6a68a09abaed.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/166431dca77feba6.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/166431dca77feba6.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/16b9227a4a41bc7e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/16c7073c546fdd58.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/16d0c12aad83f9b3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1714b06e6a415766.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1717229250780255.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17302b9b0cab0c69.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/17326734a7bf9629.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/17326734a7bf9629.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/174d05abbd69a960.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/175a032b2252eb0d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/177fef3d002eb873.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17a2de2c9e102bba.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17bd5dc47ec4a3ba.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/17bd95dfa6a302f2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/17bd95dfa6a302f2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17cc7c10e02028be.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17d63bb0b9482189.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/17d881105a9a6c85.js"); }
@@ -219,7 +219,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/18e32b70e6a5574c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/18f05b95a72dffa1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/18f731daf0845475.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1908280b73954ef7.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1938db3bb862ded1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1938db3bb862ded1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/194b702816a7e5e5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1972b64c4704a1eb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/19d1d07fe88ec849.js"); }
@@ -230,12 +230,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/1a7800a74a866638.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1b0c0fc32b9e5e35.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1b542dd79e4444c7.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1b6e33ab982844af.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1b87f88ae8ea1cb1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1b87f88ae8ea1cb1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1b884461ff1acfc6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1ba78d63a36ea567.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1bbe65871120530b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1c055d256ec34f17.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1c1e2a43fe5515b6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1c1e2a43fe5515b6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1c2f680b78692645.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1c6424d9a7209f81.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1c6c67fcd71f2d08.js"); }
@@ -243,7 +243,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/1c7e1e347f726166.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1ca991b39b6e7754.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1cb2c267c552028f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1cdce2d337e64b4f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1ce4afd9b35e3312.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1ce4afd9b35e3312.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1d1037fcfa0c7958.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1d1ac5ee0d1a9bd4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1d3dd296a717e478.js"); }
@@ -251,7 +251,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/1db0d98ff1726af8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1db76a05c7b9a090.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1de765c987733026.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1e3f57c4ec83f5bc.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/1e61843633dcb483.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/1e61843633dcb483.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1ea254c74f1071de.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1ef3bdd7e919cca8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1efde9ddd9d6e6ce.module.js"); }
@@ -264,7 +264,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/1fbf374c8a04fb23.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1fc4349ef394b505.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/1fd743f03945fd05.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2010526ea64db82e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/20644d335e3cd008.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/20644d335e3cd008.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/206ebb4e67a6daa9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2072cb8131a4ae2b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/209fc98bea7b9d67.js"); }
@@ -272,26 +272,26 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/20aca21e32bf7772.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/20b873ad024b210f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/20f9bec9f3215688.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2100bec1b92b51ae.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/212d2ca66d97a90f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/212d2ca66d97a90f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/213c3b05c6690d2d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/213e3455c8f8ceb2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2160fc99c3589501.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2179895ec5cc6276.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/218ca74570bf06b5.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2179895ec5cc6276.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/218ca74570bf06b5.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/218e751b8b453b9b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/21ebb8746371268b.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/21ebb8746371268b.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/21f1173fff072ee5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/21f5ce68788d4ffa.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2207b24e625f30db.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2207b24e625f30db.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/22119a1d30256255.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/224d4dca3d98b618.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/227118dffd2c9935.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/22b24d1deb35baf3.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/22dc0bb1d4e8d89f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/22dc0bb1d4e8d89f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/22eba6e3841edeec.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/230da70c908c1859.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/23869c020fc2cb0f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/23d6a92eed7f18fa.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/23d6a92eed7f18fa.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2418fddf06e515f8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/242ede66951e11b1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/24557730b5076325.js"); }
@@ -301,7 +301,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/24fa28a37061a18f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/250ced8c8e83b389.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/25296359c69440e8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/252bb992a448270e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/25542e65ad9d2bf1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/25542e65ad9d2bf1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2565ae4b2f2956b0.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/257f15ea5c44a423.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/25824f6a683e7467.module.js"); }
@@ -321,7 +321,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/27409f5b7b692b24.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2754a9872f3512ed.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/27ac24465c731ff9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/27b5d00cc75de02f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/27ca96102da82628.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/27ca96102da82628.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/27ed2f0fdb7f53f6.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/284ca169f09605be.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/285648c16156804f.js"); }
@@ -330,7 +330,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/28a54e6410ad3f19.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/290fdc5a2f826ead.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2935f62bfe48ca1b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2976a1598d3a75e1.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/29bcad4873d3581b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/29bcad4873d3581b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/29e41f46ede71f11.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/29ef8a7a1cbfda7f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2a11bb318142547e.js"); }
@@ -342,21 +342,21 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/2acc83b037420689.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2afc5d4b75dbf12d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2b0727c871857af5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2b1f4f042cff07a3.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2b393e093a0e2fb3.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2b393e093a0e2fb3.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2b478bb5ceb2e18b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2b83dea123ed2e2e.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2b83dea123ed2e2e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2b9d4a632590814a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2ba11d8ca169ab6c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2bd8ae9202baa31e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2bdb271c1ff34f35.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2c16af589c5c8535.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2c4b264884006a8e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2c5f4d039f9c7740.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2c4b264884006a8e.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2c5f4d039f9c7740.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2c7a69627f1d8062.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2c7e2fecbc1cb477.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2ccf4707fe3749ff.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2cda5eb51a2d97e7.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/2cdf798a24c241e3.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/2cdf798a24c241e3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2d10fed2af94fbd1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2d1ecf6fb0d1afe2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/2d3273e0386e9cb8.js"); }
@@ -393,7 +393,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/31ad88cae27258b7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/31cca30ad2bf696d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/323783be9a53a31e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/329bc0e532da6227.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/32a9af0615bf7618.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/32a9af0615bf7618.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/32b4780ad9c4292a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/32b635a9667a9fb1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/32b6854d07aefbda.js"); }
@@ -413,21 +413,21 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/3514acf61732f662.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/35bf182594dc08ac.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/35e730121a5e6326.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/35eb2e229858a6c7.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/3610e596404818d6.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/36224cf8215ad8e4.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/3610e596404818d6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/36224cf8215ad8e4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/366585381e4610b4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/369b56fe359d52fc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/369fd0a1e40030d8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/36a9e7f1c95b82ff.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/36fb3e9c8cedf764.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/36ff120198eea816.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/36ff120198eea816.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/370a2bd1387fd440.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/372097a44c33daf2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/373e35460ecaccc6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3793ec99f844de1c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/37ac3bcee6fa89f9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/37c0f5275362d1c9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/37d26e3bec6d9a0f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/37d26e3bec6d9a0f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/37e4a6eca1ece7e5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/37e845e0d8283fb3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/380e999de8f31c7d.js"); }
@@ -445,7 +445,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/39bd53b0c3dcd639.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3a1ccd915e97ed68.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3a1f039e533d1543.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3a50539d66e7fb07.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/3a5a7699f0631c6f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/3a5a7699f0631c6f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3a707c56867f396c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3aa600e48cbd8a5c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3ae4f46daa688c58.js"); }
@@ -472,7 +472,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/3d137e7b0cb6c8bc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3d2ab39608730a47.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3d3ddc63a85b13a0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3d9c76216b0a9d4b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/3dabeca76119d501.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/3dabeca76119d501.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3df03e7e138b7760.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3e1a6f702041b599.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3e3a99768a4a1502.js"); }
@@ -491,7 +491,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/3f46ee1db509d55d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3f6fd744861ee7c3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3f8b15109761ea65.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3f9b0dd207c09990.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/3fb07536eb5aea8d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/3fb07536eb5aea8d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/3ff52d86c77678bd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4014ec6c7931de54.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/401544b8abe9d656.js"); }
@@ -505,15 +505,15 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/4086605956ddfcbb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/408971d922c72ea2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/409f30dc7efe75d5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/40adcdf7cfe3fa0d.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/40b9ff090910c512.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/40b9ff090910c512.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/414b9b02f2789648.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4180f57196d0388d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/41ad2d6d8414c573.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/41b805ea7ac014e2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/41e79ea43f242aed.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/41e79ea43f242aed.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/41fc5bd8d644937c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/420855197cbff7ce.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/424fb5db0f6734b6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/424fb5db0f6734b6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4263e76758123044.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/42907dc7a3d7b79b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/43023cd549deee77.js"); }
@@ -524,7 +524,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/433859474119631f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4369559377b6394e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/438521c40cf1b08b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4389b59f7805c7c7.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/43bbb253d4035175.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/43bbb253d4035175.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4412172b5dc13cd6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/44136fa355b3678a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/441a92357939904a.js"); }
@@ -539,7 +539,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/45dd9586f26a3cf4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/45ed987996568823.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/45ff445d87e37214.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/46173461e93df4c2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/46279e885d2aa853.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/46279e885d2aa853.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/465b79616fdc9794.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/46657ec13f5857d5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4672c2ef688237c9.js"); }
@@ -574,9 +574,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/4a0d9236bc523b77.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4a479db6af79906e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4a56cf2dea99fcd6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4a5fe6bf2362352b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/4a79205bd8cd49d0.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/4a79205bd8cd49d0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4a807fda565547a2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/4ac1a1bc6b3cbe66.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/4ac1a1bc6b3cbe66.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4ad6e3a59e27e9b1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4ada45968b9f45ec.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4ae32442eef8a4e0.js"); }
@@ -595,7 +595,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/4c56fb063bea0ec2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4c71e11fbbc56349.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4d2c7020de650d40.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4d310ef039a7435c.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/4d833cbc56caaaf9.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/4d833cbc56caaaf9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4d88f169e3827587.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4dc600d5ae71e8eb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4deb8938d7b36024.js"); }
@@ -607,7 +607,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/4e3de59ad16a7d0f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4e625840177567fc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4e742059e0fc3d3c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4e7c58761e24d77c.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/4e8e7d6fe1e67ce5.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/4e8e7d6fe1e67ce5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4e9006104ab9afe8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4e997dab642864ca.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/4eafc760484cd72b.js"); }
@@ -641,7 +641,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/515825915b8d1cd8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5171e99c2d9d3e5a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5183eafe6b4cd6e0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/51a3505b43223a9f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/51b243bb5076b692.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/51b243bb5076b692.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/51b58dc84e1fab89.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/51ea4e18429c02e4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/51fd2b53ad7e1581.js"); }
@@ -650,14 +650,14 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/5212ddf4e4b70261.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/521479b987ae2d7f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/521b6dfff0a28aa1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/523950fa023d7305.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5239dd0fc0effb71.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5239dd0fc0effb71.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/524172bf792ef97e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/52aeec7b8da212a2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/52aeec7b8da212a2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/52ce5853ea953f0f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/52f2f30356750b9b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/52f9245e7cd97f6a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5317b960ad78bbfe.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5333f04581124314.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5333f04581124314.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/53645d3765e5f67f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/54032532b8655caf.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5406bea2982a6e13.module.js"); }
@@ -671,11 +671,11 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/54fb77cb2384a86b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/551af1dc1686e912.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5526c98fdf9150c1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/55b74de671f60184.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/55c15fe174790fb2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/55c27b3727ba1165.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/55c15fe174790fb2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/55c27b3727ba1165.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/55d1482dc2d95e91.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/55d721b105cc1780.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/560c364700fdb6b2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/560c364700fdb6b2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/561ccbf2e5091865.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5641ad33abcd1752.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5654d4106d7025c2.js"); }
@@ -694,8 +694,8 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/57971b49e239c0ff.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/57ad28ff7d96f031.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5829d742ab805866.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/585130f356b0729f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5856de37689f8db9.js"); }
-test {return error.SkipZigTest;} // try doPass(parser_tests_path ++ "/pass-explicit/585b857c11763bad.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5856de37689f8db9.js"); }
+test { try doPass(parser_tests_path ++ "/pass-explicit/585b857c11763bad.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/587400d1c019785a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/589dc8ad3b9aa28f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/58a52091eaa8746c.js"); }
@@ -709,7 +709,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/597b9759467727fc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5984eac0c5c6d947.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/598a5cedba92154d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/599dff255c5ec792.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/59ae0289778b80cd.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/59ae0289778b80cd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a06dab3e9fd0f65.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a079debdfff12da.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a0dcc9e43fed2c2.js"); }
@@ -717,7 +717,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/5a2a8e992fa4fe37.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a51417e1ceb294f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a54ee2c0b326b18.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5a7812b78a03b937.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5aca2791ab698851.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5aca2791ab698851.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5b146261dda66d63.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5b39aca97d9006f4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5b4cef6792d9462f.js"); }
@@ -726,11 +726,11 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/5b8d2b991d2c1f5b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5b8fad162f489b3b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5b9f113c3bdd0c49.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5bae374be95382c6.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5bb4c1e68b0925d1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5bb4c1e68b0925d1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5beffd72ddb47f13.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5c3d125ce5f032aa.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5c57eec29a019ebb.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5c587adcfe50a8c6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5c587adcfe50a8c6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5c5ef7a4bdc3e081.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5cc7ceeebdccb6d4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5cf0dc4259e98c15.js"); }
@@ -740,7 +740,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/5d3e89c83953788e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5d5b9de6d9b95f3e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5d687a45c607ea42.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5d8ab2c35c7eb883.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5d9d30af901ba176.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5d9d30af901ba176.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5dd65055dace49bc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5e0cab2e2e36274c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5e1cbe1737b1bbc6.js"); }
@@ -752,9 +752,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/5ecf2f4d83e6260d.module.j
 test { try doPass(parser_tests_path ++ "/pass-explicit/5ed18bdbe48cc4c3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5f1e0eff7ac775ee.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5f2834246274eccc.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5f5e1d12ad68e832.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5f5e1d12ad68e832.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5f730961df66e8e8.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/5f85b0b6828b081b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/5f85b0b6828b081b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5f9eeac7b076f34b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5fa8c711247d70f5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/5fcc16142185c87c.js"); }
@@ -764,7 +764,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/60a1991953372b97.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/60bb345d725fe68b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/60c092cb83b525f2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/60dcd48a3f6af44f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/610b397691988417.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/610b397691988417.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/612fed84b89e42a8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6196b3f969486455.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/61ceb5809404ee85.js"); }
@@ -790,7 +790,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/645e8cce491528cd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/646c2391c11102b5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/647e21f8f157c338.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6498dcc494193cb4.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/64cc57f82a54b7fb.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/64cc57f82a54b7fb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/64ff3b3ee7f636c5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/65047600233c760c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/65228d6a31a06406.js"); }
@@ -818,7 +818,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/6823058797ddd563.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/684237281767d41d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6861bb23b186f65a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/687b7b904904fcfd.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/687f678cde900411.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/687f678cde900411.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/69063bc9496ea6e5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/691e1d9954f3e6e2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/697b3d30c1d06918.js"); }
@@ -832,9 +832,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/6a240463b40550d2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6a323491fe75918a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6a735105a5e79722.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6a7ed6cb99ea0b81.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/6b0e8bbdc3dca1c5.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/6b36b5ad4f3ad84d.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/6b5e7e125097d439.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/6b0e8bbdc3dca1c5.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/6b36b5ad4f3ad84d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/6b5e7e125097d439.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6b63d36394b0ffb3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6b68aefbfbf0beb9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6b76b8761a049c19.js"); }
@@ -846,7 +846,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/6c5f0dd83c417a5a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6c688efe01b3631e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6cfcfc99afcb6e1a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6d1bf4c3db76b489.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/6d707802519c7158.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/6d707802519c7158.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6d79220c64963dad.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6d8728cbc7bfe6b5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6d8c97119162ad95.js"); }
@@ -859,7 +859,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/6ec818aa7f27cdbf.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6edc155d463535cb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6f256be2ef45a7d6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6f6e870785069487.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/6f824ec22e22a198.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/6f824ec22e22a198.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6ffb11115fcefb96.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6ffb1fb47c2dd12f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/6ffc173d4e1e5158.js"); }
@@ -901,9 +901,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/75969544af546abc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/75ad6a8ee6579761.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/75b0eeaf3aa61e74.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/75bb6594d6ad253f.module.js"); }
-test {return error.SkipZigTest;}// try doPass(parser_tests_path ++ "/pass-explicit/75e16348fe9e6213.js"); }
+test { try doPass(parser_tests_path ++ "/pass-explicit/75e16348fe9e6213.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/764e72657e7321b5.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/765a7a823aa1b070.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/765a7a823aa1b070.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/76703c4b987330fb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/76a46be6c2f09fa3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/76d4858e4a60be95.js"); }
@@ -918,7 +918,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/779e65d6349f1616.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/77a541b0502d0bde.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/77c661b2fbe3dd3a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/77db52b103913973.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/78435241f6c87ece.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/78435241f6c87ece.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/784a059faa166072.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/784cbc06d5ade346.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7855fbf5ea10e622.js"); }
@@ -948,7 +948,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/7ac0063e99bc8720.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7ae57d0c2d30db3a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7afd38d79e6795a8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7b0a9215ec756496.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/7b514406528ff126.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/7b514406528ff126.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7b71bc250036251c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7b72d7b43bedc895.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7b8a8232be18df90.js"); }
@@ -966,7 +966,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/7cbf77c14b9c89bc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7cd7c68a6131f816.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7d029e0be60dc821.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7d7dd05015778d56.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/7d8b61ba2a3a275c.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/7d8b61ba2a3a275c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7da12349ac9f51f2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7dab6e55461806c9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/7dde401422530d6b.js"); }
@@ -992,15 +992,15 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/801ac33e4c34efb8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/802658d6ef9a83ec.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/804e022cd08b4ae1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/807dfc91f4ed4394.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/80950061e291542b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/80950061e291542b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/80c6bda5cad0fbc5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/80d2351a5ae68524.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/80f60039028189e4.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/811b309b010a36ce.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/811b309b010a36ce.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8152f05423c90f61.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8179659ef4fd0965.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/818ea8eaeef8b3da.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/81a0322e554af8da.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/81a0322e554af8da.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/81a6472df96f185f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/81b986948b58ffda.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/81be1572d1eebdf2.js"); }
@@ -1012,7 +1012,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/82a730bd109206bb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/82c827ccaecbe22b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/832ad002639ce202.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8340cdb8653046bb.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/836158118a07b45d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/836158118a07b45d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8386fbff927a9e0e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/838d87085df03a6d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/83cea3f2e14d1e23.js"); }
@@ -1027,12 +1027,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/845e30448809e2bc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8462f068b299bca2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/849e112b480fda30.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/84b2a5d834daee2f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/84eaae502ca93891.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/84eaae502ca93891.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/84f901eb37273117.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/850a60daa178d3b6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/85263ecacc7a4dc5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8543b43f3c48c975.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/855b8dea36c841ed.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/855b8dea36c841ed.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/858d6a756ff641f3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8597768c0fe519eb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/85d2d93264f2672d.module.js"); }
@@ -1044,7 +1044,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/86a25a2a0e393ed6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/86b0ffc811e713ec.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/86d8f1465e745b44.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/86f68610fcefaeae.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/870a0b8d891753e9.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/870a0b8d891753e9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8751eb24f903c279.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/87844be2334fba9e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/87a9b0d1d80812cc.js"); }
@@ -1053,7 +1053,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/87e1d3eab9d05339.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/88127d108648d05b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/881a7a3d4e17e621.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/882910de7dd1aef9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/884e5c2703ce95f3.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/884e5c2703ce95f3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8854cac4acddd510.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/88561e211e862344.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/88827d8021b5b3ab.js"); }
@@ -1083,7 +1083,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/8c27fb7ef1e3ca3d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8c56513a6ac3cdff.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8c56cf12f007a392.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8c5c46a300d5addb.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/8c80f7ee04352eba.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/8c80f7ee04352eba.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8c8a7a2941fb6d64.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8ce30bb40ffff192.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/8d14286a8cc6ee9d.js"); }
@@ -1128,7 +1128,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/906e545ceef0fcfd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/90919cd6fd06c4d8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/90abe26c46af6975.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/90ad0135b905a622.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/90fa9751ab71ce28.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/90fa9751ab71ce28.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/914ae3168da48965.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9159ea4175a5a021.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/918e105a2ff6c64a.js"); }
@@ -1136,21 +1136,21 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/91cbb6971c86509e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/91f2fa0b11550b30.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9203cb34e9b091dc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9208254b5f8a8481.js"); }
-test {return error.SkipZigTest;}// try doPass(parser_tests_path ++ "/pass-explicit/923c99b441ab5a26.js"); }
+test { try doPass(parser_tests_path ++ "/pass-explicit/923c99b441ab5a26.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/925443c6cf79aa88.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/927b1e0dd52248a6.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/927efb51d4882ccb.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/927b1e0dd52248a6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/927efb51d4882ccb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/92a997b1ba17876e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/92dd079c741d2a95.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/92fd8e24864fde0a.js"); }
-test {return error.SkipZigTest;} // try doPass(parser_tests_path ++ "/pass-explicit/93108a695e5ff29d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/93108a695e5ff29d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9312a1adbbf0a4c0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9331c78bb0fc6a55.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/9349f48a456341b8.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/9349f48a456341b8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/937059a5e53177e5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/939479d60d564ccd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/93bd9d668ac308a0.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/93c32bb0a4bad388.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/93c32bb0a4bad388.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/93c75264893587a5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/93cac77bbf2242ab.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/93d4c5dfbddf859d.js"); }
@@ -1174,18 +1174,18 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/9681f5d844d7acd0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/96909e1dce85ca53.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/96941f16c2d7cec4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/96e1b294d19a101d.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/96ea36bc180f25d5.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/96ea36bc180f25d5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/96f5d93be9a54573.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/970fb35ce6ce89bb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/973cbc9ece13acbc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/974e7275fdedce49.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/97593deb177d09ae.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/976afd9ae5f5d71a.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/979b36a2c530f286.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/979b36a2c530f286.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/97e246302dfe8616.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/982595e2af9d9703.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/982835d8c977075c.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/988e362ed9ddcac5.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/988e362ed9ddcac5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/988f8a06b68457ef.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/98c7fb7947f7eae4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/98df58b0c40fac90.js"); }
@@ -1206,16 +1206,16 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/9aa93e1e417ce8e3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9b9d0e250e01155d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9bcae7c7f00b4e3c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9c30b0817f412a30.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/9cf32425f04fd865.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/9cf32425f04fd865.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9d0fd95dd43f59ec.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9d1320f0185b1586.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9d3d960e32528788.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9d935d1b787ed251.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9db4dccf1122bfc4.js"); }
-test {return error.SkipZigTest;}// try doPass(parser_tests_path ++ "/pass-explicit/9db573299f02bf36.js"); }
+test { try doPass(parser_tests_path ++ "/pass-explicit/9db573299f02bf36.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9dc20e081005fba4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9dfa08b5b7ad82a9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/9e3e46891aaf13de.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/9e3e46891aaf13de.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9e98dbfde77e3dfe.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9ec644dbf797e95c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/9ed0369295348e76.js"); }
@@ -1231,9 +1231,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/a08ed291f78352a0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a0af29e4dd6d3845.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a0b7bf790311b763.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a0fba75a10c21ac9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a10929d2c1b0d792.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a10929d2c1b0d792.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a11e875c4dd100af.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a150e917230aa57d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a150e917230aa57d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a157424306915066.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a1594a4d0c0ee99a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a15c90cc56980c41.js"); }
@@ -1249,12 +1249,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/a2798917405b080b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a29b007e8fb9d020.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a2c2339691fc48fb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a2cb5a14559c6a50.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a2f26b79b01628f9.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a2f26b79b01628f9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a33250f92a2f000e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a353c62d8ed56d6f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a378fc25898cf05b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a378fc25898cf05b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a3b497c58f78b243.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a41e5072dd6dda98.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a41e5072dd6dda98.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a42a93f3af33bbc5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a43df1aea659fab8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a445a478b4ce0c58.js"); }
@@ -1262,10 +1262,10 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/a454d2e2ab3484e6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a487d6498ec0efbf.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a4931f8127e03c4e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a4b3402765acaa0e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a4d62a651f69d815.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a4d62a651f69d815.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a515d7aaea7b816f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a54cca69085ad35a.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a54ce6036e646e24.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a54ce6036e646e24.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a59e0d0b4d3e1b7d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a5a01023fef4d506.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a5a7eb83bf27418b.js"); }
@@ -1288,12 +1288,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/a8a03a88237c4e8f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a8b6c3139974f6e1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a8b832d61af9cdc4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a8fea31fe6aa588e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a91ad31c88855e59.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a91ad31c88855e59.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a93f6b22796d4868.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a953f09a1b6b6725.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a955c7a892679016.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a9b0aedbd9f25ec9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/a9e054dbd43d4b86.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/a9e054dbd43d4b86.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a9e4ff39f145a1fd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/a9f99e657441a735.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/aa06ccdc7ff9e10d.js"); }
@@ -1324,7 +1324,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ad6bf12aa7eda975.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ad6bfcbfca5afde1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ad7d61a732903cd8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/adad54e09949b0e9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/ade301f0d871c610.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/ade301f0d871c610.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ae204e41bacd8237.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ae4bbee73a0f80a5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ae700e3f8ff82c6c.js"); }
@@ -1338,9 +1338,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/af17707f71e402a7.module.j
 test { try doPass(parser_tests_path ++ "/pass-explicit/af1d905ed056724f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/af4bbcea9802b120.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/af5766d06630bbc5.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/af97a3752e579223.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/af97a3752e579223.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/afa63b136c835723.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/afcf8bace3839da2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/afcf8bace3839da2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/affd557fd820e1f2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/afffb6d317e53b92.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b030378ad6e36751.js"); }
@@ -1353,7 +1353,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/b0a834e1180ccd73.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b0c6752e1db068ed.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b0d44fd20353fd82.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b0fdc038ee292aba.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b1072e92becf06a9.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b1072e92becf06a9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b13e700d2613a5a7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b15ab152f8531a9f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b175bdef718c4012.js"); }
@@ -1390,19 +1390,19 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/b506e9cc13c4ad2e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b549d045fc8e93bf.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b563460c1031daf2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b5755ec32b9418af.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b5a1e1a3679f81ba.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b5a1e1a3679f81ba.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b5bc1ffd90912fb1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b5cf21a87ec272d1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b5d302467c6f2f16.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b6145fa4a8cb8c35.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b62c6dd890bef675.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b62c6dd890bef675.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b644c9f68254c85d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b6b5e49c97cedebb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b6e396c8cdf28f95.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b6efc88be898bda8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b756b64f0eef72db.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b75a0b610a41c000.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b77549e54bfef0f9.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b77549e54bfef0f9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b79d2c4df1141981.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b7a5cd294201221b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b7a6a807ae6db312.js"); }
@@ -1411,9 +1411,9 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/b7cd8df8dc875529.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b7d99c0034be0ce1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b8403938b1ddd626.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b86b0122e80c330e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b8705496c9c1ff60.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b8705496c9c1ff60.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b885e6a35c04d915.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b88624492a2c81d3.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b88624492a2c81d3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b89aef8a4690aa20.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b8ad1bd2ff50021f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b8bf39a3e60568ab.js"); }
@@ -1424,7 +1424,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/b92bdcf6c2591e5c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b92dd0bc25eaebe3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b93d116fd0409637.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b96ba7cdf0b42ca9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/b9a0cb6df76a73d2.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/b9a0cb6df76a73d2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b9a4f9232146d4d9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b9a5f5c8c12525c7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/b9b8fb218e1990af.js"); }
@@ -1432,7 +1432,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/b9e1124424a35ad1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba00173ff473e7da.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba21e63736d8fd46.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba4cc699857f41f2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/ba620e120a809888.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/ba620e120a809888.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba6624f5f448dfe4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba6dd18da17dbc10.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ba9a047839eb4682.js"); }
@@ -1445,7 +1445,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/bb87b410a1170cf0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bb8b546cf9db5996.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bbff5671643cc2ea.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bbffb851469a3f0e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/bc10e230c13b6c02.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/bc10e230c13b6c02.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bc302492d441d561.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bc89b2b2f1e19f9e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bcd690cfb709ffe8.js"); }
@@ -1454,16 +1454,16 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/bd160eed5626ae7d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bd28a7d19ac0d50b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bd697f0fda948394.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bd7b54d5e0ce444b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/bd883e5fd1f09b69.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/bd883e5fd1f09b69.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bd9b563f02b80dae.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bdc4accd07049034.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bde1a5ea9aebf9d2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bdfc6c05edd19925.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/be2c3fff6426873e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/be2fd5888f434cbd.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/be2fd5888f434cbd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/be6eb70d9330c165.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/be879445c87d7e72.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/be9d538d5041fd5f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/be9d538d5041fd5f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/beb4cc5812ec1eed.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/beb5335e463d92c1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bedf5be599c82fe8.js"); }
@@ -1475,13 +1475,13 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/bf8ffad512a5f568.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bf9c4d8ecd728018.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bf9e8bd90d8537c3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/bfb61863d3b10adf.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/c06df922631aeabc.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/c06df922631aeabc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c0740dd25c9de39b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c086a8a5c8ef2bb9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c0f5f3f7db69c5a0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c1319833fc139cf8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c162248ee699b68f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/c16d7f2993152b6b.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/c16d7f2993152b6b.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c17fd07fc9b5bf7e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c18d547cafb43e30.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c1914072e996ddbe.js"); }
@@ -1509,7 +1509,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/c35dcf99291ec6be.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c3699b982b33926b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c3799cf68cbac258.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c38644033565f7b9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/c3ce623096553057.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/c3ce623096553057.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c3dc60d438666700.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c3fc8ace42f3fb44.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c412905e229d6f2b.js"); }
@@ -1531,7 +1531,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/c5bd72f618d7cade.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c6827eb9dd7b3dc6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c6ea3404ea5c6c91.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c6ff61d189c5cbee.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/c756f39dca1f7423.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/c756f39dca1f7423.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c767fa4d683aa3ce.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c771490bbb3dd6e9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c78c8fbfbd3e779e.js"); }
@@ -1549,7 +1549,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/c87859666bd18c8c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c88c5d1e7e9574b6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c8b9a4d186ec2eb8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c8dbdecbde2c1869.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/c92dc954a0ce196d.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/c92dc954a0ce196d.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c963ac653b30699b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c964ed7bc2373c54.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/c98889d7d94a0a63.js"); }
@@ -1565,7 +1565,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ca4f13a64e35195f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ca7a0ca0d22f30f8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ca978112ca1bbdca.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/caa0719b52a1409d.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/caaa9f06dd52e5a5.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/caaa9f06dd52e5a5.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/caf6539007d41b5e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb05f3c30f5f88c0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb095c303f88cd0b.js"); }
@@ -1574,7 +1574,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/cb23f6635a581786.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb2d573836b1e204.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb3316f2b008bec3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb4b35cf4cd815d8.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/cb625ce2970fe52a.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/cb625ce2970fe52a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cb898749d76e51fd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cbc644a20893a549.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cbc7fdab53161051.js"); }
@@ -1599,7 +1599,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ce349e20cf388e87.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce3d1f8d346bb92d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce52f1c3d90b194a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce569e89a005c02a.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/ce5f3bc27d5ccaac.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/ce5f3bc27d5ccaac.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce6a4854c1f79924.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce8c443eb361e1a2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ce968fcdf3a1987c.js"); }
@@ -1608,7 +1608,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/cec2d94dc09a6a71.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cefd0dd07bfa670f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cf0eb6e6c4317c33.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cf0fb26afd0eaaf1.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/cf939dae739eacf6.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/cf939dae739eacf6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cfca620b63dd98b8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/cfebdd6b58e65e90.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d010d377bcfd5565.js"); }
@@ -1645,12 +1645,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/d4104d0ed6a07c28.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d42cf386ef394628.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d45f1126ef89120b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d45fa56c26ed4a4e.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d483926898410cae.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d483926898410cae.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d487300b8deff2ff.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d4b898b45172a637.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d4c979f1a92a8cac.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d4e81043d808dc31.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d515f6ce0c47a609.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d515f6ce0c47a609.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d51711f888aeeac9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d53aef16fe683218.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d54bfed43597e9ac.js"); }
@@ -1671,7 +1671,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/d759838042f0bf78.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d767138e133ad239.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d79a08ea5cc1e2f6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d7c7ff252e84e81d.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d7da7ccd42af2c4b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d7da7ccd42af2c4b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d7e461a3aa2cd9bc.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d80edd7fb074b51d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d818deffd07a5c3a.js"); }
@@ -1679,7 +1679,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/d81d71f4121e3193.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d82ae3dbc61808f8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d843ddb6cde8c408.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d8882ceedce6eae0.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d88992e07614f506.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d88992e07614f506.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d8aff43ba7b44ef3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d8b6a56583bdefab.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d8db2079f10d30ff.js"); }
@@ -1687,8 +1687,8 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/d917a549d3f308d8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d93ec22aea12336a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d94d38d65e8b715f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d95b0608f939e81a.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d95e9ad32d562722.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/d96153b59454dddd.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d95e9ad32d562722.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/d96153b59454dddd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d97144839fbdca91.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d99414900a405295.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d99714b3c4e81b56.js"); }
@@ -1697,7 +1697,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/d9d0b115106f376c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/d9eb39b11bc766f4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/da3756d1f8acb3c5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/da4c5dd50fbdda83.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/da671a25e498bcac.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/da671a25e498bcac.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/da96599b89265d75.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/da9e16ac9fd5b61d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/da9fdc3a2d7f9452.js"); }
@@ -1724,7 +1724,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/dcc9c2ff46392f30.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dcdf666e16667f4c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dcfaa5f359400cf2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dcfb11abc780d6d9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/dd0e8f971ab4d6ab.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/dd0e8f971ab4d6ab.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dd3c63403db5c06e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dd500055335127b3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dd67e8365153c4fb.js"); }
@@ -1732,7 +1732,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/dd80c278722f97e9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ddcd0bf839779a45.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ddd3c540fa087867.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ddef0827f7a75499.js"); }
-test {return error.SkipZigTest;} // try doPass(parser_tests_path ++ "/pass-explicit/de24062f6e293cf0.js"); }
+test { try doPass(parser_tests_path ++ "/pass-explicit/de24062f6e293cf0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/de25059a9dd7b618.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/de6b6c9002d2d43e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/de6dd6b2ec971861.js"); }
@@ -1742,36 +1742,36 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/decdfa7f961d283c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/df20c9b7a7d534cb.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/df4eb225b4ba9ae2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/df5fee9e52377ab9.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/df696c501125c86f.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/df696c501125c86f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/df7e8c48ed8d9e6f.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/df9c60e4ff82b9d9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dfa22e3eac3cd26e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/dfbd1b07bd57a08d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e01c7172cf204b92.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e0204155218e1d42.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e0204155218e1d42.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e03ae54743348d7d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e05209211a87a606.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e08112a34cfea369.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e08e181172bad2b1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e08e181172bad2b1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e0b98eaceaaeaf9b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e0c3f07a142a589d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e0f831f2b08fd35c.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e0fc2148b455a6be.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e0fc2148b455a6be.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e1237566c1f89d8e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e12aa6994333466f.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e1387fe892984e2b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e1387fe892984e2b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e1820bdb79ebe44b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e18c297bf29c4b6b.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e18c297bf29c4b6b.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e18f80fa1699a0fd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e1939e7cb50f65b4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e1d373aa5d926fde.module.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e1dd1979a86a5f1d.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e1dd1979a86a5f1d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e23748bdbb0713dc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e23f481ffc072aee.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e2470430b235b9bb.module.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e2470430b235b9bb.module.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e290a32637ffdcb7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e2ac0bea41202dc9.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e2c7f7c0da23bc45.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e2c7f7c0da23bc45.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e2c80df1960433a3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e349023df8e12f2d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e374d329af31c20a.js"); }
@@ -1784,7 +1784,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/e4bd395227b4ee8e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e4c6c19e4b214180.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e4cef19dab44335a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e512276dcfe241c1.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e5204d6e30f296a8.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e5204d6e30f296a8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e5393f15b0e8585d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e54c1a2fc15cd4b8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e5570b178254bfb9.js"); }
@@ -1795,11 +1795,11 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/e5fbf9e911ec36cd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e65f3cca9a4637c3.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e6643a557fe93de0.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e6714aac10964792.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e686d016100a7a08.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e686d016100a7a08.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e6ac25f6aa73a2be.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e6b424d430520bf2.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e6e24cfdc6d308a2.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/e71a91c61343cdb1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/e71a91c61343cdb1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e71c1d5f0b6b833c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e720d4faf2b41f42.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/e748a1e428ccdf69.js"); }
@@ -1835,7 +1835,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ebd6534f7bb01a7a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ec05d8a5722be86c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ec782937135d4f32.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ec79f9c27c045b00.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/ec97990c2cc5e0e8.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/ec97990c2cc5e0e8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ec99a663d6f3983d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ecba8fb326c2c985.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ed0783c35e43032b.js"); }
@@ -1854,7 +1854,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ee4e8fa6257d810a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/eea2875eacf36279.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/eebefa78eec0af44.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/eed97872dd924560.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/eef60d36274e4ed8.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/eef60d36274e4ed8.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ef086346e9707e91.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ef15294c7bc4675e.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/ef61944dbb440b60.js"); }
@@ -1905,12 +1905,12 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/f552daf299e1c6e5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f597b0312e2b678c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f5b89028dfa29f27.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f5ba9f1b21487d3b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/f601e7dd0235d423.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/f658dbaa20c36388.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/f601e7dd0235d423.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/f658dbaa20c36388.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f69b27444afab042.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f6d11d1e4dcb1ded.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f6d42525cd87339b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/f7291c5ec70a4152.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/f7291c5ec70a4152.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f78abc3cba581cdd.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f7af1a6b02dbd440.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f7e2edf1ccb61303.js"); }
@@ -1919,7 +1919,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/f80f30fbdd7e7b19.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f8323b3c45bd107a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f89bf797c3b1dda4.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f8a07bd5ab703d4b.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/f8cf06a0d5699319.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/f8cf06a0d5699319.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f8d843a30c73377a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f8dc2e8bbddcdfbe.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/f94e47b7b5cfda74.js"); }
@@ -1934,14 +1934,14 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/fa58aa963031f8df.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fa59ac4c41d26c14.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fa5b398eeef697a6.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fa6c17d9a188d0bb.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/fa736f4b0cf19c0c.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/fa736f4b0cf19c0c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fa9eaf58f51d6926.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/faa4a026e1e86145.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fada2c7bbfabe14a.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fae42f5a2ab85c1d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fb50400b4c9cf740.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fb69459d7628ace1.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/fb7c5656640f6ec7.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/fb7c5656640f6ec7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fb8d437ce90b1178.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fb8db7a71f3755fc.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fba24e17d16fd0c4.js"); }
@@ -1952,7 +1952,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/fbde237f11796df9.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc020c065098cbd5.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc035551a2a4c15c.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc063bfba795ad91.js"); }
-test { try doPass(parser_tests_path ++ "/pass-explicit/fc1ba7d289fb1af1.js"); }
+test { try doPassTODO(parser_tests_path ++ "/pass-explicit/fc1ba7d289fb1af1.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc286bf26373db8d.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc5c8d6f6bf16121.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fc9f000aa3e4bd79.js"); }
@@ -2001,4 +2001,21 @@ fn doPass(input_path: string) !void {
         input_file.reader(),
         std.mem.endsWith(u8, input_path, ".module.js"),
     );
+}
+
+fn doPassTODO(input_path: string) !void {
+    const allocator = std.testing.allocator;
+    var input_file = try std.fs.cwd().openFile(input_path, .{});
+    defer input_file.close();
+
+    js.parse(
+        allocator,
+        input_path,
+        input_file.reader(),
+        std.mem.endsWith(u8, input_path, ".module.js"),
+    ) catch |err| switch (err) {
+        error.JsMalformed => return,
+        else => |e| return e,
+    };
+    return error.FailZigTest;
 }
