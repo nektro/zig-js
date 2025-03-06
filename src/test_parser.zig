@@ -1991,9 +1991,7 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/fffe7e78a7ce9f9a.js"); }
 // zig fmt: on
 
 fn doPass(input_path: string) !void {
-    //
     const allocator = std.testing.allocator;
-
     var input_file = try std.fs.cwd().openFile(input_path, .{});
     defer input_file.close();
 
