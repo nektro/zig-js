@@ -17,7 +17,7 @@ test transitive failure
 
 ## Built With
 
-- Zig 0.11.0
+- Zig 0.13.0
 - See [`zigmod.yml`](./zigmod.yml) and [`zigmod.lock`](./zigmod.lock)
 
 ## License
