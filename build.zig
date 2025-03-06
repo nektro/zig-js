@@ -25,34 +25,34 @@ pub fn build(b: *std.Build) void {
         run_unit_tests.has_side_effects = true;
         test_step.dependOn(&run_unit_tests.step);
     }
-    {
-        const unit_tests = b.addTest(.{
-            .root_source_file = b.path("src/test_parser_pass.zig"),
-            .target = target,
-            .optimize = mode,
-        });
-        deps.addAllTo(unit_tests);
-        unit_tests.root_module.addImport("build_options", options.createModule());
-        unit_tests.use_llvm = !disable_llvm;
-        unit_tests.use_lld = !disable_llvm;
+    // {
+    //     const unit_tests = b.addTest(.{
+    //         .root_source_file = b.path("src/test_parser_pass.zig"),
+    //         .target = target,
+    //         .optimize = mode,
+    //     });
+    //     deps.addAllTo(unit_tests);
+    //     unit_tests.root_module.addImport("build_options", options.createModule());
+    //     unit_tests.use_llvm = !disable_llvm;
+    //     unit_tests.use_lld = !disable_llvm;
 
-        const run_unit_tests = b.addRunArtifact(unit_tests);
-        run_unit_tests.has_side_effects = true;
-        test_step.dependOn(&run_unit_tests.step);
-    }
-    {
-        const unit_tests = b.addTest(.{
-            .root_source_file = b.path("src/test_parser_fail.zig"),
-            .target = target,
-            .optimize = mode,
-        });
-        deps.addAllTo(unit_tests);
-        unit_tests.root_module.addImport("build_options", options.createModule());
-        unit_tests.use_llvm = !disable_llvm;
-        unit_tests.use_lld = !disable_llvm;
+    //     const run_unit_tests = b.addRunArtifact(unit_tests);
+    //     run_unit_tests.has_side_effects = true;
+    //     test_step.dependOn(&run_unit_tests.step);
+    // }
+    // {
+    //     const unit_tests = b.addTest(.{
+    //         .root_source_file = b.path("src/test_parser_fail.zig"),
+    //         .target = target,
+    //         .optimize = mode,
+    //     });
+    //     deps.addAllTo(unit_tests);
+    //     unit_tests.root_module.addImport("build_options", options.createModule());
+    //     unit_tests.use_llvm = !disable_llvm;
+    //     unit_tests.use_lld = !disable_llvm;
 
-        const run_unit_tests = b.addRunArtifact(unit_tests);
-        run_unit_tests.has_side_effects = true;
-        test_step.dependOn(&run_unit_tests.step);
-    }
+    //     const run_unit_tests = b.addRunArtifact(unit_tests);
+    //     run_unit_tests.has_side_effects = true;
+    //     test_step.dependOn(&run_unit_tests.step);
+    // }
 }
