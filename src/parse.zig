@@ -33,7 +33,7 @@ pub fn do(alloc: std.mem.Allocator, path: string, inreader: anytype, isModule: b
     const anyreader = extras.AnyReader.from(counter.reader());
     var p = Parser.init(alloc, anyreader);
     defer p.deinit();
-    defer p.extras.deinit(alloc);
+    defer p.data.deinit(alloc);
     defer p.string_bytes.deinit(alloc);
     defer p.strings_map.deinit(alloc);
 

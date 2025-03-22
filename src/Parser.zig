@@ -13,7 +13,7 @@ idx: usize = 0,
 end: bool = false,
 line: usize = 1,
 col: usize = 1,
-extras: std.ArrayListUnmanaged(u32) = .{},
+data: std.ArrayListUnmanaged(u32) = .{},
 string_bytes: std.ArrayListUnmanaged(u8) = .{},
 strings_map: std.StringArrayHashMapUnmanaged(t.StringIndex) = .{},
 memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, struct { usize, void }) = .{},
@@ -188,8 +188,8 @@ pub fn addStr(ore: *Parser, alloc: std.mem.Allocator, str: string) !t.StringInde
     if (res.found_existing) return res.value_ptr.*;
     const q = ore.string_bytes.items.len;
     try ore.string_bytes.appendSlice(alloc, str);
-    const r = ore.extras.items.len;
-    try ore.extras.appendSlice(alloc, &[_]u32{ @as(u32, @intCast(q)), @as(u32, @intCast(str.len)) });
+    const r = ore.data.items.len;
+    try ore.data.appendSlice(alloc, &[_]u32{ @as(u32, @intCast(q)), @as(u32, @intCast(str.len)) });
     res.value_ptr.* = @enumFromInt(r);
     return @enumFromInt(r);
 }
@@ -213,15 +213,15 @@ const Adapter = struct {
 
 pub fn addStrList(ore: *Parser, alloc: std.mem.Allocator, items: []const t.StringIndex) !t.StringListIndex {
     if (items.len == 0) return .empty;
-    const r = ore.extras.items.len;
-    try ore.extras.ensureUnusedCapacity(alloc, 1 + items.len);
-    ore.extras.appendAssumeCapacity(@intCast(items.len));
-    ore.extras.appendSliceAssumeCapacity(@ptrCast(items));
+    const r = ore.data.items.len;
+    try ore.data.ensureUnusedCapacity(alloc, 1 + items.len);
+    ore.data.appendAssumeCapacity(@intCast(items.len));
+    ore.data.appendSliceAssumeCapacity(@ptrCast(items));
     return @enumFromInt(r);
 }
 
 pub fn getStr(ore: *const Parser, sidx: t.StringIndex) string {
-    const obj = ore.extras.items[@intFromEnum(sidx)..][0..2].*;
+    const obj = ore.data.items[@intFromEnum(sidx)..][0..2].*;
     const str = ore.string_bytes.items[obj[0]..][0..obj[1]];
     return str;
 }
