@@ -1,5 +1,11 @@
 # zig-js
 
+![loc](https://sloc.xyz/github/nektro/zig-js)
+[![license](https://img.shields.io/github/license/nektro/zig-js.svg)](https://github.com/nektro/zig-js/blob/master/LICENSE)
+[![nektro @ github sponsors](https://img.shields.io/badge/sponsors-nektro-purple?logo=github)](https://github.com/sponsors/nektro)
+[![Zig](https://img.shields.io/badge/Zig-0.14-f7a41d)](https://ziglang.org/)
+[![Zigmod](https://img.shields.io/badge/Zigmod-latest-f7a41d)](https://github.com/nektro/zigmod)
+
 An ECMAScript module for Zig. Currently includes a parser.
 
 ## Progress
@@ -14,14 +20,3 @@ test transitive failure
 └─ run test 202/729 passed, 527 failed
    └─ zig test Debug native success 50s MaxRSS:2G
 ```
-
-## Built With
-
-- Zig 0.13.0
-- See [`zigmod.yml`](./zigmod.yml) and [`zigmod.lock`](./zigmod.lock)
-
-## License
-
-Mozilla Public License Version 2.0
-
-Copyright 2023 Meghan Denny
