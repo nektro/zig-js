@@ -17,7 +17,7 @@ inline fn w(val: anytype) ?W(@TypeOf(val)) {
 
 fn W(comptime T: type) type {
     return switch (@typeInfo(T)) {
-        .ErrorUnion => |v| v.payload,
+        .error_union => |v| v.payload,
         else => unreachable,
     };
 }
