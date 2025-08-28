@@ -22,6 +22,7 @@ pub fn build(b: *std.Build) void {
         unit_tests.use_lld = !disable_llvm;
 
         const run_unit_tests = b.addRunArtifact(unit_tests);
+        run_unit_tests.setCwd(b.path("."));
         run_unit_tests.has_side_effects = true;
         test_step.dependOn(&run_unit_tests.step);
     }
@@ -37,6 +38,7 @@ pub fn build(b: *std.Build) void {
     //     unit_tests.use_lld = !disable_llvm;
 
     //     const run_unit_tests = b.addRunArtifact(unit_tests);
+    //     run_unit_tests.setCwd(b.path("."));
     //     run_unit_tests.has_side_effects = true;
     //     test_step.dependOn(&run_unit_tests.step);
     // }
@@ -52,6 +54,7 @@ pub fn build(b: *std.Build) void {
     //     unit_tests.use_lld = !disable_llvm;
 
     //     const run_unit_tests = b.addRunArtifact(unit_tests);
+    //     run_unit_tests.setCwd(b.path("."));
     //     run_unit_tests.has_side_effects = true;
     //     test_step.dependOn(&run_unit_tests.step);
     // }
