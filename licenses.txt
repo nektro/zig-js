@@ -5,8 +5,10 @@ MPL-2.0:
 MIT:
 = https://spdx.org/licenses/MIT
 - git https://github.com/nektro/zig-extras
+- git https://github.com/nektro/zig-sys-linux
 - git https://github.com/nektro/zig-tracer
 - git https://github.com/nektro/zig-unicode-ucd
 
 Unspecified:
+- system_lib c
 - git https://github.com/tc39/test262-parser-tests
