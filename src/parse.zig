@@ -2698,7 +2698,7 @@ fn parseCodePoint(alloc: std.mem.Allocator, p: *Parser) anyerror!u21 {
 
     const sidx = try parseHexDigits(alloc, p, false);
     const s = p.getStr(sidx);
-    const c = std.fmt.parseInt(u21, s, 16) catch return error.JsMalformed;
+    const c = extras.parseDigits(u21, s, 16) catch return error.JsMalformed;
     return c;
 }
 
