@@ -42,7 +42,7 @@ pub fn slice(ore: *Parser) []const u8 {
 }
 
 pub fn eat(ore: *Parser, comptime test_s: string) !void {
-    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({s})", .{ ore.idx, test_s }) else tracer.Ctx{ .src = @src() };
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({s})", .{ ore.idx, test_s }) else undefined;
     defer if (ore.trace_eat) tr.end();
 
     if (test_s.len == 1) {
@@ -72,7 +72,7 @@ fn peekAmt(ore: *Parser, amt: usize) !void {
 }
 
 pub fn eatByte(ore: *Parser, test_c: u8) !u8 {
-    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({c})", .{ ore.idx, test_c }) else tracer.Ctx{ .src = @src() };
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({c})", .{ ore.idx, test_c }) else undefined;
     defer if (ore.trace_eat) tr.end();
 
     try ore.peekAmt(1);
@@ -84,14 +84,14 @@ pub fn eatByte(ore: *Parser, test_c: u8) !u8 {
 }
 
 pub fn eatCp(ore: *Parser, comptime test_cp: u21) !u21 {
-    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})(U+{d})", .{ ore.idx, test_cp }) else tracer.Ctx{ .src = @src() };
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})(U+{d})", .{ ore.idx, test_cp }) else undefined;
     defer if (ore.trace_eat) tr.end();
 
     return ore.eatRangeM(test_cp, test_cp);
 }
 
 pub fn eatRange(ore: *Parser, comptime from: u8, comptime to: u8) !u8 {
-    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else tracer.Ctx{ .src = @src() };
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else undefined;
     defer if (ore.trace_eat) tr.end();
 
     try ore.peekAmt(1);
@@ -104,7 +104,7 @@ pub fn eatRange(ore: *Parser, comptime from: u8, comptime to: u8) !u8 {
 }
 
 pub fn eatRangeM(ore: *Parser, comptime from: u21, comptime to: u21) !u21 {
-    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else tracer.Ctx{ .src = @src() };
+    const tr = if (ore.trace_eat) tracer.trace(@src(), "({d})({d},{d})", .{ ore.idx, from, to }) else undefined;
     defer if (ore.trace_eat) tr.end();
 
     const from_len = comptime std.unicode.utf8CodepointSequenceLength(from) catch unreachable;
