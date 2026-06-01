@@ -1,6 +1,8 @@
 const std = @import("std");
 const string = []const u8;
 const js = @import("js");
+const nfs = @import("nfs");
+
 const build_options = @import("build_options");
 const parser_tests_path = build_options.parser_tests_path;
 
@@ -1990,28 +1992,28 @@ test { try doPass(parser_tests_path ++ "/pass-explicit/ffcf0064736d41e7.js"); }
 test { try doPass(parser_tests_path ++ "/pass-explicit/fffe7e78a7ce9f9a.js"); }
 // zig fmt: on
 
-fn doPass(input_path: string) !void {
+fn doPass(input_path: [:0]const u8) !void {
     const allocator = std.testing.allocator;
-    var input_file = try std.fs.cwd().openFile(input_path, .{});
+    var input_file = try nfs.cwd().openFile(input_path, .{});
     defer input_file.close();
 
     try js.parse(
         allocator,
         input_path,
-        input_file.reader(),
+        input_file,
         std.mem.endsWith(u8, input_path, ".module.js"),
     );
 }
 
-fn doPassTODO(input_path: string) !void {
+fn doPassTODO(input_path: [:0]const u8) !void {
     const allocator = std.testing.allocator;
-    var input_file = try std.fs.cwd().openFile(input_path, .{});
+    var input_file = try nfs.cwd().openFile(input_path, .{});
     defer input_file.close();
 
     js.parse(
         allocator,
         input_path,
-        input_file.reader(),
+        input_file,
         std.mem.endsWith(u8, input_path, ".module.js"),
     ) catch |err| switch (err) {
         error.JsMalformed => return,
