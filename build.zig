@@ -19,6 +19,7 @@ pub fn build(b: *std.Build) void {
             }),
         });
         deps.addAllTo(unit_tests);
+        unit_tests.linkLibC();
         unit_tests.root_module.addImport("build_options", options.createModule());
         unit_tests.use_llvm = !disable_llvm;
         unit_tests.use_lld = !disable_llvm;
