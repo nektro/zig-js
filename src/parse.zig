@@ -4210,7 +4210,7 @@ fn parseHexDigits(alloc: std.mem.Allocator, p: *Parser, Sep: bool) anyerror!ty.S
     const t = tracer.trace(@src(), "({d})", .{p.idx});
     defer t.end();
 
-    var list = std.ArrayList(u8).init(alloc);
+    var list = std.array_list.Managed(u8).init(alloc);
     defer list.deinit();
     var i: usize = 0;
     while (true) : (i += 1) {

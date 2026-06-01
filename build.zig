@@ -3,7 +3,7 @@ const deps = @import("./deps.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
-    const mode = b.option(std.builtin.Mode, "mode", "") orelse .Debug;
+    const mode = b.option(std.builtin.OptimizeMode, "mode", "") orelse .Debug;
     const disable_llvm = b.option(bool, "disable_llvm", "use the non-llvm zig codegen") orelse false;
 
     const options = b.addOptions();
@@ -12,9 +12,11 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Run all library tests");
     {
         const unit_tests = b.addTest(.{
-            .root_source_file = b.path("src/test_parser.zig"),
-            .target = target,
-            .optimize = mode,
+            .root_module = b.createModule(.{
+                .root_source_file = b.path("src/test_parser.zig"),
+                .target = target,
+                .optimize = mode,
+            }),
         });
         deps.addAllTo(unit_tests);
         unit_tests.root_module.addImport("build_options", options.createModule());
