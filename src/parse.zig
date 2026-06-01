@@ -9,6 +9,7 @@ const Parser = @import("./Parser.zig");
 const extras = @import("extras");
 const unicodeucd = @import("unicode-ucd");
 const tracer = @import("tracer");
+const nio = @import("nio");
 const ty = @import("./types.zig");
 
 inline fn w(val: anytype) ?W(@TypeOf(val)) {
@@ -29,8 +30,8 @@ pub fn do(alloc: std.mem.Allocator, path: string, inreader: anytype, isModule: b
 
     _ = path;
 
-    var counter = std.io.countingReader(inreader);
-    const anyreader = extras.AnyReader.from(counter.reader());
+    var counter = nio.CountingReader(@TypeOf(inreader)).init(inreader);
+    const anyreader = counter.anyReadable();
     var p = Parser.init(alloc, anyreader);
     defer p.deinit();
     defer p.data.deinit(alloc);

@@ -7,6 +7,7 @@ dependencies:
   - src: git https://github.com/nektro/zig-extras
   - src: git https://github.com/nektro/zig-unicode-ucd
   - src: git https://github.com/nektro/zig-tracer
+  - src: git https://github.com/nektro/zig-nio
 
 root_dependencies:
   - src: git https://github.com/tc39/test262-parser-tests

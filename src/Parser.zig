@@ -5,8 +5,9 @@ const Parser = @This();
 const buf_size = 64;
 const t = @import("./types.zig");
 const tracer = @import("tracer");
+const nio = @import("nio");
 
-any: extras.AnyReader,
+any: nio.AnyReadable,
 arena: std.mem.Allocator,
 temp: std.ArrayListUnmanaged(u8) = .{},
 idx: usize = 0,
@@ -20,7 +21,7 @@ memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bo
 memoize_fails: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, void) = .{},
 trace_eat: bool = false,
 
-pub fn init(allocator: std.mem.Allocator, any: extras.AnyReader) Parser {
+pub fn init(allocator: std.mem.Allocator, any: nio.AnyReadable) Parser {
     return .{
         .any = any,
         .arena = allocator,
