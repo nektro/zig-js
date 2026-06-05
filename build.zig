@@ -23,6 +23,7 @@ pub fn build(b: *std.Build) void {
         unit_tests.root_module.addImport("build_options", options.createModule());
         unit_tests.use_llvm = !disable_llvm;
         unit_tests.use_lld = !disable_llvm;
+        b.getInstallStep().dependOn(&unit_tests.step);
 
         const run_unit_tests = b.addRunArtifact(unit_tests);
         run_unit_tests.setCwd(b.path("."));
