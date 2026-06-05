@@ -9,16 +9,16 @@ const nio = @import("nio");
 
 any: nio.AnyReadable,
 arena: std.mem.Allocator,
-temp: std.ArrayListUnmanaged(u8) = .{},
+temp: std.ArrayList(u8) = .empty,
 idx: usize = 0,
 end: bool = false,
 line: usize = 1,
 col: usize = 1,
-data: std.ArrayListUnmanaged(u32) = .{},
-string_bytes: std.ArrayListUnmanaged(u8) = .{},
-strings_map: std.StringArrayHashMapUnmanaged(t.StringIndex) = .{},
-memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, struct { usize, void }) = .{},
-memoize_fails: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, void) = .{},
+data: std.ArrayList(u32) = .empty,
+string_bytes: std.ArrayList(u8) = .empty,
+strings_map: std.array_hash_map.String(t.StringIndex) = .empty,
+memoize_map: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, struct { usize, void }) = .empty,
+memoize_fails: std.AutoHashMapUnmanaged(struct { *const anyopaque, usize, bool, bool, bool }, void) = .empty,
 trace_eat: bool = false,
 
 pub fn init(allocator: std.mem.Allocator, any: nio.AnyReadable) Parser {
