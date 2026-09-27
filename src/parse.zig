@@ -1662,7 +1662,7 @@ fn parseNewExpression(alloc: std.mem.Allocator, p: *Parser, Yield: bool, Await: 
 
     // only eat n-1 'new's since MemberExpression includes a `'new' MemberExpression Arguments` production
     // and we don't want eating prefixed 'new's to interfere.
-    var fifo = extras.RingBuffer(usize, 2){};
+    var fifo: extras.RingBuffer(usize, 2) = .empty;
     fifo.append(p.idx);
     fifo.append(p.idx);
     while (w(p.eatTok("new"))) |_| {
