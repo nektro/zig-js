@@ -3,7 +3,7 @@ const deps = @import("./deps.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
-    const mode = b.option(std.builtin.OptimizeMode, "mode", "") orelse .Debug;
+    const optimize = b.standardOptimizeOption(.{});
     const disable_llvm = b.option(bool, "disable_llvm", "use the non-llvm zig codegen") orelse false;
 
     const options = b.addOptions();
@@ -15,7 +15,7 @@ pub fn build(b: *std.Build) void {
             .root_module = b.createModule(.{
                 .root_source_file = b.path("src/test_parser.zig"),
                 .target = target,
-                .optimize = mode,
+                .optimize = optimize,
             }),
         });
         deps.addAllTo(unit_tests);
@@ -34,7 +34,7 @@ pub fn build(b: *std.Build) void {
     //     const unit_tests = b.addTest(.{
     //         .root_source_file = b.path("src/test_parser_pass.zig"),
     //         .target = target,
-    //         .optimize = mode,
+    //         .optimize = optimize,
     //     });
     //     deps.addAllTo(unit_tests);
     //     unit_tests.root_module.addImport("build_options", options.createModule());
@@ -50,7 +50,7 @@ pub fn build(b: *std.Build) void {
     //     const unit_tests = b.addTest(.{
     //         .root_source_file = b.path("src/test_parser_fail.zig"),
     //         .target = target,
-    //         .optimize = mode,
+    //         .optimize = optimize,
     //     });
     //     deps.addAllTo(unit_tests);
     //     unit_tests.root_module.addImport("build_options", options.createModule());
